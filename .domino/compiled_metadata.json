@@ -1,4 +1,1279 @@
 {
+    "ModelMonitoringPiece": {
+        "name": "ModelMonitoringPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [],
+        "style": {
+            "node_label": "ModelMonitoringPiece",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid fa-circle",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Monitor model quality and prediction drift",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "predictions_csv": {
+                    "description": "CSV with prediction_load_kw and optionally load_kw",
+                    "title": "Predictions Csv",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "predictions_csv"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "report_json": {
+                    "title": "Report Json",
+                    "type": "string"
+                },
+                "daily_csv": {
+                    "title": "Daily Csv",
+                    "type": "string"
+                },
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "report_json",
+                "daily_csv",
+                "message"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/ModelMonitoringPiece"
+    },
+    "FetchEnergyDataPiece": {
+        "name": "FetchEnergyDataPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [
+            "Energy"
+        ],
+        "style": {
+            "node_label": "FetchEnergyDataPiece",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:bolt",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Load and merge energy CSV files",
+        "dependencies_group": "0",
+        "container_resources": {
+            "requests": {
+                "cpu": 100,
+                "memory": 128
+            },
+            "limits": {
+                "cpu": 500,
+                "memory": 512
+            }
+        },
+        "input_schema": {
+            "description": "Input model for Fetch Energy Data Piece",
+            "properties": {
+                "load_csv": {
+                    "default": "/home/shared_storage/load.csv",
+                    "description": "Path to load CSV file or a directory with load*.csv files",
+                    "title": "Load Csv",
+                    "type": "string"
+                },
+                "prices_csv": {
+                    "default": "/home/shared_storage/prices.csv",
+                    "description": "Path to prices CSV file",
+                    "title": "Prices Csv",
+                    "type": "string"
+                }
+            },
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "description": "Output model for Fetch Energy Data Piece",
+            "properties": {
+                "message": {
+                    "default": "",
+                    "title": "Message",
+                    "type": "string"
+                },
+                "output_path": {
+                    "default": "",
+                    "title": "Output Path",
+                    "type": "string"
+                }
+            },
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/FetchEnergyDataPiece"
+    },
+    "KPIPiece": {
+        "name": "KPIPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [],
+        "style": {
+            "node_label": "Compute KPIs",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:chart-column",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Compute KPI summary from MRK report",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "report_json": {
+                    "description": "Path to mrk_savings_report.json",
+                    "title": "Report Json",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "report_json"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "kpi_results_csv": {
+                    "title": "Kpi Results Csv",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "kpi_results_csv"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/KPIPiece"
+    },
+    "ForecastHorizonPiece": {
+        "name": "ForecastHorizonPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [],
+        "style": {
+            "node_label": "ForecastHorizonPiece",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:clock",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Forecast consumption by department for chosen horizon",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "history_csv": {
+                    "description": "Merged history CSV",
+                    "title": "History Csv",
+                    "type": "string"
+                },
+                "models_index_json": {
+                    "description": "JSON map department -> model path",
+                    "title": "Models Index Json",
+                    "type": "string"
+                },
+                "model_registry_dir": {
+                    "description": "Allowed model registry root for secure loading",
+                    "title": "Model Registry Dir",
+                    "type": "string"
+                },
+                "horizon_hours": {
+                    "default": 24,
+                    "description": "Forecast horizon in hours",
+                    "minimum": 1,
+                    "title": "Horizon Hours",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "history_csv",
+                "models_index_json",
+                "model_registry_dir"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "forecast_csv": {
+                    "title": "Forecast Csv",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "forecast_csv"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/ForecastHorizonPiece"
+    },
+    "TrainModelPiece": {
+        "name": "TrainModelPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [
+            "XGBoost",
+            "Training",
+            "Energy"
+        ],
+        "style": {
+            "node_label": "TrainModelPiece",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:brain",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Train XGBoost energy forecasting model",
+        "dependencies_group": "0",
+        "container_resources": {
+            "requests": {
+                "cpu": 200,
+                "memory": 256
+            },
+            "limits": {
+                "cpu": 1000,
+                "memory": 1024
+            }
+        },
+        "input_schema": {
+            "properties": {
+                "data_path": {
+                    "description": "Path to preprocessed parquet or CSV dataset",
+                    "title": "Training dataset path",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "data_path"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "description": "Training result message",
+                    "title": "Message",
+                    "type": "string"
+                },
+                "model_file_path": {
+                    "description": "Path to trained model file",
+                    "title": "Model File Path",
+                    "type": "string"
+                },
+                "train_log_path": {
+                    "description": "Path to training log file",
+                    "title": "Train Log Path",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "model_file_path",
+                "train_log_path"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/TrainModelPiece"
+    },
+    "PreprocessEnergyDataPiece": {
+        "name": "PreprocessEnergyDataPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [
+            "Energy",
+            "Preprocessing"
+        ],
+        "style": {
+            "node_label": "PreprocessEnergyDataPiece",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:filter",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Clean, resample and prepare energy data for training and prediction",
+        "dependencies_group": "0",
+        "container_resources": {
+            "requests": {
+                "cpu": 200,
+                "memory": 256
+            },
+            "limits": {
+                "cpu": 500,
+                "memory": 512
+            }
+        },
+        "input_schema": {
+            "properties": {
+                "input_path": {
+                    "description": "Path to merged energy parquet file",
+                    "title": "Input Path",
+                    "type": "string"
+                },
+                "forecast_hours": {
+                    "default": 24,
+                    "description": "Ignored when generate_predict_dataset is False",
+                    "title": "Forecast Hours",
+                    "type": "integer"
+                },
+                "generate_predict_dataset": {
+                    "default": false,
+                    "description": "If False (default): only train_dataset.parquet. Predict uses separate CSV in PredictPiece.",
+                    "title": "Generate Predict Dataset",
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "input_path"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "train_file_path": {
+                    "title": "Train File Path",
+                    "type": "string"
+                },
+                "predict_file_path": {
+                    "default": "",
+                    "description": "Empty if generate_predict_dataset is False",
+                    "title": "Predict File Path",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "train_file_path"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/PreprocessEnergyDataPiece"
+    },
+    "IncrementalTrainPiece": {
+        "name": "IncrementalTrainPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [],
+        "style": {
+            "node_label": "IncrementalTrainPiece",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:brain",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Train or incrementally update load models by department",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "history_csv": {
+                    "description": "Merged long-term history CSV",
+                    "title": "History Csv",
+                    "type": "string"
+                },
+                "model_registry_dir": {
+                    "description": "Directory for per-department model artifacts",
+                    "title": "Model Registry Dir",
+                    "type": "string"
+                },
+                "incremental_window_days": {
+                    "default": 30,
+                    "description": "Train update only on recent window in days",
+                    "minimum": 1,
+                    "title": "Incremental Window Days",
+                    "type": "integer"
+                },
+                "full_retrain_every_n_updates": {
+                    "default": 20,
+                    "description": "Run full retrain after this many incremental updates",
+                    "minimum": 1,
+                    "title": "Full Retrain Every N Updates",
+                    "type": "integer"
+                },
+                "incremental_trees": {
+                    "default": 50,
+                    "description": "Number of trees appended in incremental update",
+                    "minimum": 10,
+                    "title": "Incremental Trees",
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "history_csv",
+                "model_registry_dir"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "models_index_json": {
+                    "title": "Models Index Json",
+                    "type": "string"
+                },
+                "training_summary_json": {
+                    "title": "Training Summary Json",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "models_index_json",
+                "training_summary_json"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/IncrementalTrainPiece"
+    },
+    "TechnicalLimitsPiece": {
+        "name": "TechnicalLimitsPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [],
+        "style": {
+            "node_label": "Technical Limits",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:ruler-combined",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Compute technical PV and battery bounds from constraints",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "load_csv": {
+                    "description": "Path to historical load CSV",
+                    "title": "Load Csv",
+                    "type": "string"
+                },
+                "scenario_yaml": {
+                    "description": "Path to scenario YAML",
+                    "title": "Scenario Yaml",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "load_csv",
+                "scenario_yaml"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "technical_limits_json": {
+                    "title": "Technical Limits Json",
+                    "type": "string"
+                },
+                "scenario_yaml": {
+                    "title": "Scenario Yaml",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "technical_limits_json",
+                "scenario_yaml"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/TechnicalLimitsPiece"
+    },
+    "SustainableIngestPiece": {
+        "name": "SustainableIngestPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [],
+        "style": {
+            "node_label": "SustainableIngestPiece",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:database",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Ingest new company load files into long-term history",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "history_csv": {
+                    "description": "Long-term history CSV path",
+                    "title": "History Csv",
+                    "type": "string"
+                },
+                "updates_dir": {
+                    "description": "Folder with new delivered CSV files",
+                    "title": "Updates Dir",
+                    "type": "string"
+                },
+                "archive_dir": {
+                    "description": "Archive folder for already processed files",
+                    "title": "Archive Dir",
+                    "type": "string"
+                },
+                "bootstrap_parquet": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Optional parquet for first run bootstrap",
+                    "title": "Bootstrap Parquet"
+                }
+            },
+            "required": [
+                "history_csv",
+                "updates_dir",
+                "archive_dir"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "history_csv_out": {
+                    "title": "History Csv Out",
+                    "type": "string"
+                },
+                "rows_total": {
+                    "title": "Rows Total",
+                    "type": "integer"
+                },
+                "departments": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "title": "Departments",
+                    "type": "array"
+                }
+            },
+            "required": [
+                "message",
+                "history_csv_out",
+                "rows_total",
+                "departments"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/SustainableIngestPiece"
+    },
+    "SolarSimPiece": {
+        "name": "SolarSimPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [],
+        "style": {
+            "node_label": "Solar Simulation",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:sun",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Generate synthetic PV profile for selected sizing",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "load_csv": {
+                    "description": "Path to historical load CSV",
+                    "title": "Load Csv",
+                    "type": "string"
+                },
+                "scenario_yaml": {
+                    "description": "Path to sized scenario YAML",
+                    "title": "Scenario Yaml",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "load_csv",
+                "scenario_yaml"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "virtual_solar_csv": {
+                    "title": "Virtual Solar Csv",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "virtual_solar_csv"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/SolarSimPiece"
+    },
+    "DashboardPiece": {
+        "name": "DashboardPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [],
+        "style": {
+            "node_label": "Dashboard Data",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:chart-line",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Aggregate MRK report and KPI CSV into dashboard JSON",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "report_json": {
+                    "description": "Path to mrk_savings_report.json",
+                    "title": "Report Json",
+                    "type": "string"
+                },
+                "kpi_results_csv": {
+                    "description": "Path to kpi_results.csv",
+                    "title": "Kpi Results Csv",
+                    "type": "string"
+                },
+                "investment_evaluation_csv": {
+                    "description": "Path to investment_evaluation.csv",
+                    "title": "Investment Evaluation Csv",
+                    "type": "string"
+                },
+                "anomaly_alerts_csv": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Optional path to anomaly_alerts.csv",
+                    "title": "Anomaly Alerts Csv"
+                },
+                "drift_report_json": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Optional path to drift_report.json",
+                    "title": "Drift Report Json"
+                }
+            },
+            "required": [
+                "report_json",
+                "kpi_results_csv",
+                "investment_evaluation_csv"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "dashboard_data_json": {
+                    "title": "Dashboard Data Json",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "dashboard_data_json"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/DashboardPiece"
+    },
+    "BatterySimPiece": {
+        "name": "BatterySimPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [],
+        "style": {
+            "node_label": "Battery Simulation",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:battery-half",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Generate battery SOC timeseries from load and PV profile",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "load_csv": {
+                    "description": "Path to historical load CSV",
+                    "title": "Load Csv",
+                    "type": "string"
+                },
+                "scenario_yaml": {
+                    "description": "Path to sized scenario YAML",
+                    "title": "Scenario Yaml",
+                    "type": "string"
+                },
+                "virtual_solar_csv": {
+                    "description": "Path to virtual_solar.csv",
+                    "title": "Virtual Solar Csv",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "load_csv",
+                "scenario_yaml",
+                "virtual_solar_csv"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "virtual_battery_soc_csv": {
+                    "title": "Virtual Battery Soc Csv",
+                    "type": "string"
+                },
+                "battery_summary_csv": {
+                    "title": "Battery Summary Csv",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "virtual_battery_soc_csv",
+                "battery_summary_csv"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/BatterySimPiece"
+    },
+    "UserInputPiece": {
+        "name": "UserInputPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [],
+        "style": {
+            "node_label": "User Input",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:file-lines",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Validate MRK workflow input files",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "load_csv": {
+                    "description": "Path to historical load CSV",
+                    "title": "Load Csv",
+                    "type": "string"
+                },
+                "prices_csv": {
+                    "default": "",
+                    "description": "Optional path to historical prices CSV",
+                    "title": "Prices Csv",
+                    "type": "string"
+                },
+                "scenario_yaml": {
+                    "description": "Path to scenario YAML",
+                    "title": "Scenario Yaml",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "load_csv",
+                "scenario_yaml"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "load_csv": {
+                    "title": "Load Csv",
+                    "type": "string"
+                },
+                "scenario_yaml": {
+                    "title": "Scenario Yaml",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "load_csv",
+                "scenario_yaml"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/UserInputPiece"
+    },
+    "InvestmentEvalPiece": {
+        "name": "InvestmentEvalPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [],
+        "style": {
+            "node_label": "Investment Evaluation",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:coins",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Compute investment evaluation from simulated KPIs",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "report_json": {
+                    "description": "Path to mrk_savings_report.json",
+                    "title": "Report Json",
+                    "type": "string"
+                },
+                "kpi_results_csv": {
+                    "description": "Path to kpi_results.csv",
+                    "title": "Kpi Results Csv",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "report_json",
+                "kpi_results_csv"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "investment_evaluation_csv": {
+                    "title": "Investment Evaluation Csv",
+                    "type": "string"
+                },
+                "investment_evaluation_json": {
+                    "title": "Investment Evaluation Json",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "investment_evaluation_csv",
+                "investment_evaluation_json"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/InvestmentEvalPiece"
+    },
+    "SizingOptimizationPiece": {
+        "name": "SizingOptimizationPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [],
+        "style": {
+            "node_label": "Sizing Optimization",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:chart-line",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Auto/manual sizing for PV and battery",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "load_csv": {
+                    "description": "Path to historical load CSV",
+                    "title": "Load Csv",
+                    "type": "string"
+                },
+                "scenario_yaml": {
+                    "description": "Path to scenario YAML",
+                    "title": "Scenario Yaml",
+                    "type": "string"
+                },
+                "technical_limits_json": {
+                    "description": "Path to technical limits json",
+                    "title": "Technical Limits Json",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "load_csv",
+                "scenario_yaml",
+                "technical_limits_json"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "sized_scenario_yaml": {
+                    "title": "Sized Scenario Yaml",
+                    "type": "string"
+                },
+                "sizing_optimization_json": {
+                    "title": "Sizing Optimization Json",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "sized_scenario_yaml",
+                "sizing_optimization_json"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/SizingOptimizationPiece"
+    },
+    "SimulatePiece": {
+        "name": "SimulatePiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [],
+        "style": {
+            "node_label": "Simulate MRK Scenario",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:calculator",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Run MRK simulation baseline/PV/battery",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "load_csv": {
+                    "description": "Path to historical load CSV",
+                    "title": "Load Csv",
+                    "type": "string"
+                },
+                "scenario_yaml": {
+                    "description": "Path to scenario YAML",
+                    "title": "Scenario Yaml",
+                    "type": "string"
+                },
+                "output_dir": {
+                    "default": "",
+                    "description": "Optional output dir when results_path is not set",
+                    "title": "Output Dir",
+                    "type": "string"
+                },
+                "battery_strategy_recommendation_json": {
+                    "default": "",
+                    "description": "Optional battery strategy recommendation JSON",
+                    "title": "Battery Strategy Recommendation Json",
+                    "type": "string"
+                },
+                "ranked_catalog_json": {
+                    "default": "",
+                    "description": "Optional ranked catalog recommendation JSON",
+                    "title": "Ranked Catalog Json",
+                    "type": "string"
+                },
+                "inverter_catalog_json": {
+                    "default": "",
+                    "description": "Optional inverter catalog JSON",
+                    "title": "Inverter Catalog Json",
+                    "type": "string"
+                },
+                "battery_catalog_json": {
+                    "default": "",
+                    "description": "Optional battery catalog JSON",
+                    "title": "Battery Catalog Json",
+                    "type": "string"
+                },
+                "catalog_manifest_json": {
+                    "default": "",
+                    "description": "Optional catalog sync manifest JSON",
+                    "title": "Catalog Manifest Json",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "load_csv",
+                "scenario_yaml"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "report_json": {
+                    "title": "Report Json",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "report_json"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/SimulatePiece"
+    },
+    "BatteryStrategyOptimizerPiece": {
+        "name": "BatteryStrategyOptimizerPiece",
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "tags": [],
+        "style": {
+            "node_label": "Battery Strategy",
+            "node_type": "default",
+            "node_style": {
+                "backgroundColor": "#ebebeb"
+            },
+            "useIcon": true,
+            "icon_class_name": "fa-solid:sliders",
+            "iconStyle": {
+                "cursor": "pointer"
+            }
+        },
+        "description": "Create battery dispatch strategy recommendation",
+        "dependencies_group": "0",
+        "input_schema": {
+            "properties": {
+                "load_csv": {
+                    "description": "Path to historical load CSV",
+                    "title": "Load Csv",
+                    "type": "string"
+                },
+                "scenario_yaml": {
+                    "description": "Path to sized scenario YAML",
+                    "title": "Scenario Yaml",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "load_csv",
+                "scenario_yaml"
+            ],
+            "title": "InputModel",
+            "type": "object"
+        },
+        "output_schema": {
+            "properties": {
+                "message": {
+                    "title": "Message",
+                    "type": "string"
+                },
+                "battery_strategy_recommendation_json": {
+                    "title": "Battery Strategy Recommendation Json",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message",
+                "battery_strategy_recommendation_json"
+            ],
+            "title": "OutputModel",
+            "type": "object"
+        },
+        "secrets_schema": null,
+        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/BatteryStrategyOptimizerPiece"
+    },
     "AnomalyAlertPiece": {
         "name": "AnomalyAlertPiece",
         "dependency": {
@@ -108,115 +1383,49 @@
         "secrets_schema": null,
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/AnomalyAlertPiece"
     },
-    "BatterySimPiece": {
-        "name": "BatterySimPiece",
+    "WebUserInputPiece": {
+        "name": "WebUserInputPiece",
         "dependency": {
             "dockerfile": null,
             "requirements_file": "requirements_0.txt"
         },
         "tags": [],
         "style": {
-            "node_label": "Battery Simulation",
+            "node_label": "Web User Input",
             "node_type": "default",
             "node_style": {
                 "backgroundColor": "#ebebeb"
             },
             "useIcon": true,
-            "icon_class_name": "fa-solid:battery-half",
+            "icon_class_name": "fa-solid:globe",
             "iconStyle": {
                 "cursor": "pointer"
             }
         },
-        "description": "Generate battery SOC timeseries from load and PV profile",
+        "description": "Web form for project settings, consumption CSV uploads, and scenario options (alternative to UserInputPiece CSV)",
         "dependencies_group": "0",
         "input_schema": {
+            "description": "Domino piece input \u2013 reads saved web form state and materializes workflow files.",
             "properties": {
-                "load_csv": {
-                    "description": "Path to historical load CSV",
-                    "title": "Load Csv",
+                "web_form_state_json": {
+                    "description": "Path to web_form_state.json (from Streamlit WebUserInputPiece UI)",
+                    "title": "Web Form State Json",
                     "type": "string"
                 },
                 "scenario_yaml": {
-                    "description": "Path to sized scenario YAML",
+                    "description": "Scenario YAML path (usually tests/_generated/scenario.yml after materialize)",
                     "title": "Scenario Yaml",
                     "type": "string"
                 },
-                "virtual_solar_csv": {
-                    "description": "Path to virtual_solar.csv",
-                    "title": "Virtual Solar Csv",
-                    "type": "string"
+                "use_classic_csv_fallback": {
+                    "default": false,
+                    "description": "If true and web CSV paths missing, use FetchEnergyDataPiece_Inputs CSV files",
+                    "title": "Use Classic Csv Fallback",
+                    "type": "boolean"
                 }
             },
             "required": [
-                "load_csv",
-                "scenario_yaml",
-                "virtual_solar_csv"
-            ],
-            "title": "InputModel",
-            "type": "object"
-        },
-        "output_schema": {
-            "properties": {
-                "message": {
-                    "title": "Message",
-                    "type": "string"
-                },
-                "virtual_battery_soc_csv": {
-                    "title": "Virtual Battery Soc Csv",
-                    "type": "string"
-                },
-                "battery_summary_csv": {
-                    "title": "Battery Summary Csv",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "message",
-                "virtual_battery_soc_csv",
-                "battery_summary_csv"
-            ],
-            "title": "OutputModel",
-            "type": "object"
-        },
-        "secrets_schema": null,
-        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/BatterySimPiece"
-    },
-    "BatteryStrategyOptimizerPiece": {
-        "name": "BatteryStrategyOptimizerPiece",
-        "dependency": {
-            "dockerfile": null,
-            "requirements_file": "requirements_0.txt"
-        },
-        "tags": [],
-        "style": {
-            "node_label": "Battery Strategy",
-            "node_type": "default",
-            "node_style": {
-                "backgroundColor": "#ebebeb"
-            },
-            "useIcon": true,
-            "icon_class_name": "fa-solid:sliders",
-            "iconStyle": {
-                "cursor": "pointer"
-            }
-        },
-        "description": "Create battery dispatch strategy recommendation",
-        "dependencies_group": "0",
-        "input_schema": {
-            "properties": {
-                "load_csv": {
-                    "description": "Path to historical load CSV",
-                    "title": "Load Csv",
-                    "type": "string"
-                },
-                "scenario_yaml": {
-                    "description": "Path to sized scenario YAML",
-                    "title": "Scenario Yaml",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "load_csv",
+                "web_form_state_json",
                 "scenario_yaml"
             ],
             "title": "InputModel",
@@ -228,82 +1437,40 @@
                     "title": "Message",
                     "type": "string"
                 },
-                "battery_strategy_recommendation_json": {
-                    "title": "Battery Strategy Recommendation Json",
+                "load_csv": {
+                    "title": "Load Csv",
                     "type": "string"
-                }
-            },
-            "required": [
-                "message",
-                "battery_strategy_recommendation_json"
-            ],
-            "title": "OutputModel",
-            "type": "object"
-        },
-        "secrets_schema": null,
-        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/BatteryStrategyOptimizerPiece"
-    },
-    "CatalogRankerPiece": {
-        "name": "CatalogRankerPiece",
-        "dependency": {
-            "dockerfile": null,
-            "requirements_file": "requirements_0.txt"
-        },
-        "tags": [],
-        "style": {
-            "node_label": "Catalog Ranker",
-            "node_type": "default",
-            "node_style": {
-                "backgroundColor": "#ebebeb"
-            },
-            "useIcon": true,
-            "icon_class_name": "fa-solid:list-check",
-            "iconStyle": {
-                "cursor": "pointer"
-            }
-        },
-        "description": "Rank online hardware catalog for selected scenario sizing",
-        "dependencies_group": "0",
-        "input_schema": {
-            "properties": {
+                },
                 "scenario_yaml": {
-                    "description": "Path to sized scenario YAML",
                     "title": "Scenario Yaml",
                     "type": "string"
                 },
-                "pv_catalog_json": {
-                    "description": "Path to synced PV catalog JSON",
-                    "title": "Pv Catalog Json",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "scenario_yaml",
-                "pv_catalog_json"
-            ],
-            "title": "InputModel",
-            "type": "object"
-        },
-        "output_schema": {
-            "properties": {
-                "message": {
-                    "title": "Message",
+                "workflow_user_input_json": {
+                    "title": "Workflow User Input Json",
                     "type": "string"
                 },
-                "catalog_ranked_recommendation_json": {
-                    "title": "Catalog Ranked Recommendation Json",
+                "web_form_state_json": {
+                    "title": "Web Form State Json",
+                    "type": "string"
+                },
+                "input_mode": {
+                    "default": "web",
+                    "title": "Input Mode",
                     "type": "string"
                 }
             },
             "required": [
                 "message",
-                "catalog_ranked_recommendation_json"
+                "load_csv",
+                "scenario_yaml",
+                "workflow_user_input_json",
+                "web_form_state_json"
             ],
             "title": "OutputModel",
             "type": "object"
         },
         "secrets_schema": null,
-        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/CatalogRankerPiece"
+        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/WebUserInputPiece"
     },
     "CatalogSyncPiece": {
         "name": "CatalogSyncPiece",
@@ -381,95 +1548,6 @@
         "secrets_schema": null,
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/CatalogSyncPiece"
     },
-    "DashboardPiece": {
-        "name": "DashboardPiece",
-        "dependency": {
-            "dockerfile": null,
-            "requirements_file": "requirements_0.txt"
-        },
-        "tags": [],
-        "style": {
-            "node_label": "Dashboard Data",
-            "node_type": "default",
-            "node_style": {
-                "backgroundColor": "#ebebeb"
-            },
-            "useIcon": true,
-            "icon_class_name": "fa-solid:chart-line",
-            "iconStyle": {
-                "cursor": "pointer"
-            }
-        },
-        "description": "Aggregate MRK report and KPI CSV into dashboard JSON",
-        "dependencies_group": "0",
-        "input_schema": {
-            "properties": {
-                "report_json": {
-                    "description": "Path to mrk_savings_report.json",
-                    "title": "Report Json",
-                    "type": "string"
-                },
-                "kpi_results_csv": {
-                    "description": "Path to kpi_results.csv",
-                    "title": "Kpi Results Csv",
-                    "type": "string"
-                },
-                "investment_evaluation_csv": {
-                    "description": "Path to investment_evaluation.csv",
-                    "title": "Investment Evaluation Csv",
-                    "type": "string"
-                },
-                "anomaly_alerts_csv": {
-                    "anyOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "default": null,
-                    "description": "Optional path to anomaly_alerts.csv",
-                    "title": "Anomaly Alerts Csv"
-                },
-                "drift_report_json": {
-                    "anyOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "default": null,
-                    "description": "Optional path to drift_report.json",
-                    "title": "Drift Report Json"
-                }
-            },
-            "required": [
-                "report_json",
-                "kpi_results_csv",
-                "investment_evaluation_csv"
-            ],
-            "title": "InputModel",
-            "type": "object"
-        },
-        "output_schema": {
-            "properties": {
-                "dashboard_data_json": {
-                    "title": "Dashboard Data Json",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "dashboard_data_json"
-            ],
-            "title": "OutputModel",
-            "type": "object"
-        },
-        "secrets_schema": null,
-        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/DashboardPiece"
-    },
     "FeasibilityReportPiece": {
         "name": "FeasibilityReportPiece",
         "dependency": {
@@ -492,7 +1570,7 @@
                 "cursor": "pointer"
             }
         },
-        "description": "Feasibility vs. cie\u00c4\u013eov\u0102\u02c7 payback, CFO JSON, dashboard_data (investment)",
+        "description": "Feasibility vs. cie\u013eov\u00e1 payback, CFO JSON, dashboard_data (investment)",
         "dependencies_group": "0",
         "container_resources": {
             "requests": {
@@ -623,128 +1701,43 @@
         "secrets_schema": null,
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/FeasibilityReportPiece"
     },
-    "FetchEnergyDataPiece": {
-        "name": "FetchEnergyDataPiece",
-        "dependency": {
-            "dockerfile": null,
-            "requirements_file": "requirements_0.txt"
-        },
-        "tags": [
-            "Energy"
-        ],
-        "style": {
-            "node_label": "FetchEnergyDataPiece",
-            "node_type": "default",
-            "node_style": {
-                "backgroundColor": "#ebebeb"
-            },
-            "useIcon": true,
-            "icon_class_name": "fa-solid:bolt",
-            "iconStyle": {
-                "cursor": "pointer"
-            }
-        },
-        "description": "Load and merge energy CSV files",
-        "dependencies_group": "0",
-        "container_resources": {
-            "requests": {
-                "cpu": 100,
-                "memory": 128
-            },
-            "limits": {
-                "cpu": 500,
-                "memory": 512
-            }
-        },
-        "input_schema": {
-            "description": "Input model for Fetch Energy Data Piece",
-            "properties": {
-                "load_csv": {
-                    "default": "/home/shared_storage/load.csv",
-                    "description": "Path to load CSV file or a directory with load*.csv files",
-                    "title": "Load Csv",
-                    "type": "string"
-                },
-                "prices_csv": {
-                    "default": "/home/shared_storage/prices.csv",
-                    "description": "Path to prices CSV file",
-                    "title": "Prices Csv",
-                    "type": "string"
-                }
-            },
-            "title": "InputModel",
-            "type": "object"
-        },
-        "output_schema": {
-            "description": "Output model for Fetch Energy Data Piece",
-            "properties": {
-                "message": {
-                    "default": "",
-                    "title": "Message",
-                    "type": "string"
-                },
-                "output_path": {
-                    "default": "",
-                    "title": "Output Path",
-                    "type": "string"
-                }
-            },
-            "title": "OutputModel",
-            "type": "object"
-        },
-        "secrets_schema": null,
-        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/FetchEnergyDataPiece"
-    },
-    "ForecastHorizonPiece": {
-        "name": "ForecastHorizonPiece",
+    "CatalogRankerPiece": {
+        "name": "CatalogRankerPiece",
         "dependency": {
             "dockerfile": null,
             "requirements_file": "requirements_0.txt"
         },
         "tags": [],
         "style": {
-            "node_label": "ForecastHorizonPiece",
+            "node_label": "Catalog Ranker",
             "node_type": "default",
             "node_style": {
                 "backgroundColor": "#ebebeb"
             },
             "useIcon": true,
-            "icon_class_name": "fa-solid:clock",
+            "icon_class_name": "fa-solid:list-check",
             "iconStyle": {
                 "cursor": "pointer"
             }
         },
-        "description": "Forecast consumption by department for chosen horizon",
+        "description": "Rank online hardware catalog for selected scenario sizing",
         "dependencies_group": "0",
         "input_schema": {
             "properties": {
-                "history_csv": {
-                    "description": "Merged history CSV",
-                    "title": "History Csv",
+                "scenario_yaml": {
+                    "description": "Path to sized scenario YAML",
+                    "title": "Scenario Yaml",
                     "type": "string"
                 },
-                "models_index_json": {
-                    "description": "JSON map department -> model path",
-                    "title": "Models Index Json",
+                "pv_catalog_json": {
+                    "description": "Path to synced PV catalog JSON",
+                    "title": "Pv Catalog Json",
                     "type": "string"
-                },
-                "model_registry_dir": {
-                    "description": "Allowed model registry root for secure loading",
-                    "title": "Model Registry Dir",
-                    "type": "string"
-                },
-                "horizon_hours": {
-                    "default": 24,
-                    "description": "Forecast horizon in hours",
-                    "minimum": 1,
-                    "title": "Horizon Hours",
-                    "type": "integer"
                 }
             },
             "required": [
-                "history_csv",
-                "models_index_json",
-                "model_registry_dir"
+                "scenario_yaml",
+                "pv_catalog_json"
             ],
             "title": "InputModel",
             "type": "object"
@@ -755,292 +1748,20 @@
                     "title": "Message",
                     "type": "string"
                 },
-                "forecast_csv": {
-                    "title": "Forecast Csv",
+                "catalog_ranked_recommendation_json": {
+                    "title": "Catalog Ranked Recommendation Json",
                     "type": "string"
                 }
             },
             "required": [
                 "message",
-                "forecast_csv"
+                "catalog_ranked_recommendation_json"
             ],
             "title": "OutputModel",
             "type": "object"
         },
         "secrets_schema": null,
-        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/ForecastHorizonPiece"
-    },
-    "IncrementalTrainPiece": {
-        "name": "IncrementalTrainPiece",
-        "dependency": {
-            "dockerfile": null,
-            "requirements_file": "requirements_0.txt"
-        },
-        "tags": [],
-        "style": {
-            "node_label": "IncrementalTrainPiece",
-            "node_type": "default",
-            "node_style": {
-                "backgroundColor": "#ebebeb"
-            },
-            "useIcon": true,
-            "icon_class_name": "fa-solid:brain",
-            "iconStyle": {
-                "cursor": "pointer"
-            }
-        },
-        "description": "Train or incrementally update load models by department",
-        "dependencies_group": "0",
-        "input_schema": {
-            "properties": {
-                "history_csv": {
-                    "description": "Merged long-term history CSV",
-                    "title": "History Csv",
-                    "type": "string"
-                },
-                "model_registry_dir": {
-                    "description": "Directory for per-department model artifacts",
-                    "title": "Model Registry Dir",
-                    "type": "string"
-                },
-                "incremental_window_days": {
-                    "default": 30,
-                    "description": "Train update only on recent window in days",
-                    "minimum": 1,
-                    "title": "Incremental Window Days",
-                    "type": "integer"
-                },
-                "full_retrain_every_n_updates": {
-                    "default": 20,
-                    "description": "Run full retrain after this many incremental updates",
-                    "minimum": 1,
-                    "title": "Full Retrain Every N Updates",
-                    "type": "integer"
-                },
-                "incremental_trees": {
-                    "default": 50,
-                    "description": "Number of trees appended in incremental update",
-                    "minimum": 10,
-                    "title": "Incremental Trees",
-                    "type": "integer"
-                }
-            },
-            "required": [
-                "history_csv",
-                "model_registry_dir"
-            ],
-            "title": "InputModel",
-            "type": "object"
-        },
-        "output_schema": {
-            "properties": {
-                "message": {
-                    "title": "Message",
-                    "type": "string"
-                },
-                "models_index_json": {
-                    "title": "Models Index Json",
-                    "type": "string"
-                },
-                "training_summary_json": {
-                    "title": "Training Summary Json",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "message",
-                "models_index_json",
-                "training_summary_json"
-            ],
-            "title": "OutputModel",
-            "type": "object"
-        },
-        "secrets_schema": null,
-        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/IncrementalTrainPiece"
-    },
-    "InvestmentEvalPiece": {
-        "name": "InvestmentEvalPiece",
-        "dependency": {
-            "dockerfile": null,
-            "requirements_file": "requirements_0.txt"
-        },
-        "tags": [],
-        "style": {
-            "node_label": "Investment Evaluation",
-            "node_type": "default",
-            "node_style": {
-                "backgroundColor": "#ebebeb"
-            },
-            "useIcon": true,
-            "icon_class_name": "fa-solid:coins",
-            "iconStyle": {
-                "cursor": "pointer"
-            }
-        },
-        "description": "Compute investment evaluation from simulated KPIs",
-        "dependencies_group": "0",
-        "input_schema": {
-            "properties": {
-                "report_json": {
-                    "description": "Path to mrk_savings_report.json",
-                    "title": "Report Json",
-                    "type": "string"
-                },
-                "kpi_results_csv": {
-                    "description": "Path to kpi_results.csv",
-                    "title": "Kpi Results Csv",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "report_json",
-                "kpi_results_csv"
-            ],
-            "title": "InputModel",
-            "type": "object"
-        },
-        "output_schema": {
-            "properties": {
-                "message": {
-                    "title": "Message",
-                    "type": "string"
-                },
-                "investment_evaluation_csv": {
-                    "title": "Investment Evaluation Csv",
-                    "type": "string"
-                },
-                "investment_evaluation_json": {
-                    "title": "Investment Evaluation Json",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "message",
-                "investment_evaluation_csv",
-                "investment_evaluation_json"
-            ],
-            "title": "OutputModel",
-            "type": "object"
-        },
-        "secrets_schema": null,
-        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/InvestmentEvalPiece"
-    },
-    "KPIPiece": {
-        "name": "KPIPiece",
-        "dependency": {
-            "dockerfile": null,
-            "requirements_file": "requirements_0.txt"
-        },
-        "tags": [],
-        "style": {
-            "node_label": "Compute KPIs",
-            "node_type": "default",
-            "node_style": {
-                "backgroundColor": "#ebebeb"
-            },
-            "useIcon": true,
-            "icon_class_name": "fa-solid:chart-column",
-            "iconStyle": {
-                "cursor": "pointer"
-            }
-        },
-        "description": "Compute KPI summary from MRK report",
-        "dependencies_group": "0",
-        "input_schema": {
-            "properties": {
-                "report_json": {
-                    "description": "Path to mrk_savings_report.json",
-                    "title": "Report Json",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "report_json"
-            ],
-            "title": "InputModel",
-            "type": "object"
-        },
-        "output_schema": {
-            "properties": {
-                "message": {
-                    "title": "Message",
-                    "type": "string"
-                },
-                "kpi_results_csv": {
-                    "title": "Kpi Results Csv",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "message",
-                "kpi_results_csv"
-            ],
-            "title": "OutputModel",
-            "type": "object"
-        },
-        "secrets_schema": null,
-        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/KPIPiece"
-    },
-    "ModelMonitoringPiece": {
-        "name": "ModelMonitoringPiece",
-        "dependency": {
-            "dockerfile": null,
-            "requirements_file": "requirements_0.txt"
-        },
-        "tags": [],
-        "style": {
-            "node_label": "ModelMonitoringPiece",
-            "node_type": "default",
-            "node_style": {
-                "backgroundColor": "#ebebeb"
-            },
-            "useIcon": true,
-            "icon_class_name": "fa-solid fa-circle",
-            "iconStyle": {
-                "cursor": "pointer"
-            }
-        },
-        "description": "Monitor model quality and prediction drift",
-        "dependencies_group": "0",
-        "input_schema": {
-            "properties": {
-                "predictions_csv": {
-                    "description": "CSV with prediction_load_kw and optionally load_kw",
-                    "title": "Predictions Csv",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "predictions_csv"
-            ],
-            "title": "InputModel",
-            "type": "object"
-        },
-        "output_schema": {
-            "properties": {
-                "report_json": {
-                    "title": "Report Json",
-                    "type": "string"
-                },
-                "daily_csv": {
-                    "title": "Daily Csv",
-                    "type": "string"
-                },
-                "message": {
-                    "title": "Message",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "report_json",
-                "daily_csv",
-                "message"
-            ],
-            "title": "OutputModel",
-            "type": "object"
-        },
-        "secrets_schema": null,
-        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/ModelMonitoringPiece"
+        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/CatalogRankerPiece"
     },
     "PredictPiece": {
         "name": "PredictPiece",
@@ -1115,726 +1836,5 @@
         },
         "secrets_schema": null,
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/PredictPiece"
-    },
-    "PreprocessEnergyDataPiece": {
-        "name": "PreprocessEnergyDataPiece",
-        "dependency": {
-            "dockerfile": null,
-            "requirements_file": "requirements_0.txt"
-        },
-        "tags": [
-            "Energy",
-            "Preprocessing"
-        ],
-        "style": {
-            "node_label": "PreprocessEnergyDataPiece",
-            "node_type": "default",
-            "node_style": {
-                "backgroundColor": "#ebebeb"
-            },
-            "useIcon": true,
-            "icon_class_name": "fa-solid:filter",
-            "iconStyle": {
-                "cursor": "pointer"
-            }
-        },
-        "description": "Clean, resample and prepare energy data for training and prediction",
-        "dependencies_group": "0",
-        "container_resources": {
-            "requests": {
-                "cpu": 200,
-                "memory": 256
-            },
-            "limits": {
-                "cpu": 500,
-                "memory": 512
-            }
-        },
-        "input_schema": {
-            "properties": {
-                "input_path": {
-                    "description": "Path to merged energy parquet file",
-                    "title": "Input Path",
-                    "type": "string"
-                },
-                "forecast_hours": {
-                    "default": 24,
-                    "description": "Ignored when generate_predict_dataset is False",
-                    "title": "Forecast Hours",
-                    "type": "integer"
-                },
-                "generate_predict_dataset": {
-                    "default": false,
-                    "description": "If False (default): only train_dataset.parquet. Predict uses separate CSV in PredictPiece.",
-                    "title": "Generate Predict Dataset",
-                    "type": "boolean"
-                }
-            },
-            "required": [
-                "input_path"
-            ],
-            "title": "InputModel",
-            "type": "object"
-        },
-        "output_schema": {
-            "properties": {
-                "message": {
-                    "title": "Message",
-                    "type": "string"
-                },
-                "train_file_path": {
-                    "title": "Train File Path",
-                    "type": "string"
-                },
-                "predict_file_path": {
-                    "default": "",
-                    "description": "Empty if generate_predict_dataset is False",
-                    "title": "Predict File Path",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "message",
-                "train_file_path"
-            ],
-            "title": "OutputModel",
-            "type": "object"
-        },
-        "secrets_schema": null,
-        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/PreprocessEnergyDataPiece"
-    },
-    "SimulatePiece": {
-        "name": "SimulatePiece",
-        "dependency": {
-            "dockerfile": null,
-            "requirements_file": "requirements_0.txt"
-        },
-        "tags": [],
-        "style": {
-            "node_label": "Simulate MRK Scenario",
-            "node_type": "default",
-            "node_style": {
-                "backgroundColor": "#ebebeb"
-            },
-            "useIcon": true,
-            "icon_class_name": "fa-solid:calculator",
-            "iconStyle": {
-                "cursor": "pointer"
-            }
-        },
-        "description": "Run MRK simulation baseline/PV/battery",
-        "dependencies_group": "0",
-        "input_schema": {
-            "properties": {
-                "load_csv": {
-                    "description": "Path to historical load CSV",
-                    "title": "Load Csv",
-                    "type": "string"
-                },
-                "scenario_yaml": {
-                    "description": "Path to scenario YAML",
-                    "title": "Scenario Yaml",
-                    "type": "string"
-                },
-                "output_dir": {
-                    "default": "",
-                    "description": "Optional output dir when results_path is not set",
-                    "title": "Output Dir",
-                    "type": "string"
-                },
-                "battery_strategy_recommendation_json": {
-                    "default": "",
-                    "description": "Optional battery strategy recommendation JSON",
-                    "title": "Battery Strategy Recommendation Json",
-                    "type": "string"
-                },
-                "ranked_catalog_json": {
-                    "default": "",
-                    "description": "Optional ranked catalog recommendation JSON",
-                    "title": "Ranked Catalog Json",
-                    "type": "string"
-                },
-                "inverter_catalog_json": {
-                    "default": "",
-                    "description": "Optional inverter catalog JSON",
-                    "title": "Inverter Catalog Json",
-                    "type": "string"
-                },
-                "battery_catalog_json": {
-                    "default": "",
-                    "description": "Optional battery catalog JSON",
-                    "title": "Battery Catalog Json",
-                    "type": "string"
-                },
-                "catalog_manifest_json": {
-                    "default": "",
-                    "description": "Optional catalog sync manifest JSON",
-                    "title": "Catalog Manifest Json",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "load_csv",
-                "scenario_yaml"
-            ],
-            "title": "InputModel",
-            "type": "object"
-        },
-        "output_schema": {
-            "properties": {
-                "message": {
-                    "title": "Message",
-                    "type": "string"
-                },
-                "report_json": {
-                    "title": "Report Json",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "message",
-                "report_json"
-            ],
-            "title": "OutputModel",
-            "type": "object"
-        },
-        "secrets_schema": null,
-        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/SimulatePiece"
-    },
-    "SizingOptimizationPiece": {
-        "name": "SizingOptimizationPiece",
-        "dependency": {
-            "dockerfile": null,
-            "requirements_file": "requirements_0.txt"
-        },
-        "tags": [],
-        "style": {
-            "node_label": "Sizing Optimization",
-            "node_type": "default",
-            "node_style": {
-                "backgroundColor": "#ebebeb"
-            },
-            "useIcon": true,
-            "icon_class_name": "fa-solid:chart-line",
-            "iconStyle": {
-                "cursor": "pointer"
-            }
-        },
-        "description": "Auto/manual sizing for PV and battery",
-        "dependencies_group": "0",
-        "input_schema": {
-            "properties": {
-                "load_csv": {
-                    "description": "Path to historical load CSV",
-                    "title": "Load Csv",
-                    "type": "string"
-                },
-                "scenario_yaml": {
-                    "description": "Path to scenario YAML",
-                    "title": "Scenario Yaml",
-                    "type": "string"
-                },
-                "technical_limits_json": {
-                    "description": "Path to technical limits json",
-                    "title": "Technical Limits Json",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "load_csv",
-                "scenario_yaml",
-                "technical_limits_json"
-            ],
-            "title": "InputModel",
-            "type": "object"
-        },
-        "output_schema": {
-            "properties": {
-                "message": {
-                    "title": "Message",
-                    "type": "string"
-                },
-                "sized_scenario_yaml": {
-                    "title": "Sized Scenario Yaml",
-                    "type": "string"
-                },
-                "sizing_optimization_json": {
-                    "title": "Sizing Optimization Json",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "message",
-                "sized_scenario_yaml",
-                "sizing_optimization_json"
-            ],
-            "title": "OutputModel",
-            "type": "object"
-        },
-        "secrets_schema": null,
-        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/SizingOptimizationPiece"
-    },
-    "SolarSimPiece": {
-        "name": "SolarSimPiece",
-        "dependency": {
-            "dockerfile": null,
-            "requirements_file": "requirements_0.txt"
-        },
-        "tags": [],
-        "style": {
-            "node_label": "Solar Simulation",
-            "node_type": "default",
-            "node_style": {
-                "backgroundColor": "#ebebeb"
-            },
-            "useIcon": true,
-            "icon_class_name": "fa-solid:sun",
-            "iconStyle": {
-                "cursor": "pointer"
-            }
-        },
-        "description": "Generate synthetic PV profile for selected sizing",
-        "dependencies_group": "0",
-        "input_schema": {
-            "properties": {
-                "load_csv": {
-                    "description": "Path to historical load CSV",
-                    "title": "Load Csv",
-                    "type": "string"
-                },
-                "scenario_yaml": {
-                    "description": "Path to sized scenario YAML",
-                    "title": "Scenario Yaml",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "load_csv",
-                "scenario_yaml"
-            ],
-            "title": "InputModel",
-            "type": "object"
-        },
-        "output_schema": {
-            "properties": {
-                "message": {
-                    "title": "Message",
-                    "type": "string"
-                },
-                "virtual_solar_csv": {
-                    "title": "Virtual Solar Csv",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "message",
-                "virtual_solar_csv"
-            ],
-            "title": "OutputModel",
-            "type": "object"
-        },
-        "secrets_schema": null,
-        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/SolarSimPiece"
-    },
-    "SustainableIngestPiece": {
-        "name": "SustainableIngestPiece",
-        "dependency": {
-            "dockerfile": null,
-            "requirements_file": "requirements_0.txt"
-        },
-        "tags": [],
-        "style": {
-            "node_label": "SustainableIngestPiece",
-            "node_type": "default",
-            "node_style": {
-                "backgroundColor": "#ebebeb"
-            },
-            "useIcon": true,
-            "icon_class_name": "fa-solid:database",
-            "iconStyle": {
-                "cursor": "pointer"
-            }
-        },
-        "description": "Ingest new company load files into long-term history",
-        "dependencies_group": "0",
-        "input_schema": {
-            "properties": {
-                "history_csv": {
-                    "description": "Long-term history CSV path",
-                    "title": "History Csv",
-                    "type": "string"
-                },
-                "updates_dir": {
-                    "description": "Folder with new delivered CSV files",
-                    "title": "Updates Dir",
-                    "type": "string"
-                },
-                "archive_dir": {
-                    "description": "Archive folder for already processed files",
-                    "title": "Archive Dir",
-                    "type": "string"
-                },
-                "bootstrap_parquet": {
-                    "anyOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ],
-                    "default": null,
-                    "description": "Optional parquet for first run bootstrap",
-                    "title": "Bootstrap Parquet"
-                }
-            },
-            "required": [
-                "history_csv",
-                "updates_dir",
-                "archive_dir"
-            ],
-            "title": "InputModel",
-            "type": "object"
-        },
-        "output_schema": {
-            "properties": {
-                "message": {
-                    "title": "Message",
-                    "type": "string"
-                },
-                "history_csv_out": {
-                    "title": "History Csv Out",
-                    "type": "string"
-                },
-                "rows_total": {
-                    "title": "Rows Total",
-                    "type": "integer"
-                },
-                "departments": {
-                    "items": {
-                        "type": "string"
-                    },
-                    "title": "Departments",
-                    "type": "array"
-                }
-            },
-            "required": [
-                "message",
-                "history_csv_out",
-                "rows_total",
-                "departments"
-            ],
-            "title": "OutputModel",
-            "type": "object"
-        },
-        "secrets_schema": null,
-        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/SustainableIngestPiece"
-    },
-    "TechnicalLimitsPiece": {
-        "name": "TechnicalLimitsPiece",
-        "dependency": {
-            "dockerfile": null,
-            "requirements_file": "requirements_0.txt"
-        },
-        "tags": [],
-        "style": {
-            "node_label": "Technical Limits",
-            "node_type": "default",
-            "node_style": {
-                "backgroundColor": "#ebebeb"
-            },
-            "useIcon": true,
-            "icon_class_name": "fa-solid:ruler-combined",
-            "iconStyle": {
-                "cursor": "pointer"
-            }
-        },
-        "description": "Compute technical PV and battery bounds from constraints",
-        "dependencies_group": "0",
-        "input_schema": {
-            "properties": {
-                "load_csv": {
-                    "description": "Path to historical load CSV",
-                    "title": "Load Csv",
-                    "type": "string"
-                },
-                "scenario_yaml": {
-                    "description": "Path to scenario YAML",
-                    "title": "Scenario Yaml",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "load_csv",
-                "scenario_yaml"
-            ],
-            "title": "InputModel",
-            "type": "object"
-        },
-        "output_schema": {
-            "properties": {
-                "message": {
-                    "title": "Message",
-                    "type": "string"
-                },
-                "technical_limits_json": {
-                    "title": "Technical Limits Json",
-                    "type": "string"
-                },
-                "scenario_yaml": {
-                    "title": "Scenario Yaml",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "message",
-                "technical_limits_json",
-                "scenario_yaml"
-            ],
-            "title": "OutputModel",
-            "type": "object"
-        },
-        "secrets_schema": null,
-        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/TechnicalLimitsPiece"
-    },
-    "TrainModelPiece": {
-        "name": "TrainModelPiece",
-        "dependency": {
-            "dockerfile": null,
-            "requirements_file": "requirements_0.txt"
-        },
-        "tags": [
-            "XGBoost",
-            "Training",
-            "Energy"
-        ],
-        "style": {
-            "node_label": "TrainModelPiece",
-            "node_type": "default",
-            "node_style": {
-                "backgroundColor": "#ebebeb"
-            },
-            "useIcon": true,
-            "icon_class_name": "fa-solid:brain",
-            "iconStyle": {
-                "cursor": "pointer"
-            }
-        },
-        "description": "Train XGBoost energy forecasting model",
-        "dependencies_group": "0",
-        "container_resources": {
-            "requests": {
-                "cpu": 200,
-                "memory": 256
-            },
-            "limits": {
-                "cpu": 1000,
-                "memory": 1024
-            }
-        },
-        "input_schema": {
-            "properties": {
-                "data_path": {
-                    "description": "Path to preprocessed parquet or CSV dataset",
-                    "title": "Training dataset path",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "data_path"
-            ],
-            "title": "InputModel",
-            "type": "object"
-        },
-        "output_schema": {
-            "properties": {
-                "message": {
-                    "description": "Training result message",
-                    "title": "Message",
-                    "type": "string"
-                },
-                "model_file_path": {
-                    "description": "Path to trained model file",
-                    "title": "Model File Path",
-                    "type": "string"
-                },
-                "train_log_path": {
-                    "description": "Path to training log file",
-                    "title": "Train Log Path",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "message",
-                "model_file_path",
-                "train_log_path"
-            ],
-            "title": "OutputModel",
-            "type": "object"
-        },
-        "secrets_schema": null,
-        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/TrainModelPiece"
-    },
-    "UserInputPiece": {
-        "name": "UserInputPiece",
-        "dependency": {
-            "dockerfile": null,
-            "requirements_file": "requirements_0.txt"
-        },
-        "tags": [],
-        "style": {
-            "node_label": "User Input",
-            "node_type": "default",
-            "node_style": {
-                "backgroundColor": "#ebebeb"
-            },
-            "useIcon": true,
-            "icon_class_name": "fa-solid:file-lines",
-            "iconStyle": {
-                "cursor": "pointer"
-            }
-        },
-        "description": "Validate MRK workflow input files",
-        "dependencies_group": "0",
-        "input_schema": {
-            "properties": {
-                "load_csv": {
-                    "description": "Path to historical load CSV",
-                    "title": "Load Csv",
-                    "type": "string"
-                },
-                "prices_csv": {
-                    "default": "",
-                    "description": "Optional path to historical prices CSV",
-                    "title": "Prices Csv",
-                    "type": "string"
-                },
-                "scenario_yaml": {
-                    "description": "Path to scenario YAML",
-                    "title": "Scenario Yaml",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "load_csv",
-                "scenario_yaml"
-            ],
-            "title": "InputModel",
-            "type": "object"
-        },
-        "output_schema": {
-            "properties": {
-                "message": {
-                    "title": "Message",
-                    "type": "string"
-                },
-                "load_csv": {
-                    "title": "Load Csv",
-                    "type": "string"
-                },
-                "scenario_yaml": {
-                    "title": "Scenario Yaml",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "message",
-                "load_csv",
-                "scenario_yaml"
-            ],
-            "title": "OutputModel",
-            "type": "object"
-        },
-        "secrets_schema": null,
-        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/UserInputPiece"
-    },
-    "WebUserInputPiece": {
-        "name": "WebUserInputPiece",
-        "dependency": {
-            "dockerfile": null,
-            "requirements_file": "requirements_0.txt"
-        },
-        "tags": [],
-        "style": {
-            "node_label": "Web User Input",
-            "node_type": "default",
-            "node_style": {
-                "backgroundColor": "#ebebeb"
-            },
-            "useIcon": true,
-            "icon_class_name": "fa-solid:globe",
-            "iconStyle": {
-                "cursor": "pointer"
-            }
-        },
-        "description": "Web form for project settings, consumption CSV uploads, and scenario options (alternative to UserInputPiece CSV)",
-        "dependencies_group": "0",
-        "input_schema": {
-            "description": "Domino piece input \u2013 reads saved web form state and materializes workflow files.",
-            "properties": {
-                "web_form_state_json": {
-                    "description": "Path to web_form_state.json (from Streamlit WebUserInputPiece UI)",
-                    "title": "Web Form State Json",
-                    "type": "string"
-                },
-                "scenario_yaml": {
-                    "description": "Scenario YAML path (usually tests/_generated/scenario.yml after materialize)",
-                    "title": "Scenario Yaml",
-                    "type": "string"
-                },
-                "use_classic_csv_fallback": {
-                    "default": false,
-                    "description": "If true and web CSV paths missing, use FetchEnergyDataPiece_Inputs CSV files",
-                    "title": "Use Classic Csv Fallback",
-                    "type": "boolean"
-                }
-            },
-            "required": [
-                "web_form_state_json",
-                "scenario_yaml"
-            ],
-            "title": "InputModel",
-            "type": "object"
-        },
-        "output_schema": {
-            "properties": {
-                "message": {
-                    "title": "Message",
-                    "type": "string"
-                },
-                "load_csv": {
-                    "title": "Load Csv",
-                    "type": "string"
-                },
-                "scenario_yaml": {
-                    "title": "Scenario Yaml",
-                    "type": "string"
-                },
-                "workflow_user_input_json": {
-                    "title": "Workflow User Input Json",
-                    "type": "string"
-                },
-                "web_form_state_json": {
-                    "title": "Web Form State Json",
-                    "type": "string"
-                },
-                "input_mode": {
-                    "default": "web",
-                    "title": "Input Mode",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "message",
-                "load_csv",
-                "scenario_yaml",
-                "workflow_user_input_json",
-                "web_form_state_json"
-            ],
-            "title": "OutputModel",
-            "type": "object"
-        },
-        "secrets_schema": null,
-        "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/WebUserInputPiece"
     }
 }
