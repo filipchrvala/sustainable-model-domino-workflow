@@ -36,6 +36,12 @@ def _hours_to_blocks(hours: list[int]) -> list[list[int]]:
 
 def _build_shift_profile(df: pd.DataFrame) -> dict:
     work = df[["datetime", "load_kw"]].copy()
+    if "department_id" in df.columns:
+        work = (
+            df[["datetime", "load_kw"]]
+            .groupby("datetime", as_index=False)["load_kw"]
+            .sum()
+        )
     work["datetime"] = pd.to_datetime(work["datetime"])
     work = work.dropna(subset=["datetime"])
     work["date"] = work["datetime"].dt.date
@@ -109,6 +115,23 @@ def _shift_features_for_datetimes(dt: pd.Series, profile: dict) -> pd.DataFrame:
 
 def _add_load_features(df: pd.DataFrame, target: str) -> pd.DataFrame:
     out = df.copy()
+    if "department_id" in out.columns:
+        out["department_id"] = out["department_id"].astype(str)
+        grouped = out.groupby("department_id", sort=False)[target]
+        for lag in (1, 4, 96, 192, 672):
+            out[f"lag_{lag}"] = grouped.shift(lag)
+        prev = grouped.shift(1)
+        out["_prev"] = prev
+        for w in (4, 16, 96):
+            out[f"roll_mean_{w}"] = out.groupby("department_id", sort=False)["_prev"].transform(
+                lambda s: s.rolling(w).mean()
+            )
+            out[f"roll_std_{w}"] = out.groupby("department_id", sort=False)["_prev"].transform(
+                lambda s: s.rolling(w).std(ddof=0)
+            )
+        out = out.drop(columns=["_prev"])
+        return out
+
     for lag in (1, 4, 96, 192, 672):
         out[f"lag_{lag}"] = out[target].shift(lag)
     prev = out[target].shift(1)
@@ -118,11 +141,40 @@ def _add_load_features(df: pd.DataFrame, target: str) -> pd.DataFrame:
     return out
 
 
+def _encode_feature_frame(df: pd.DataFrame) -> pd.DataFrame:
+    out = df.copy()
+    if "department_id" in out.columns:
+        out["department_id"] = out["department_id"].astype(str)
+        out = pd.get_dummies(out, columns=["department_id"], dtype=float)
+    for col in out.columns:
+        if pd.api.types.is_bool_dtype(out[col]):
+            out[col] = out[col].astype(int)
+        elif pd.api.types.is_object_dtype(out[col]) or pd.api.types.is_string_dtype(out[col]):
+            out[col] = pd.to_numeric(out[col], errors="raise")
+    return out
+
+
+def _split_train_test(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+    if "department_id" not in df.columns:
+        split_index = int(len(df) * 0.8)
+        return df.iloc[:split_index].copy(), df.iloc[split_index:].copy()
+
+    train_parts: list[pd.DataFrame] = []
+    test_parts: list[pd.DataFrame] = []
+    for _, group in df.groupby("department_id", sort=False):
+        split_index = int(len(group) * 0.8)
+        train_parts.append(group.iloc[:split_index].copy())
+        test_parts.append(group.iloc[split_index:].copy())
+    return pd.concat(train_parts, ignore_index=True), pd.concat(test_parts, ignore_index=True)
+
+
 class TrainModelPiece(BasePiece):
 
     def piece_function(self, input_data: InputModel) -> OutputModel:
-        piece_log = Path(self.results_path) / "train_model.log"
-        piece_err = Path(self.results_path) / "train_model_error.txt"
+        results_dir = Path(self.results_path or ".")
+        results_dir.mkdir(parents=True, exist_ok=True)
+        piece_log = results_dir / "train_model.log"
+        piece_err = results_dir / "train_model_error.txt"
         try:
             print("[INFO] TrainModelPiece started")
             print(f"[INFO] Using training data: {input_data.data_path}")
@@ -143,7 +195,11 @@ class TrainModelPiece(BasePiece):
                 raise ValueError("Dataset must contain 'datetime' column")
 
             df["datetime"] = pd.to_datetime(df["datetime"])
-            df = df.sort_values("datetime")
+            if "department_id" in df.columns:
+                df["department_id"] = df["department_id"].astype(str)
+                df = df.sort_values(["department_id", "datetime"]).reset_index(drop=True)
+            else:
+                df = df.sort_values("datetime").reset_index(drop=True)
 
             target = "load_kw"
             if target not in df.columns:
@@ -166,17 +222,14 @@ class TrainModelPiece(BasePiece):
 
             df = df.dropna().reset_index(drop=True)
 
-            split_index = int(len(df) * 0.8)
-
-            train_df = df.iloc[:split_index]
-            test_df = df.iloc[split_index:]
+            train_df, test_df = _split_train_test(df)
 
             feature_cols = [c for c in df.columns if c not in ["datetime", target]]
 
-            X_train = train_df[feature_cols]
+            X_train = _encode_feature_frame(train_df[feature_cols])
             y_train = train_df[target]
 
-            X_test = test_df[feature_cols]
+            X_test = _encode_feature_frame(test_df[feature_cols]).reindex(columns=X_train.columns, fill_value=0.0)
             y_test = test_df[target]
 
             print(f"[INFO] Train rows: {len(X_train)}")
@@ -185,16 +238,16 @@ class TrainModelPiece(BasePiece):
             print("[INFO] Training XGBoost model")
 
             model = XGBRegressor(
-            objective="reg:squarederror",
-            learning_rate=0.03,
-            max_depth=7,
-            n_estimators=500,
-            subsample=0.85,
-            colsample_bytree=0.85,
-            min_child_weight=3,
-            reg_alpha=0.05,
-            reg_lambda=1.5,
-        )
+                objective="reg:squarederror",
+                learning_rate=0.03,
+                max_depth=7,
+                n_estimators=500,
+                subsample=0.85,
+                colsample_bytree=0.85,
+                min_child_weight=3,
+                reg_alpha=0.05,
+                reg_lambda=1.5,
+            )
 
             model.fit(X_train, y_train)
 
@@ -221,9 +274,9 @@ class TrainModelPiece(BasePiece):
             print(f"[METRIC] RMSE: {rmse:.2f} kW ({rmse_pct:.2f}% of test mean)")
             print(f"[METRIC] MAPE: {mape:.2f} %")
 
-            model_path = Path(self.results_path) / "xgboost_model.pkl"
-            log_path = Path(self.results_path) / "training_log.txt"
-            shift_profile_path = Path(self.results_path) / "shift_profile.json"
+            model_path = results_dir / "xgboost_model.pkl"
+            log_path = results_dir / "training_log.txt"
+            shift_profile_path = results_dir / "shift_profile.json"
 
             joblib.dump(model, model_path)
             shift_profile_path.write_text(json.dumps(shift_profile, indent=2, ensure_ascii=False), encoding="utf-8")

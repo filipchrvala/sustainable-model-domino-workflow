@@ -58,12 +58,41 @@ def _shift_features_for_datetimes(dt: pd.Series, profile: dict) -> pd.DataFrame:
 
 def _add_load_features(df: pd.DataFrame, target: str) -> pd.DataFrame:
     out = df.copy()
+    if "department_id" in out.columns:
+        out["department_id"] = out["department_id"].astype(str)
+        grouped = out.groupby("department_id", sort=False)[target]
+        for lag in (1, 4, 96, 192, 672):
+            out[f"lag_{lag}"] = grouped.shift(lag)
+        prev = grouped.shift(1)
+        out["_prev"] = prev
+        for w in (4, 16, 96):
+            out[f"roll_mean_{w}"] = out.groupby("department_id", sort=False)["_prev"].transform(
+                lambda s: s.rolling(w).mean()
+            )
+            out[f"roll_std_{w}"] = out.groupby("department_id", sort=False)["_prev"].transform(
+                lambda s: s.rolling(w).std(ddof=0)
+            )
+        out = out.drop(columns=["_prev"])
+        return out
     for lag in (1, 4, 96, 192, 672):
         out[f"lag_{lag}"] = out[target].shift(lag)
     prev = out[target].shift(1)
     for w in (4, 16, 96):
         out[f"roll_mean_{w}"] = prev.rolling(w).mean()
         out[f"roll_std_{w}"] = prev.rolling(w).std(ddof=0)
+    return out
+
+
+def _encode_feature_frame(df: pd.DataFrame) -> pd.DataFrame:
+    out = df.copy()
+    if "department_id" in out.columns:
+        out["department_id"] = out["department_id"].astype(str)
+        out = pd.get_dummies(out, columns=["department_id"], dtype=float)
+    for col in out.columns:
+        if pd.api.types.is_bool_dtype(out[col]):
+            out[col] = out[col].astype(int)
+        elif pd.api.types.is_object_dtype(out[col]) or pd.api.types.is_string_dtype(out[col]):
+            out[col] = pd.to_numeric(out[col], errors="raise")
     return out
 
 
@@ -86,8 +115,10 @@ def _safe_roll(loads: np.ndarray, i: int, w: int) -> tuple[float, float]:
 class PredictPiece(BasePiece):
 
     def piece_function(self, input_data: InputModel) -> OutputModel:
-        piece_log = Path(self.results_path) / "predict.log"
-        piece_err = Path(self.results_path) / "predict_error.txt"
+        results_dir = Path(self.results_path or ".")
+        results_dir.mkdir(parents=True, exist_ok=True)
+        piece_log = results_dir / "predict.log"
+        piece_err = results_dir / "predict_error.txt"
         try:
             print("[INFO] PredictPiece started")
             print(f"[INFO] Model path: {input_data.model_path}")
@@ -121,7 +152,11 @@ class PredictPiece(BasePiece):
                 )
 
             df["datetime"] = pd.to_datetime(df["datetime"])
-            df = df.sort_values("datetime").reset_index(drop=True)
+            if "department_id" in df.columns:
+                df["department_id"] = df["department_id"].astype(str)
+                df = df.sort_values(["department_id", "datetime"]).reset_index(drop=True)
+            else:
+                df = df.sort_values("datetime").reset_index(drop=True)
 
             target = "load_kw"
 
@@ -141,11 +176,11 @@ class PredictPiece(BasePiece):
                 print("[INFO] Batch prediction (shift na load_kw)")
                 df_out = self._predict_batch(model, df, target, shift_profile)
 
-            output_path = Path(self.results_path) / "predictions_15min.csv"
+            output_path = results_dir / "predictions_15min.csv"
             df_out.to_csv(output_path, index=False)
 
             feature_names = list(model.get_booster().feature_names)
-            log_path = Path(self.results_path) / "prediction_log.txt"
+            log_path = results_dir / "prediction_log.txt"
             with open(log_path, "w") as f:
                 f.write(f"Prediction time (UTC): {datetime.utcnow()}\n")
                 f.write(f"Rows: {len(df_out)}\n")
@@ -180,13 +215,24 @@ class PredictPiece(BasePiece):
         df = _add_load_features(df, target)
         df = df.dropna().reset_index(drop=True)
         feature_names = model.get_booster().feature_names
-        X = df[feature_names]
+        X = _encode_feature_frame(df.drop(columns=["datetime", target], errors="ignore")).reindex(
+            columns=feature_names,
+            fill_value=0.0,
+        )
         preds = model.predict(X)
         df_out = df.copy()
         df_out["prediction_load_kw"] = preds
         return df_out
 
     def _predict_rolling(self, model, df: pd.DataFrame, bridge_rows: int, shift_profile: dict) -> pd.DataFrame:
+        if "department_id" in df.columns:
+            parts: list[pd.DataFrame] = []
+            for _, group in df.groupby("department_id", sort=False):
+                parts.append(self._predict_rolling_single(model, group.reset_index(drop=True), bridge_rows, shift_profile))
+            return pd.concat(parts, ignore_index=True).sort_values(["department_id", "datetime"]).reset_index(drop=True)
+        return self._predict_rolling_single(model, df.reset_index(drop=True), bridge_rows, shift_profile)
+
+    def _predict_rolling_single(self, model, df: pd.DataFrame, bridge_rows: int, shift_profile: dict) -> pd.DataFrame:
         n = len(df)
         if n < bridge_rows:
             raise ValueError(f"Need at least {bridge_rows} rows for bridge; got {n}")
@@ -241,8 +287,19 @@ class PredictPiece(BasePiece):
                     row["price_eur_kwh"] = float(df.iloc[i]["price_eur_mwh"]) / 1000.0
                 else:
                     raise ValueError("Missing price_eur_kwh or price_eur_mwh")
+            if "price_eur_per_kwh" in feature_names:
+                if "price_eur_per_kwh" in df.columns:
+                    row["price_eur_per_kwh"] = float(df.iloc[i]["price_eur_per_kwh"])
+                elif "price_eur_kwh" in df.columns:
+                    row["price_eur_per_kwh"] = float(df.iloc[i]["price_eur_kwh"])
+                elif "price_eur_mwh" in df.columns:
+                    row["price_eur_per_kwh"] = float(df.iloc[i]["price_eur_mwh"]) / 1000.0
+                else:
+                    raise ValueError("Missing price_eur_per_kwh or compatible price column")
+            if "department_id" in df_out.columns:
+                row["department_id"] = str(df_out.iloc[i]["department_id"])
 
-            X_row = pd.DataFrame([[row[c] for c in feature_names]], columns=feature_names)
+            X_row = _encode_feature_frame(pd.DataFrame([row])).reindex(columns=feature_names, fill_value=0.0)
             pr = float(model.predict(X_row)[0])
             loads[i] = pr
 

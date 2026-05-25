@@ -14,6 +14,25 @@ except ModuleNotFoundError:
 from .models import InputModel, OutputModel
 
 
+def _discover_workflow_user_input_path(load_csv: Path, scenario_yaml: Path) -> Path | None:
+    repo_root = Path(__file__).resolve().parents[2]
+    candidates = [
+        scenario_yaml.with_name("workflow_user_input.json"),
+        load_csv.with_name("workflow_user_input.json"),
+        load_csv.parent / "workflow_user_input.json",
+        repo_root / "tests" / "user_input" / "workflow_user_input.json",
+    ]
+    seen: set[str] = set()
+    for candidate in candidates:
+        key = str(candidate)
+        if key in seen:
+            continue
+        seen.add(key)
+        if candidate.is_file():
+            return candidate
+    return None
+
+
 class UserInputPiece(BasePiece):
     """Validate and pass-through user inputs for downstream pieces."""
 
@@ -96,8 +115,6 @@ class UserInputPiece(BasePiece):
         return repaired, filled
 
     def piece_function(self, input_data: InputModel) -> OutputModel:
-        from workflow import paths as P
-
         load_csv = Path(input_data.load_csv)
         prices_csv = Path(input_data.prices_csv) if input_data.prices_csv else None
         scenario_yaml = Path(input_data.scenario_yaml)
@@ -225,10 +242,13 @@ class UserInputPiece(BasePiece):
             json.dumps(summary["resolved_paths"], indent=2, ensure_ascii=False), encoding="utf-8"
         )
         workflow_input_copy = out_dir / "workflow_user_input.json"
-        if P.WORKFLOW_USER_INPUT_JSON.is_file():
-            shutil.copy2(P.WORKFLOW_USER_INPUT_JSON, workflow_input_copy)
+        workflow_input_source = _discover_workflow_user_input_path(load_csv, scenario_yaml)
+        if workflow_input_source is not None:
+            shutil.copy2(workflow_input_source, workflow_input_copy)
+            _log(f"Copied workflow_user_input_json from {workflow_input_source}")
         else:
             workflow_input_copy.write_text("{}", encoding="utf-8")
+            _log("workflow_user_input.json not found near inputs; wrote empty fallback")
 
         return OutputModel(
             message="User input validated",
