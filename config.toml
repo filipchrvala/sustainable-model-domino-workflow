@@ -2,4 +2,4 @@
 REGISTRY_NAME = "filipchrvala"
 REPOSITORY_NAME = "sustainable-model-domino-workflow"
 REPOSITORY_LABEL = "Sustainable Model Domino Workflow"
-VERSION = "0.1.0"
+VERSION = "0.1.1"
