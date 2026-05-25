@@ -30,7 +30,7 @@ from pieces.WebUserInputPiece.piece import (
     sync_from_csv,
     sync_scope_from_state,
 )
-from pieces.DashboardPiece.dashboard_view import render_unified_dashboard
+from pieces.DashboardPiece.piece import render_unified_dashboard
 from pieces.WebUserInputPiece.piece import WebUserInputPiece
 from pieces.WebUserInputPiece.models import InputModel as WebInput
 from workflow.progress_runner import run_full_pipeline_with_progress

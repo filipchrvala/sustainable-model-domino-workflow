@@ -21,9 +21,9 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from pieces.DashboardPiece.dashboard_view import load_unified_payload, render_investment, render_unified_dashboard
+from pieces.DashboardPiece.piece import load_unified_payload, render_investment, render_unified_dashboard
 from pieces.DashboardPiece.models import METRIC_HELP
-from pieces.DashboardPiece.dashboard_view import render_kpi_metric
+from pieces.DashboardPiece.piece import render_kpi_metric
 
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
