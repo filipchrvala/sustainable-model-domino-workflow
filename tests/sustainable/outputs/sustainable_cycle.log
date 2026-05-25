@@ -1,0 +1,22 @@
+[START] sustainable cycle started
+[CONFIG] tests\sustainable\sustainable_cycle.yaml
+[PARAM] horizon_hours=48
+[INGEST] No new files in updates_dir, using existing history only.
+[TRAIN] A: initial_train, rows=13633, model=A_xgb.pkl
+[TRAIN] B: initial_train, rows=13633, model=B_xgb.pkl
+[TRAIN] C: initial_train, rows=13633, model=C_xgb.pkl
+[TRAIN] D: initial_train, rows=13633, model=D_xgb.pkl
+[DONE] forecast=tests\sustainable\outputs\forecast_by_department.csv
+[DONE] alerts=tests\sustainable\outputs\anomaly_alerts.csv
+[DONE] summary=tests\sustainable\outputs\sustainable_cycle_summary.json
+[START] sustainable cycle started
+[CONFIG] tests\sustainable\sustainable_cycle.yaml
+[PARAM] horizon_hours=24
+[INGEST] No new files in updates_dir, using existing history only.
+[TRAIN] A: incremental_update, rows=13633, model=A_xgb.pkl
+[TRAIN] B: incremental_update, rows=13633, model=B_xgb.pkl
+[TRAIN] C: incremental_update, rows=13633, model=C_xgb.pkl
+[TRAIN] D: incremental_update, rows=13633, model=D_xgb.pkl
+[DONE] forecast=tests\sustainable\outputs\forecast_by_department.csv
+[DONE] alerts=tests\sustainable\outputs\anomaly_alerts.csv
+[DONE] summary=tests\sustainable\outputs\sustainable_cycle_summary.json

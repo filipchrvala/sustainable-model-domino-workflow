@@ -1,0 +1,103 @@
+timezone: Europe/Bratislava
+timestep_minutes: 15
+use_pv: true
+use_battery: true
+equipment:
+  selection_mode: auto
+  system_scope: pv_and_battery
+  constraints:
+    max_roof_area_m2: 8000
+    max_battery_area_m2: 400
+    max_capex_eur: 0
+    installation:
+      mount_type: roof
+      shading: low
+      priority: balanced
+      allow_bifacial: true
+  layout:
+    kwp_per_m2_roof: 0.18
+    kwh_per_m2_battery_area: 2.5
+  auto:
+    objective: max_npv
+    target_payback_years: 8
+    kwp_step: 50.0
+    kwh_step: 25.0
+    kwp_min: 0
+    kwh_min: 0
+    min_pv_kwp: 100.0
+    min_battery_kwh: 100.0
+    max_configurations: 180
+    grid_sweep:
+      kwp_min: 100.0
+      kwp_max: 1325.0
+      kwp_step: 50.0
+      kwh_min: 50.0
+      kwh_max: 1000.0
+      kwh_step: 50.0
+      respect_physical_bounds: false
+      grid_bounds_from: csv
+pv:
+  installed_kwp: 100.0
+  specific_capex_eur_per_kwp: 900.0
+  yield_kwh_per_kwp_year: 1000.0
+  tilt_deg: 15
+  azimuth_deg: 180
+  degradation_pct_per_year: 0.5
+  om_eur_per_kwp_year: 8
+battery:
+  energy_kwh: 100.0
+  capacity_kWh: 100.0
+  max_c_rate: 0.5
+  charge_efficiency: 0.95
+  discharge_efficiency: 0.95
+  initial_soc_pct: 50
+  specific_capex_eur_per_kwh: 350.0
+  max_equivalent_full_cycles_per_year: 450
+  calendar_life_years: 15
+  max_fraction_capacity_from_grid_charge: 0.72
+mrk:
+  contract_kw: 420.0
+  fee_eur_per_kw_month: 4.85
+  excess_peak_penalty_eur_per_kw: 32.0
+  rv_downsizing_safety_margin_pct: 8
+  suggested_contract_kw: 224.2
+energy:
+  feed_in_surplus_eur_per_kwh: 0.052
+analysis:
+  amortization_years: 15
+  discount_rate: 0.08
+  enable_trading_only_scenario: true
+  enable_c_rate_sweep: true
+  c_rate_sweep_values:
+  - 0.25
+  - 0.5
+  - 1.0
+finance:
+  enabled: true
+  o_and_m_eur_per_year: 0
+  o_and_m_pct_of_capex: 1.5
+  ancillary_revenue_eur_per_year: 0
+  debt_ratio_of_capex: 0.6
+  debt_interest_rate: 0.05
+  debt_years: 10
+  tax_rate_pct: 21
+production:
+  strict_validation: false
+  min_sample_days: 7
+  max_missing_interval_share: 0.02
+  gap_repair_enabled: true
+solar:
+  capacity_kWp: 100.0
+strategy:
+  charge_from: solar_excess
+  discharge_during: peak_hours
+  charge_price_max_eur_kwh: 0.07
+  discharge_price_min_eur_kwh: 0.105
+time_window:
+  peak_hours:
+    start: 08:00
+    end: '18:00'
+apply_monthly: true
+scenario_id: workflow
+description: 'Workflow proposal: 100 kWp + 100 kWh (model payback -1.00 years)'
+timestep_minutes_from: csv

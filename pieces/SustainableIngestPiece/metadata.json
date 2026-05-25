@@ -1,0 +1,12 @@
+{
+  "name": "SustainableIngestPiece",
+  "description": "Ingest new company load files into long-term history",
+  "dependencies_group": "0",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "style": {
+    "node_label": "SustainableIngestPiece",
+    "icon_class_name": "fa-solid:database"
+  }
+}

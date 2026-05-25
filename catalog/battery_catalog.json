@@ -1,0 +1,132 @@
+{
+  "description": "Industriálne rackové / kontajnerové ESS – orientačné nominály pre návrh (overiť u dodávateľa). Väčší zoznam môžeš hostiť na GitHub raw a zadať URL v config/catalog_sources.yaml.",
+  "references_github_note": "Parametre článkov: napr. ndrewwang/liiondb, phdechent/CellInfoRepository; ekonomika ESS: NREL GNESTE (CC-BY). Tu sú úrovne produktov (kWh), nie článkov.",
+  "products": [
+    {
+      "id": "rack_lfp_50",
+      "manufacturer": "Tesla",
+      "product_line": "Megapack-class (orient.)",
+      "nominal_kwh": 50,
+      "max_power_kw": 25,
+      "chemistry": "LFP",
+      "form_factor": "rack"
+    },
+    {
+      "id": "rack_lfp_100",
+      "manufacturer": "BYD",
+      "product_line": "Battery-Box Premium",
+      "nominal_kwh": 100,
+      "max_power_kw": 50,
+      "chemistry": "LFP",
+      "form_factor": "cabinet"
+    },
+    {
+      "id": "rack_lfp_200",
+      "manufacturer": "Sungrow",
+      "product_line": "ST500CP",
+      "nominal_kwh": 200,
+      "max_power_kw": 100,
+      "chemistry": "LFP",
+      "form_factor": "container"
+    },
+    {
+      "id": "rack_lfp_372",
+      "manufacturer": "CATL",
+      "product_line": "EnerOne (orient.)",
+      "nominal_kwh": 372,
+      "max_power_kw": 186,
+      "chemistry": "LFP",
+      "form_factor": "container"
+    },
+    {
+      "id": "rack_nmc_256",
+      "manufacturer": "Nidec",
+      "product_line": "AS1 (orient.)",
+      "nominal_kwh": 256,
+      "max_power_kw": 128,
+      "chemistry": "NMC",
+      "form_factor": "container"
+    },
+    {
+      "id": "cab_lfp_20",
+      "manufacturer": "Huawei",
+      "product_line": "LUNA2000 (orient.)",
+      "nominal_kwh": 20,
+      "max_power_kw": 10,
+      "chemistry": "LFP",
+      "form_factor": "cabinet"
+    },
+    {
+      "id": "cab_lfp_30",
+      "manufacturer": "SMA",
+      "product_line": "Sunny Boy Storage (orient.)",
+      "nominal_kwh": 30,
+      "max_power_kw": 15,
+      "chemistry": "LFP",
+      "form_factor": "cabinet"
+    },
+    {
+      "id": "rack_lfp_75",
+      "manufacturer": "Fluence",
+      "product_line": "Gridstack (orient.)",
+      "nominal_kwh": 75,
+      "max_power_kw": 37,
+      "chemistry": "LFP",
+      "form_factor": "rack"
+    },
+    {
+      "id": "rack_lfp_125",
+      "manufacturer": "Wärtsilä",
+      "product_line": "Quantum (orient.)",
+      "nominal_kwh": 125,
+      "max_power_kw": 62,
+      "chemistry": "LFP",
+      "form_factor": "container"
+    },
+    {
+      "id": "rack_lfp_150",
+      "manufacturer": "Powin",
+      "product_line": "Centipede (orient.)",
+      "nominal_kwh": 150,
+      "max_power_kw": 75,
+      "chemistry": "LFP",
+      "form_factor": "rack"
+    },
+    {
+      "id": "rack_lfp_250",
+      "manufacturer": "NEC",
+      "product_line": "ES (orient.)",
+      "nominal_kwh": 250,
+      "max_power_kw": 125,
+      "chemistry": "LFP",
+      "form_factor": "container"
+    },
+    {
+      "id": "rack_lfp_300",
+      "manufacturer": "Honeywell",
+      "product_line": "Flow (orient.)",
+      "nominal_kwh": 300,
+      "max_power_kw": 150,
+      "chemistry": "LFP",
+      "form_factor": "container"
+    },
+    {
+      "id": "rack_lfp_400",
+      "manufacturer": "Saft",
+      "product_line": "Intensium (orient.)",
+      "nominal_kwh": 400,
+      "max_power_kw": 200,
+      "chemistry": "LFP",
+      "form_factor": "container"
+    },
+    {
+      "id": "rack_lfp_500",
+      "manufacturer": "LG Energy Solution",
+      "product_line": "TR1300 (orient.)",
+      "nominal_kwh": 500,
+      "max_power_kw": 250,
+      "chemistry": "LFP",
+      "form_factor": "container"
+    }
+  ]
+}

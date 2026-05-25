@@ -1,0 +1,11 @@
+Training time (UTC): 2026-05-25 18:33:28.281269
+Rows total: 34369
+Train rows: 27495
+Test rows: 6874
+Features: ['hour', 'dayofweek', 'month', 'shift_active', 'shift_block_index', 'shift_block_count', 'lag_1', 'lag_4', 'lag_96', 'lag_192', 'lag_672', 'roll_mean_4', 'roll_std_4', 'roll_mean_16', 'roll_std_16', 'roll_mean_96', 'roll_std_96']
+MAE: 1.2114 kW
+RMSE: 3.7156 kW
+Mean load (test set): 89.4387 kW
+MAE as % of mean load: 1.3544 %
+RMSE as % of mean load: 4.1544 %
+MAPE (mean abs % error): 1.8909 %

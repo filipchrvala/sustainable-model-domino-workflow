@@ -1,0 +1,148 @@
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sizing.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sizing.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs\load_seed.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs\load_seed.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sizing_from_merged.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sizing.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sizing.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sizing.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sizing.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sizing_from_merged.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sizing_from_merged.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sizing.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sizing_from_merged.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sizing.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sizing_from_merged.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sizing_from_merged.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sizing.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sizing_from_merged.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sizing_from_merged.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sizing.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable-model-domino-workflow-repo\tests\_generated\runtime_load_for_sizing_from_merged.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable-model-domino-workflow-repo\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable-model-domino-workflow-repo\tests\UserInputPiece_Output\scenario_resolved.yaml
+[UserInputPiece] Input load_csv=C:\Users\NTB\Domino\sustainable-model-domino-workflow-repo\tests\_generated\runtime_load_for_sizing.csv
+[UserInputPiece] Input prices_csv=None
+[UserInputPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable-model-domino-workflow-repo\tests\_generated\scenario.yml
+[UserInputPiece] Copied scenario to shared output path: C:\Users\NTB\Domino\sustainable-model-domino-workflow-repo\tests\UserInputPiece_Output\scenario_resolved.yaml

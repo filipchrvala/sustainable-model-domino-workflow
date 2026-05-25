@@ -1,0 +1,73 @@
+{
+  "description": "Moduly pre návrh počtu kusov. Záznamy so sam_key musia sedieť s SandiaMod (ako SolarSimPiece). Technické polia (area_m2, efficiency_pct, …) sa používajú pri pv_module_selection_mode: auto.",
+  "reference": "pvlib: https://github.com/pvlib/pvlib-python — SandiaMod + voliteľne CECMod pre novšie moduly",
+  "modules": [
+    {
+      "sam_key": null,
+      "cec_key": null,
+      "manufacturer": "(šablóna)",
+      "model": "Veľkoformátový modul 600 Wp – doplň presný typ / CEC kľúč",
+      "power_wp": 600,
+      "area_m2": 2.17,
+      "weight_kg": 27.0,
+      "efficiency_pct": 22.5,
+      "half_cut": true,
+      "bifacial": true,
+      "eur_per_wp": 0.32,
+      "technology": "mono-Si TOPCon / bifacial (orient.)",
+      "note": "Šablóna pre rozmerovanie; pre simuláciu v hlavnom projekte pridaj zodpovedajúci kľúč z pvlib CECMod."
+    },
+    {
+      "sam_key": "Canadian_Solar_CS6X_300M__2013_",
+      "manufacturer": "Canadian Solar",
+      "model": "CS6X-300M",
+      "power_wp": 300,
+      "area_m2": 1.94,
+      "weight_kg": 18.5,
+      "efficiency_pct": 18.3,
+      "half_cut": false,
+      "bifacial": false,
+      "eur_per_wp": 0.38,
+      "technology": "mono-Si"
+    },
+    {
+      "sam_key": "Trina_TSM_240PA05__2013_",
+      "manufacturer": "Trina Solar",
+      "model": "TSM-240PA05",
+      "power_wp": 240,
+      "area_m2": 1.61,
+      "weight_kg": 15.5,
+      "efficiency_pct": 14.9,
+      "half_cut": false,
+      "bifacial": false,
+      "eur_per_wp": 0.42,
+      "technology": "poly-Si"
+    },
+    {
+      "sam_key": "Yingli_Solar_YL230_29b_Module___2009_",
+      "manufacturer": "Yingli Solar",
+      "model": "YL230P-29b",
+      "power_wp": 230,
+      "area_m2": 1.58,
+      "weight_kg": 15.0,
+      "efficiency_pct": 14.6,
+      "half_cut": false,
+      "bifacial": false,
+      "eur_per_wp": 0.44,
+      "technology": "poly-Si"
+    },
+    {
+      "sam_key": "SunPower_128_Cell_Module___2009_",
+      "manufacturer": "SunPower",
+      "model": "128-cell (prototype series)",
+      "power_wp": 400,
+      "area_m2": 1.91,
+      "weight_kg": 18.0,
+      "efficiency_pct": 20.9,
+      "half_cut": false,
+      "bifacial": false,
+      "eur_per_wp": 0.45,
+      "technology": "mono-Si"
+    }
+  ]
+}

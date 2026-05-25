@@ -1,0 +1,8 @@
+{
+  "max_kwp": 1440.0,
+  "max_kwh": 1000.0,
+  "annual_load_mwh_est": 2574.808,
+  "notes": [
+    "PV area limit applied."
+  ]
+}

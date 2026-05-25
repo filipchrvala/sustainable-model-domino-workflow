@@ -1,0 +1,36 @@
+{
+  "by_dayofweek": {
+    "0": {
+      "active_hours": [],
+      "blocks": []
+    },
+    "1": {
+      "active_hours": [],
+      "blocks": []
+    },
+    "2": {
+      "active_hours": [],
+      "blocks": []
+    },
+    "3": {
+      "active_hours": [],
+      "blocks": []
+    },
+    "4": {
+      "active_hours": [],
+      "blocks": []
+    },
+    "5": {
+      "active_hours": [],
+      "blocks": []
+    },
+    "6": {
+      "active_hours": [],
+      "blocks": []
+    }
+  },
+  "global": {
+    "active_hours": [],
+    "blocks": []
+  }
+}

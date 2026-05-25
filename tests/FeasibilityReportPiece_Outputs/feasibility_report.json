@@ -1,0 +1,138 @@
+{
+  "model_basis": "timeseries_simulation",
+  "feasible": false,
+  "target_payback_years": 8.0,
+  "recommended_kwp": 100.0,
+  "recommended_kwh": 100.0,
+  "achieved_payback_years": 11.654,
+  "minimum_payback_in_search_space_years": 9.044,
+  "annual_savings_eur": 10726.08,
+  "capex_eur": 125000.0,
+  "parametric_estimate": {
+    "payback_years": -1.0,
+    "annual_savings_eur": 0.0,
+    "npv_eur": 0.0,
+    "capex_eur": 125000.0,
+    "label": "Parametrická mriežka (pieces/kit/economics – pred časovou simuláciou)"
+  },
+  "simulation": {
+    "annual_savings_eur": 10726.08,
+    "simple_payback_years": 11.654,
+    "npv_eur": 0.0,
+    "total_capex_eur": 125000.0,
+    "solar_capex_eur": 0.0,
+    "battery_capex_eur": 35000.0,
+    "solar_lcoe_eur_per_mwh": 0.0,
+    "annual_co2_saved_ton": 0.0,
+    "battery_cycles_est": 0.25
+  },
+  "cfo_notes": {
+    "scenario_summary": "Cieľová návratnosť **8.0 r.**: **NESPLNITEĽNÉ** podľa **časovej simulácie** (KPI → InvestmentEval). Payback **11.65 r.** | ročná úspora **10,726 €**. Mriežkový odhad (pred simuláciou) bol payback **-1.00 r.** (100 kWp + 100 kWh). Min. payback v prehľadávanej mriežke (orientačný): **9.04 r.**",
+    "sensitivity_matrix": [
+      {
+        "scenario": "Základ (simulácia alebo mriežka)",
+        "payback_years": 11.65,
+        "npv_eur": -33190.0,
+        "capex_eur": 125000.0,
+        "annual_savings_eur": 10726.0
+      },
+      {
+        "scenario": "Úspora -10 %",
+        "payback_years": 12.95,
+        "npv_eur": -42371.0,
+        "capex_eur": 125000.0,
+        "annual_savings_eur": 9653.0
+      },
+      {
+        "scenario": "Úspora +10 %",
+        "payback_years": 10.59,
+        "npv_eur": -24009.0,
+        "capex_eur": 125000.0,
+        "annual_savings_eur": 11799.0
+      },
+      {
+        "scenario": "CAPEX -10 %",
+        "payback_years": 10.49,
+        "npv_eur": -20690.0,
+        "capex_eur": 112500.0,
+        "annual_savings_eur": 10726.0
+      },
+      {
+        "scenario": "CAPEX +10 %",
+        "payback_years": 12.82,
+        "npv_eur": -45690.0,
+        "capex_eur": 137500.0,
+        "annual_savings_eur": 10726.0
+      }
+    ],
+    "sensitivity_hint": "Tabuľka: šoky ± na ročnej úspore a CAPEX (orientačné). Detailnejšiu tarifu doplň v vstupoch / časovej simulácii.",
+    "estimated_co2_avoided_tons_year": 0.0,
+    "npv_eur_at_best": 0.0,
+    "recommended_pv_hardware": {
+      "catalog_module_count": 5,
+      "catalog_source": "catalog/pv_modules_catalog.json",
+      "module_manufacturer": "(šablóna)",
+      "module_model": "Veľkoformátový modul 600 Wp – doplň presný typ / CEC kľúč",
+      "sam_key": null,
+      "cec_key": null,
+      "module_power_wp": 600.0,
+      "module_count": 167,
+      "installed_kwp_dc_approx": 100.2,
+      "selection_mode": "local_catalog",
+      "selection_strategy_used": "max_power_wp",
+      "catalog_note": "Šablóna pre rozmerovanie; pre simuláciu v hlavnom projekte pridaj zodpovedajúci kľúč z pvlib CECMod.",
+      "sam_verify_warning": "Chýba sam_key aj cec_key pre overenie voči pvlib."
+    },
+    "recommended_battery_hardware": {
+      "product_id": "rack_lfp_100",
+      "manufacturer": "BYD",
+      "product_line": "Battery-Box Premium",
+      "model_label": "BYD - Battery-Box Premium",
+      "chemistry": "LFP",
+      "form_factor": "cabinet",
+      "units": 1,
+      "nominal_kwh_per_unit": 100.0,
+      "nominal_kwh_installed": 100.0,
+      "max_power_kw_note": 50,
+      "catalog_product_count": 14,
+      "source": "catalog/battery_catalog.json (verify with supplier)"
+    },
+    "assumptions": [
+      "Ročná úspora a payback v hlavnom súhrne sú z **časovej simulácie** (KPIPiece → InvestmentEvalPiece), nie z mriežky.",
+      "Parametrický riadok zostáva ako porovnanie (rýchly odhad pred simuláciou).",
+      "CAPEX z jednotkových cien (economics_defaults / investment_config); payback = jednoduchý CAPEX / ročná úspora.",
+      "Panely: katalóg + SAM/pvlib; batérie: orientačné produkty v catalog/battery_catalog.json."
+    ]
+  },
+  "hardware": {
+    "pv": {
+      "catalog_module_count": 5,
+      "catalog_source": "catalog/pv_modules_catalog.json",
+      "module_manufacturer": "(šablóna)",
+      "module_model": "Veľkoformátový modul 600 Wp – doplň presný typ / CEC kľúč",
+      "sam_key": null,
+      "cec_key": null,
+      "module_power_wp": 600.0,
+      "module_count": 167,
+      "installed_kwp_dc_approx": 100.2,
+      "selection_mode": "local_catalog",
+      "selection_strategy_used": "max_power_wp",
+      "catalog_note": "Šablóna pre rozmerovanie; pre simuláciu v hlavnom projekte pridaj zodpovedajúci kľúč z pvlib CECMod.",
+      "sam_verify_warning": "Chýba sam_key aj cec_key pre overenie voči pvlib."
+    },
+    "battery": {
+      "product_id": "rack_lfp_100",
+      "manufacturer": "BYD",
+      "product_line": "Battery-Box Premium",
+      "model_label": "BYD - Battery-Box Premium",
+      "chemistry": "LFP",
+      "form_factor": "cabinet",
+      "units": 1,
+      "nominal_kwh_per_unit": 100.0,
+      "nominal_kwh_installed": 100.0,
+      "max_power_kw_note": 50,
+      "catalog_product_count": 14,
+      "source": "catalog/battery_catalog.json (verify with supplier)"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "department_id": "A",
+    "rows_used": 96,
+    "mode": "incremental_update"
+  },
+  {
+    "department_id": "B",
+    "rows_used": 96,
+    "mode": "incremental_update"
+  },
+  {
+    "department_id": "C",
+    "rows_used": 96,
+    "mode": "incremental_update"
+  },
+  {
+    "department_id": "D",
+    "rows_used": 96,
+    "mode": "incremental_update"
+  }
+]

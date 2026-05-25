@@ -1,0 +1,23 @@
+{
+  "message": "User input validated",
+  "merge_mode": "single_csv_normalized",
+  "input_paths": {
+    "load_csv": "C:\\Users\\NTB\\Domino\\sustainable-model-domino-workflow-repo\\tests\\_generated\\runtime_load_for_sizing.csv",
+    "prices_csv": "",
+    "scenario_yaml": "C:\\Users\\NTB\\Domino\\sustainable-model-domino-workflow-repo\\tests\\_generated\\scenario.yml"
+  },
+  "resolved_paths": {
+    "load_csv": "C:\\Users\\NTB\\Domino\\sustainable-model-domino-workflow-repo\\tests\\UserInputPiece_Output\\load_and_prices_merged.csv",
+    "scenario_yaml": "C:\\Users\\NTB\\Domino\\sustainable-model-domino-workflow-repo\\tests\\UserInputPiece_Output\\scenario_resolved.yaml"
+  },
+  "rows_merged": 676,
+  "rows_overlap_when_two_csv": null,
+  "datetime_min": "2025-06-30 23:00:00",
+  "datetime_max": "2025-07-07 23:45:00",
+  "inferred_step_hours": 0.25,
+  "repair_step_hours": 0.25,
+  "expected_intervals_in_range": 676,
+  "missing_intervals_estimate": 0,
+  "gap_repair_enabled": true,
+  "repaired_intervals_count": 0
+}

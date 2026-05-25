@@ -1,0 +1,17 @@
+scenario_id: "v001"
+description: "500 kWp virtual solar + 200 kWh battery, self-consumption priority"
+solar:
+  capacity_kWp: 500
+battery:
+  capacity_kWh: 200
+  charge_efficiency: 0.95
+  discharge_efficiency: 0.95
+  max_c_rate: 0.5
+strategy:
+  charge_from: solar_excess
+  discharge_during: peak_hours
+time_window:
+  peak_hours:
+    start: "08:00"
+    end:   "18:00"
+apply_monthly: true

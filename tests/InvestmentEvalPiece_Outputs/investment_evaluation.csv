@@ -1,0 +1,2 @@
+annual_savings_eur,operating_savings_period_eur,net_after_capex_savings_eur,pv_capex_eur,battery_capex_eur,total_capex_eur,pv_only_operating_eur,pv_battery_operating_eur,battery_cycles_est,simple_payback_years,discounted_payback_years,npv_operating_eur
+10726.08,206.93,-14396.76,90000.0,35000.0,125000.0,8428.56,8423.58,0.25,11.654,,-33190.38

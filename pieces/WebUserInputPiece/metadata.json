@@ -1,0 +1,12 @@
+{
+  "name": "WebUserInputPiece",
+  "description": "Web form for project settings, consumption CSV uploads, and scenario options (alternative to UserInputPiece CSV)",
+  "dependencies_group": "0",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "style": {
+    "node_label": "Web User Input",
+    "icon_class_name": "fa-solid:globe"
+  }
+}

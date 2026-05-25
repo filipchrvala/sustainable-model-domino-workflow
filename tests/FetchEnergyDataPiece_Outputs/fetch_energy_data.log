@@ -1,0 +1,210 @@
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[ERROR] No load CSV files found at: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[ERROR] No load CSV files found at: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55300
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55300
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55300
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55300
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55300
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55300
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55300
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55300
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55300
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55300
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55976
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55976
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55976
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55976
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55976
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55976
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55976
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55976
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55976
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55976
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55976
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55976
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55976
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55976
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable model\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet
+[INFO] FetchEnergyDataPiece started
+[INFO] Load CSV: C:\Users\NTB\Domino\sustainable-model-domino-workflow-repo\tests\FetchEnergyDataPiece_Inputs
+[INFO] Prices CSV: 
+[WARN] Prices CSV not found; continuing without price columns
+[INFO] Reading CSV files
+[INFO] Merging data
+[SUCCESS] Data merged, rows: 55976
+[SUCCESS] Output written to C:\Users\NTB\Domino\sustainable-model-domino-workflow-repo\tests\FetchEnergyDataPiece_Outputs\merged_energy_data.parquet

@@ -1,0 +1,7 @@
+{
+  "A": "C:\\Users\\NTB\\Domino\\sustainable-model-domino-workflow-repo\\tests\\TrainModelPiece_Outputs\\A\\xgboost_model.pkl",
+  "B": "C:\\Users\\NTB\\Domino\\sustainable-model-domino-workflow-repo\\tests\\TrainModelPiece_Outputs\\B\\xgboost_model.pkl",
+  "C": "C:\\Users\\NTB\\Domino\\sustainable-model-domino-workflow-repo\\tests\\TrainModelPiece_Outputs\\C\\xgboost_model.pkl",
+  "D": "C:\\Users\\NTB\\Domino\\sustainable-model-domino-workflow-repo\\tests\\TrainModelPiece_Outputs\\D\\xgboost_model.pkl",
+  "from_web": "C:\\Users\\NTB\\Domino\\sustainable-model-domino-workflow-repo\\tests\\TrainModelPiece_Outputs\\from_web\\xgboost_model.pkl"
+}

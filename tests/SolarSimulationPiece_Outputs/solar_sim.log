@@ -1,0 +1,80 @@
+[SolarSimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[SolarSimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[SolarSimPiece] Computed virtual solar rows=676, installed_kwp=0.0
+[SolarSimPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[SolarSimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[SolarSimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[SolarSimPiece] Computed virtual solar rows=676, installed_kwp=100.0
+[SolarSimPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[SolarSimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[SolarSimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[SolarSimPiece] Computed virtual solar rows=676, installed_kwp=100.0
+[SolarSimPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[SolarSimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[SolarSimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[SolarSimPiece] Computed virtual solar rows=676, installed_kwp=100.0
+[SolarSimPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[SolarSimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[SolarSimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[SolarSimPiece] Computed virtual solar rows=676, installed_kwp=100.0
+[SolarSimPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[SolarSimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[SolarSimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[SolarSimPiece] Computed virtual solar rows=676, installed_kwp=100.0
+[SolarSimPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[SolarSimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[SolarSimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[SolarSimPiece] Computed virtual solar rows=676, installed_kwp=100.0
+[SolarSimPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[SolarSimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[SolarSimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[SolarSimPiece] Computed virtual solar rows=676, installed_kwp=100.0
+[SolarSimPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[SolarSimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[SolarSimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[SolarSimPiece] Computed virtual solar rows=676, installed_kwp=100.0
+[SolarSimPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[SolarSimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[SolarSimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[SolarSimPiece] Computed virtual solar rows=676, installed_kwp=100.0
+[SolarSimPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[SolarSimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[SolarSimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[SolarSimPiece] Computed virtual solar rows=676, installed_kwp=100.0
+[SolarSimPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[SolarSimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[SolarSimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[SolarSimPiece] Computed virtual solar rows=676, installed_kwp=100.0
+[SolarSimPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[SolarSimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[SolarSimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[SolarSimPiece] Computed virtual solar rows=676, installed_kwp=100.0
+[SolarSimPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[SolarSimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[SolarSimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[SolarSimPiece] Computed virtual solar rows=676, installed_kwp=100.0
+[SolarSimPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[SolarSimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[SolarSimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[SolarSimPiece] Computed virtual solar rows=676, installed_kwp=100.0
+[SolarSimPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[SolarSimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[SolarSimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[SolarSimPiece] Computed virtual solar rows=676, installed_kwp=100.0
+[SolarSimPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[SolarSimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[SolarSimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[SolarSimPiece] Computed virtual solar rows=676, installed_kwp=400.0
+[SolarSimPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[SolarSimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[SolarSimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[SolarSimPiece] Computed virtual solar rows=676, installed_kwp=100.0
+[SolarSimPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[SolarSimulationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[SolarSimulationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[SolarSimulationPiece] Computed virtual solar rows=676, installed_kwp=100.0
+[SolarSimulationPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\SolarSimulationPiece_Outputs\virtual_solar.csv
+[SolarSimulationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[SolarSimulationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[SolarSimulationPiece] Computed virtual solar rows=676, installed_kwp=100.0
+[SolarSimulationPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\SolarSimulationPiece_Outputs\virtual_solar.csv

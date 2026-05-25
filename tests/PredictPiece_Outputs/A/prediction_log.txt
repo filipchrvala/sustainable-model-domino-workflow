@@ -1,0 +1,5 @@
+Prediction time (UTC): 2026-05-25 18:33:33.729703
+Rows: 676
+Features used: ['hour', 'dayofweek', 'month', 'shift_active', 'shift_block_index', 'shift_block_count', 'lag_1', 'lag_4', 'lag_96', 'lag_192', 'lag_672', 'roll_mean_4', 'roll_std_4', 'roll_mean_16', 'roll_std_16', 'roll_mean_96', 'roll_std_96']
+Model: xgboost_model.pkl
+use_rolling_prediction: True

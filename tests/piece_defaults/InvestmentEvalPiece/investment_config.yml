@@ -1,0 +1,6 @@
+solar_capex_eur: 180000
+battery_capex_eur: 120000
+
+analysis_years: 15
+discount_rate: 0.08
+degradation_per_year: 0.005

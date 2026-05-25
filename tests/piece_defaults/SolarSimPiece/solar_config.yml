@@ -1,0 +1,15 @@
+capacity_kWp: 500
+tilt: 35                # deg
+azimuth: 180            # deg (south)
+# Global derating factor for AC výkonu (1.0 = žiadne dodatočné straty,
+# 0.9 = cca 10 % systémové straty). Pôvodných 0.19 bolo skôr ako účinnosť panelu,
+# čo výrazne podstreľovalo výrobu.
+efficiency: 0.9
+temp_coeff: -0.004       # %/°C
+site_latitude: 48.74
+site_longitude: 21.92
+site_altitude: 200     # m a.s.l.
+
+# Názvy modulu a meniča v pvlib SAM databázach
+module_name: "Canadian_Solar_CS6X_300M__2013_"
+inverter_name: "ABB__MICRO_0_25_I_OUTD_US_208__208V_"

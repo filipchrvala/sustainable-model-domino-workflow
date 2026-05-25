@@ -1,0 +1,31 @@
+{
+  "horizon_hours": 24,
+  "train_results": [
+    {
+      "department_id": "A",
+      "model_path": "tests\\sustainable\\model_registry\\A_xgb.pkl",
+      "rows_used": 13633,
+      "mode": "incremental_update"
+    },
+    {
+      "department_id": "B",
+      "model_path": "tests\\sustainable\\model_registry\\B_xgb.pkl",
+      "rows_used": 13633,
+      "mode": "incremental_update"
+    },
+    {
+      "department_id": "C",
+      "model_path": "tests\\sustainable\\model_registry\\C_xgb.pkl",
+      "rows_used": 13633,
+      "mode": "incremental_update"
+    },
+    {
+      "department_id": "D",
+      "model_path": "tests\\sustainable\\model_registry\\D_xgb.pkl",
+      "rows_used": 13633,
+      "mode": "incremental_update"
+    }
+  ],
+  "forecast_rows": 384,
+  "alert_rows": 137
+}

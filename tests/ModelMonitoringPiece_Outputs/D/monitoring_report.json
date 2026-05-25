@@ -1,0 +1,32 @@
+{
+  "rows": 676,
+  "pred_mean_kw": 3.4734174528594552,
+  "pred_std_kw": 1.4986647687962689,
+  "pred_p95_kw": 6.384326457977296,
+  "actual_available": true,
+  "mae_kw": 3.4666127191316445,
+  "rmse_kw": 3.781824022663815,
+  "mape_pct": 0.0,
+  "top_consumption_hours": [
+    {
+      "hour": 9,
+      "avg_pred_kw": 6.3
+    },
+    {
+      "hour": 8,
+      "avg_pred_kw": 6.23
+    },
+    {
+      "hour": 7,
+      "avg_pred_kw": 6.14
+    },
+    {
+      "hour": 10,
+      "avg_pred_kw": 5.98
+    },
+    {
+      "hour": 11,
+      "avg_pred_kw": 5.15
+    }
+  ]
+}

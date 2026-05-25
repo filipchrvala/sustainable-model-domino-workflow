@@ -1,0 +1,6 @@
+{
+  "charge_below_eur_per_kwh": 0.07,
+  "discharge_above_eur_per_kwh": 0.105,
+  "expensive_hour_threshold_eur_per_kwh": 0.105,
+  "strategy_note": "Thresholds aligned to dispatch logic in SimulatePiece."
+}

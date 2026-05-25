@@ -1,0 +1,12 @@
+{
+  "name": "CatalogSyncPiece",
+  "description": "Sync PV and inverter catalogs from online SAM sources",
+  "dependencies_group": "0",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "style": {
+    "node_label": "Catalog Sync",
+    "icon_class_name": "fa-solid:cloud-arrow-down"
+  }
+}

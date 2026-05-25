@@ -1,0 +1,18 @@
+{
+  "investment_evaluation": [
+    {
+      "annual_savings_eur": 10726.08,
+      "operating_savings_period_eur": 206.93,
+      "net_after_capex_savings_eur": -14396.76,
+      "pv_capex_eur": 90000.0,
+      "battery_capex_eur": 35000.0,
+      "total_capex_eur": 125000.0,
+      "pv_only_operating_eur": 8428.56,
+      "pv_battery_operating_eur": 8423.58,
+      "battery_cycles_est": 0.25,
+      "simple_payback_years": 11.654,
+      "discounted_payback_years": null,
+      "npv_operating_eur": -33190.38
+    }
+  ]
+}

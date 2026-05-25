@@ -1,0 +1,19 @@
+scenario_id: workflow
+description: 'Workflow proposal: 50 kWp + 25 kWh (model payback 68.66 years)'
+solar:
+  capacity_kWp: 50.0
+battery:
+  capacity_kWh: 25.0
+  charge_efficiency: 0.95
+  discharge_efficiency: 0.95
+  max_c_rate: 0.5
+strategy:
+  charge_from: solar_excess_then_low_price_grid
+  discharge_during: peak_hours_and_high_price
+  charge_price_max_eur_kwh: 0.07
+  discharge_price_min_eur_kwh: 0.105
+time_window:
+  peak_hours:
+    start: 07:00
+    end: '21:00'
+apply_monthly: true

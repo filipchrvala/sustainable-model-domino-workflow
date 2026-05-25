@@ -1,0 +1,100 @@
+[BatterySimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatterySimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatterySimPiece] Input virtual_solar_csv=C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[BatterySimPiece] Computed battery SOC rows=676
+[BatterySimPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\virtual_battery_soc.csv, C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\battery_summary.csv
+[BatterySimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatterySimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatterySimPiece] Input virtual_solar_csv=C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[BatterySimPiece] Computed battery SOC rows=676
+[BatterySimPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\virtual_battery_soc.csv, C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\battery_summary.csv
+[BatterySimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatterySimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatterySimPiece] Input virtual_solar_csv=C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[BatterySimPiece] Computed battery SOC rows=676
+[BatterySimPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\virtual_battery_soc.csv, C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\battery_summary.csv
+[BatterySimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatterySimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatterySimPiece] Input virtual_solar_csv=C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[BatterySimPiece] Computed battery SOC rows=676
+[BatterySimPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\virtual_battery_soc.csv, C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\battery_summary.csv
+[BatterySimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatterySimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatterySimPiece] Input virtual_solar_csv=C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[BatterySimPiece] Computed battery SOC rows=676
+[BatterySimPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\virtual_battery_soc.csv, C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\battery_summary.csv
+[BatterySimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatterySimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatterySimPiece] Input virtual_solar_csv=C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[BatterySimPiece] Computed battery SOC rows=676
+[BatterySimPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\virtual_battery_soc.csv, C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\battery_summary.csv
+[BatterySimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatterySimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatterySimPiece] Input virtual_solar_csv=C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[BatterySimPiece] Computed battery SOC rows=676
+[BatterySimPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\virtual_battery_soc.csv, C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\battery_summary.csv
+[BatterySimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatterySimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatterySimPiece] Input virtual_solar_csv=C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[BatterySimPiece] Computed battery SOC rows=676
+[BatterySimPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\virtual_battery_soc.csv, C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\battery_summary.csv
+[BatterySimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatterySimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatterySimPiece] Input virtual_solar_csv=C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[BatterySimPiece] Computed battery SOC rows=676
+[BatterySimPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\virtual_battery_soc.csv, C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\battery_summary.csv
+[BatterySimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatterySimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatterySimPiece] Input virtual_solar_csv=C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[BatterySimPiece] Computed battery SOC rows=676
+[BatterySimPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\virtual_battery_soc.csv, C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\battery_summary.csv
+[BatterySimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatterySimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatterySimPiece] Input virtual_solar_csv=C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[BatterySimPiece] Computed battery SOC rows=676
+[BatterySimPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\virtual_battery_soc.csv, C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\battery_summary.csv
+[BatterySimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatterySimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatterySimPiece] Input virtual_solar_csv=C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[BatterySimPiece] Computed battery SOC rows=676
+[BatterySimPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\virtual_battery_soc.csv, C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\battery_summary.csv
+[BatterySimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatterySimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatterySimPiece] Input virtual_solar_csv=C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[BatterySimPiece] Computed battery SOC rows=676
+[BatterySimPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\virtual_battery_soc.csv, C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\battery_summary.csv
+[BatterySimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatterySimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatterySimPiece] Input virtual_solar_csv=C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[BatterySimPiece] Computed battery SOC rows=676
+[BatterySimPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\virtual_battery_soc.csv, C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\battery_summary.csv
+[BatterySimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatterySimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatterySimPiece] Input virtual_solar_csv=C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[BatterySimPiece] Computed battery SOC rows=676
+[BatterySimPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\virtual_battery_soc.csv, C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\battery_summary.csv
+[BatterySimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatterySimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatterySimPiece] Input virtual_solar_csv=C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[BatterySimPiece] Computed battery SOC rows=676
+[BatterySimPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\virtual_battery_soc.csv, C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\battery_summary.csv
+[BatterySimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatterySimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatterySimPiece] Input virtual_solar_csv=C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[BatterySimPiece] Computed battery SOC rows=676
+[BatterySimPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\virtual_battery_soc.csv, C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\battery_summary.csv
+[BatterySimPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatterySimPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatterySimPiece] Input virtual_solar_csv=C:\Users\NTB\Domino\sustainable model\tests\SolarSimPiece_Outputs\virtual_solar.csv
+[BatterySimPiece] Computed battery SOC rows=676
+[BatterySimPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\virtual_battery_soc.csv, C:\Users\NTB\Domino\sustainable model\tests\BatterySimPiece_Outputs\battery_summary.csv
+[BatterySimulationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatterySimulationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatterySimulationPiece] Input virtual_solar_csv=C:\Users\NTB\Domino\sustainable model\tests\SolarSimulationPiece_Outputs\virtual_solar.csv
+[BatterySimulationPiece] Computed battery SOC rows=676
+[BatterySimulationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\BatterySimulationPiece_Outputs\virtual_battery_soc.csv, C:\Users\NTB\Domino\sustainable model\tests\BatterySimulationPiece_Outputs\battery_summary.csv
+[BatterySimulationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatterySimulationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatterySimulationPiece] Input virtual_solar_csv=C:\Users\NTB\Domino\sustainable model\tests\SolarSimulationPiece_Outputs\virtual_solar.csv
+[BatterySimulationPiece] Computed battery SOC rows=676
+[BatterySimulationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\BatterySimulationPiece_Outputs\virtual_battery_soc.csv, C:\Users\NTB\Domino\sustainable model\tests\BatterySimulationPiece_Outputs\battery_summary.csv

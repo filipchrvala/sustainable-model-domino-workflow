@@ -1,0 +1,20 @@
+[BatteryStrategyOptimizerPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatteryStrategyOptimizerPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatteryStrategyOptimizerPiece] Computed thresholds from rows=676
+[BatteryStrategyOptimizerPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\BatteryStrategyOptimizerPiece_Outputs\battery_strategy_recommendation.json
+[BatteryStrategyOptimizerPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatteryStrategyOptimizerPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatteryStrategyOptimizerPiece] Computed thresholds from rows=676
+[BatteryStrategyOptimizerPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\BatteryStrategyOptimizerPiece_Outputs\battery_strategy_recommendation.json
+[BatteryStrategyOptimizerPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatteryStrategyOptimizerPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatteryStrategyOptimizerPiece] Computed thresholds from rows=676
+[BatteryStrategyOptimizerPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\BatteryStrategyOptimizerPiece_Outputs\battery_strategy_recommendation.json
+[BatteryStrategyOptimizerPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\_generated\runtime_load_for_sim.csv
+[BatteryStrategyOptimizerPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\_generated\scenario.yml
+[BatteryStrategyOptimizerPiece] Computed thresholds from rows=676
+[BatteryStrategyOptimizerPiece] Wrote output: C:\Users\NTB\Domino\sustainable model\tests\BatteryStrategyOptimizerPiece_Outputs\battery_strategy_recommendation.json
+[BatteryStrategyOptimizerPiece] Input load_csv=C:\Users\NTB\Domino\sustainable-model-domino-workflow-repo\tests\_generated\runtime_load_for_sim.csv
+[BatteryStrategyOptimizerPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable-model-domino-workflow-repo\tests\_generated\scenario.yml
+[BatteryStrategyOptimizerPiece] Computed thresholds from rows=676
+[BatteryStrategyOptimizerPiece] Wrote output: C:\Users\NTB\Domino\sustainable-model-domino-workflow-repo\tests\BatteryStrategyOptimizerPiece_Outputs\battery_strategy_recommendation.json

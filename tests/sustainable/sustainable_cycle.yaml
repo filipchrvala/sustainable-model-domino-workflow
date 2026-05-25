@@ -1,0 +1,29 @@
+paths:
+  # Long-term merged history used for training and monitoring.
+  history_csv: tests/sustainable/history/energy_history.csv
+  # Optional bootstrap for first run if history CSV does not exist yet.
+  bootstrap_parquet: tests/FetchEnergyDataPiece_Outputs/merged_energy_data.parquet
+  # New company deliveries go here (csv). After processing they are moved to archive_dir.
+  updates_dir: tests/sustainable/company_drop
+  archive_dir: tests/sustainable/company_archive
+  # Per-department model registry for incremental learning.
+  model_registry_dir: tests/sustainable/model_registry
+  # Outputs for each cycle.
+  output_dir: tests/sustainable/outputs
+
+training:
+  # If a model already exists, script performs incremental update (warm-start).
+  learning_rate: 0.03
+  max_depth: 7
+  n_estimators: 500
+  subsample: 0.85
+  colsample_bytree: 0.85
+  min_child_weight: 3
+  reg_alpha: 0.05
+  reg_lambda: 1.5
+  default_step_minutes: 15
+
+anomaly_detection:
+  # Alerting is based on robust residual z-score against model expected load.
+  lookback_rows: 672
+  z_threshold: 3.5

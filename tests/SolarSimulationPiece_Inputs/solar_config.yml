@@ -1,0 +1,10 @@
+capacity_kWp: 50.0
+tilt: 35
+azimuth: 180
+site_latitude: 48.74
+site_longitude: 21.92
+efficiency: 0.9
+temp_coeff: -0.004
+site_altitude: 200
+module_name: Canadian_Solar_CS6X_300M__2013_
+inverter_name: ABB__MICRO_0_25_I_OUTD_US_208__208V_

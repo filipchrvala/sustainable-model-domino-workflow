@@ -1,0 +1,160 @@
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=manual, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=35041
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=35041
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=35041
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=35041
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=35041
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=manual, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=35041
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=35041
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=manual, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=35041
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable model\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable model\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable model\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable-model-domino-workflow-repo\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable-model-domino-workflow-repo\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable-model-domino-workflow-repo\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=35041
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable-model-domino-workflow-repo\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable-model-domino-workflow-repo\tests\SizingOptimizationPiece_Output\sizing_optimization.json
+[SizingOptimizationPiece] Input load_csv=C:\Users\NTB\Domino\sustainable-model-domino-workflow-repo\tests\UserInputPiece_Output\load_and_prices_merged.csv
+[SizingOptimizationPiece] Input scenario_yaml=C:\Users\NTB\Domino\sustainable-model-domino-workflow-repo\tests\UserInputPiece_Output\scenario_resolved.yaml
+[SizingOptimizationPiece] Input technical_limits_json=C:\Users\NTB\Domino\sustainable-model-domino-workflow-repo\tests\TechnicalLimitsPiece_Output\technical_limits.json
+[SizingOptimizationPiece] Resolved selection_mode=auto, rows=676
+[SizingOptimizationPiece] Wrote outputs: C:\Users\NTB\Domino\sustainable-model-domino-workflow-repo\tests\SizingOptimizationPiece_Output\scenario_sized.yaml, C:\Users\NTB\Domino\sustainable-model-domino-workflow-repo\tests\SizingOptimizationPiece_Output\sizing_optimization.json

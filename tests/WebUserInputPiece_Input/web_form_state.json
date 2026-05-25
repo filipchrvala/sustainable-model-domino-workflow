@@ -1,0 +1,221 @@
+{
+  "format": "web_user_input_v1",
+  "saved_at_utc": "2026-05-16T11:13:02.793140+00:00",
+  "project_options": {
+    "include_solar_pv": true,
+    "include_battery": true
+  },
+  "constraints": {
+    "site_name": "Demo plant",
+    "site": {
+      "latitude": 48.17,
+      "longitude": 17.07,
+      "country": "SK"
+    },
+    "installation": {
+      "mount_type": "roof",
+      "roof_shape": "pitched",
+      "roof_tilt_deg": 15,
+      "orientation_deg": 180,
+      "shading": "low",
+      "priority": "balanced",
+      "allow_bifacial": true,
+      "notes": ""
+    },
+    "target_payback_years": 8.0,
+    "max_roof_area_m2": 8000.0,
+    "max_ground_area_m2": 0,
+    "max_battery_area_m2": 400.0,
+    "annual_load_mwh": 1446.671,
+    "min_pv_kwp": 0,
+    "roof_load_limit_kg_per_m2": 120,
+    "max_capex_eur": 0,
+    "search": {
+      "kwp_step": 50,
+      "kwh_step": 25,
+      "kwp_min": 0,
+      "kwh_min": 0
+    },
+    "annual_load_mwh_from": "csv"
+  },
+  "economics": {
+    "currency": "EUR",
+    "solar": {
+      "eur_per_kwp": 900.0,
+      "yield_kwh_per_kwp_year": 1000.0,
+      "self_consumption_base": 0.45,
+      "pv_module_selection_mode": "auto",
+      "pv_module_selection": "max_power_wp",
+      "pv_module_reference_wp": 300,
+      "panel_selection_weights": {
+        "power_density": 0.22,
+        "economics": 0.18,
+        "shading_robustness": 0.18,
+        "weight_compliance": 0.14,
+        "bifacial_fit": 0.12,
+        "efficiency": 0.16
+      }
+    },
+    "battery": {
+      "eur_per_kwh": 350.0,
+      "peak_shaving_value_eur_per_kwh_year": 25
+    },
+    "electricity": {
+      "price_sensitivity_pct": 10
+    },
+    "finance": {
+      "discount_rate": 0.08,
+      "analysis_years": 15,
+      "degradation_solar_per_year": 0.005
+    },
+    "emissions": {
+      "kg_co2_per_kwh_grid": 0.57
+    },
+    "layout": {
+      "kwp_per_m2_roof": 0.18,
+      "kwh_per_m2_battery_area": 2.5,
+      "roof_additional_load_kg_per_m2_max": 25
+    }
+  },
+  "scenario": {
+    "timezone": "Europe/Bratislava",
+    "timestep_minutes": 15,
+    "use_pv": true,
+    "use_battery": true,
+    "mrk": {
+      "contract_kw": 420.0,
+      "fee_eur_per_kw_month": 4.85,
+      "excess_peak_penalty_eur_per_kw": 32.0,
+      "rv_downsizing_safety_margin_pct": 8,
+      "suggested_contract_kw": 224.2
+    },
+    "analysis": {
+      "amortization_years": 15,
+      "discount_rate": 0.08,
+      "enable_trading_only_scenario": true,
+      "enable_c_rate_sweep": true,
+      "c_rate_sweep_values": [
+        0.25,
+        0.5,
+        1.0
+      ]
+    },
+    "finance": {
+      "enabled": true,
+      "o_and_m_pct_of_capex": 1.5,
+      "debt_ratio_of_capex": 0.6,
+      "debt_interest_rate": 0.05,
+      "debt_years": 10,
+      "tax_rate_pct": 21,
+      "o_and_m_eur_per_year": 0,
+      "ancillary_revenue_eur_per_year": 0
+    },
+    "pv": {
+      "installed_kwp": 400.0,
+      "specific_capex_eur_per_kwp": 900.0,
+      "yield_kwh_per_kwp_year": 1000.0
+    },
+    "battery": {
+      "energy_kwh": 400.0,
+      "max_c_rate": 0.5,
+      "charge_efficiency": 0.95,
+      "discharge_efficiency": 0.95,
+      "specific_capex_eur_per_kwh": 350.0,
+      "capacity_kWh": 0.0
+    },
+    "equipment": {
+      "selection_mode": "auto",
+      "system_scope": "pv_and_battery",
+      "auto": {
+        "objective": "max_npv",
+        "target_payback_years": 8,
+        "kwp_step": 50.0,
+        "kwh_step": 25.0,
+        "min_pv_kwp": 100.0,
+        "min_battery_kwh": 100.0,
+        "max_configurations": 180,
+        "grid_sweep": {
+          "kwp_min": 100.0,
+          "kwp_max": 1325.0,
+          "kwp_step": 50.0,
+          "kwh_min": 50.0,
+          "kwh_max": 1000.0,
+          "kwh_step": 50.0,
+          "respect_physical_bounds": false,
+          "grid_bounds_from": "csv"
+        },
+        "kwp_min": 0,
+        "kwh_min": 0
+      },
+      "constraints": {
+        "max_roof_area_m2": 8000,
+        "max_battery_area_m2": 400,
+        "max_capex_eur": 0,
+        "installation": {
+          "mount_type": "roof",
+          "shading": "low",
+          "priority": "balanced",
+          "allow_bifacial": true
+        }
+      },
+      "layout": {
+        "kwp_per_m2_roof": 0.18,
+        "kwh_per_m2_battery_area": 2.5
+      }
+    },
+    "scenario_id": "workflow",
+    "description": "From WebUserInputPiece",
+    "solar": {
+      "capacity_kWp": 0.0
+    },
+    "strategy": {
+      "charge_from": "solar_excess",
+      "discharge_during": "peak_hours"
+    },
+    "time_window": {
+      "peak_hours": {
+        "start": "08:00",
+        "end": "18:00"
+      }
+    },
+    "apply_monthly": true,
+    "production": {
+      "strict_validation": false,
+      "min_sample_days": 7,
+      "max_missing_interval_share": 0.02,
+      "gap_repair_enabled": true
+    },
+    "timestep_minutes_from": "csv"
+  },
+  "solar_config": {
+    "tilt": 35,
+    "azimuth": 180,
+    "site_latitude": 48.17,
+    "site_longitude": 17.07,
+    "efficiency": 0.9,
+    "capacity_kWp": 50.0,
+    "temp_coeff": -0.004,
+    "site_altitude": 200,
+    "module_name": "Canadian_Solar_CS6X_300M__2013_",
+    "inverter_name": "ABB__MICRO_0_25_I_OUTD_US_208__208V_"
+  },
+  "investment_eval": {
+    "analysis_years": 20,
+    "discount_rate": 0.05,
+    "degradation_per_year": 0.006,
+    "solar_capex_eur": 45000.0,
+    "battery_capex_eur": 8750.0
+  },
+  "battery_config": {
+    "charge_efficiency": 0.95,
+    "discharge_efficiency": 0.95,
+    "max_c_rate": 0.5,
+    "initial_soc": 50,
+    "capacity_kWh": 0.0
+  },
+  "data": {
+    "load_csv": "C:\\Users\\NTB\\Domino\\sustainable model\\tests\\WebUserInputPiece_Input\\uploaded_load.csv",
+    "prices_csv": "",
+    "append_new_rows_to_company_drop": true
+  }
+}

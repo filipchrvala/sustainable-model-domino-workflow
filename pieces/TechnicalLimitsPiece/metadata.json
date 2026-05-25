@@ -1,0 +1,12 @@
+{
+  "name": "TechnicalLimitsPiece",
+  "description": "Compute technical PV and battery bounds from constraints",
+  "dependencies_group": "0",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "style": {
+    "node_label": "Technical Limits",
+    "icon_class_name": "fa-solid:ruler-combined"
+  }
+}

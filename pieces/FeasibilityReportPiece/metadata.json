@@ -1,0 +1,26 @@
+{
+  "name": "FeasibilityReportPiece",
+  "description": "Feasibility vs. cieľová payback, CFO JSON, dashboard_data (investment)",
+  "dependencies_group": "0",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "container_resources": {
+    "requests": {
+      "cpu": 100,
+      "memory": 256
+    },
+    "limits": {
+      "cpu": 1000,
+      "memory": 1024
+    }
+  },
+  "tags": [
+    "Alternate",
+    "Report"
+  ],
+  "style": {
+    "node_label": "FeasibilityReportPiece",
+    "icon_class_name": "fa-solid:clipboard-check"
+  }
+}

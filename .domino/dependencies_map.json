@@ -1,0 +1,34 @@
+{
+    "group0": {
+        "dependency": {
+            "dockerfile": null,
+            "requirements_file": "requirements_0.txt"
+        },
+        "pieces": [
+            "AnomalyAlertPiece",
+            "BatterySimPiece",
+            "BatteryStrategyOptimizerPiece",
+            "CatalogRankerPiece",
+            "CatalogSyncPiece",
+            "DashboardPiece",
+            "FeasibilityReportPiece",
+            "FetchEnergyDataPiece",
+            "ForecastHorizonPiece",
+            "IncrementalTrainPiece",
+            "InvestmentEvalPiece",
+            "KPIPiece",
+            "ModelMonitoringPiece",
+            "PredictPiece",
+            "PreprocessEnergyDataPiece",
+            "SimulatePiece",
+            "SizingOptimizationPiece",
+            "SolarSimPiece",
+            "SustainableIngestPiece",
+            "TechnicalLimitsPiece",
+            "TrainModelPiece",
+            "UserInputPiece",
+            "WebUserInputPiece"
+        ],
+        "secrets": []
+    }
+}

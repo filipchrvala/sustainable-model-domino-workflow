@@ -1,0 +1,15 @@
+{
+  "input_mode": "web",
+  "materialized": {
+    "workflow_user_input_json": "C:\\Users\\NTB\\Domino\\sustainable model\\tests\\user_input\\workflow_user_input.json",
+    "user_scenario_yaml": "C:\\Users\\NTB\\Domino\\sustainable model\\tests\\user_input\\scenario.yaml",
+    "load_csv": "C:\\Users\\NTB\\Domino\\sustainable model\\tests\\WebUserInputPiece_Input\\uploaded_load.csv",
+    "prices_csv": "",
+    "fetch_load_csv": "C:\\Users\\NTB\\Domino\\sustainable model\\tests\\FetchEnergyDataPiece_Inputs\\load_from_web.csv"
+  },
+  "validated": {
+    "message": "User input validated",
+    "load_csv": "C:\\Users\\NTB\\Domino\\sustainable model\\tests\\UserInputPiece_Output\\load_and_prices_merged.csv",
+    "scenario_yaml": "C:\\Users\\NTB\\Domino\\sustainable model\\tests\\UserInputPiece_Output\\scenario_resolved.yaml"
+  }
+}

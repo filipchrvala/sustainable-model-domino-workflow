@@ -1,0 +1,37 @@
+[WebUserInputPiece] Materialized workflow_user_input: C:\Users\NTB\Domino\sustainable model\tests\user_input\workflow_user_input.json
+[WebUserInputPiece] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[ERROR]
+Traceback (most recent call last):
+  File "C:\Users\NTB\Domino\sustainable model\pieces\WebUserInputPiece\piece.py", line 54, in piece_function
+    classic_out = classic.piece_function(
+  File "C:\Users\NTB\Domino\sustainable model\pieces\UserInputPiece\piece.py", line 145, in piece_function
+    raise ValueError(
+ValueError: Provide either single CSV with load_kw + price_eur_per_kwh, or two CSV files (load_csv + prices_csv).
+[WebUserInputPiece] Materialized workflow_user_input: C:\Users\NTB\Domino\sustainable model\tests\user_input\workflow_user_input.json
+[WebUserInputPiece] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[WebUserInputPiece] Materialized workflow_user_input: C:\Users\NTB\Domino\sustainable model\tests\user_input\workflow_user_input.json
+[WebUserInputPiece] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[WebUserInputPiece] Materialized workflow_user_input: C:\Users\NTB\Domino\sustainable model\tests\user_input\workflow_user_input.json
+[WebUserInputPiece] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[WebUserInputPiece] Materialized workflow_user_input: C:\Users\NTB\Domino\sustainable model\tests\user_input\workflow_user_input.json
+[WebUserInputPiece] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[WebUserInputPiece] Materialized workflow_user_input: C:\Users\NTB\Domino\sustainable model\tests\user_input\workflow_user_input.json
+[WebUserInputPiece] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[WebUserInputPiece] Materialized workflow_user_input: C:\Users\NTB\Domino\sustainable model\tests\user_input\workflow_user_input.json
+[WebUserInputPiece] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[WebUserInputPiece] Materialized workflow_user_input: C:\Users\NTB\Domino\sustainable model\tests\user_input\workflow_user_input.json
+[WebUserInputPiece] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[WebUserInputPiece] Materialized workflow_user_input: C:\Users\NTB\Domino\sustainable model\tests\user_input\workflow_user_input.json
+[WebUserInputPiece] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[WebUserInputPiece] Materialized workflow_user_input: C:\Users\NTB\Domino\sustainable model\tests\user_input\workflow_user_input.json
+[WebUserInputPiece] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[WebUserInputPiece] Materialized workflow_user_input: C:\Users\NTB\Domino\sustainable model\tests\user_input\workflow_user_input.json
+[WebUserInputPiece] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[WebUserInputPiece] Materialized workflow_user_input: C:\Users\NTB\Domino\sustainable model\tests\user_input\workflow_user_input.json
+[WebUserInputPiece] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[WebUserInputPiece] Materialized workflow_user_input: C:\Users\NTB\Domino\sustainable model\tests\user_input\workflow_user_input.json
+[WebUserInputPiece] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[WebUserInputPiece] Materialized workflow_user_input: C:\Users\NTB\Domino\sustainable model\tests\user_input\workflow_user_input.json
+[WebUserInputPiece] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv
+[WebUserInputPiece] Materialized workflow_user_input: C:\Users\NTB\Domino\sustainable model\tests\user_input\workflow_user_input.json
+[WebUserInputPiece] Load CSV: C:\Users\NTB\Domino\sustainable model\tests\WebUserInputPiece_Input\uploaded_load.csv

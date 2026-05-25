@@ -1,0 +1,12 @@
+{
+  "name": "SizingOptimizationPiece",
+  "description": "Auto/manual sizing for PV and battery",
+  "dependencies_group": "0",
+  "dependency": {
+    "requirements_file": "requirements_0.txt"
+  },
+  "style": {
+    "node_label": "Sizing Optimization",
+    "icon_class_name": "fa-solid:chart-line"
+  }
+}

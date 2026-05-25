@@ -1,0 +1,35 @@
+{
+  "departments": [
+    {
+      "department_id": "A",
+      "psi_load": 3.1546,
+      "psi_residual": 0.3811,
+      "residual_mean_shift_kw": 0.0577,
+      "state": "critical"
+    },
+    {
+      "department_id": "B",
+      "psi_load": 2.3409,
+      "psi_residual": 0.4807,
+      "residual_mean_shift_kw": 0.1294,
+      "state": "critical"
+    },
+    {
+      "department_id": "C",
+      "psi_load": 2.4918,
+      "psi_residual": 0.5626,
+      "residual_mean_shift_kw": 0.201,
+      "state": "critical"
+    },
+    {
+      "department_id": "D",
+      "psi_load": 1.2162,
+      "psi_residual": 0.3631,
+      "residual_mean_shift_kw": 0.0026,
+      "state": "critical"
+    }
+  ],
+  "critical_count": 4,
+  "warning_count": 0,
+  "ok_count": 0
+}
