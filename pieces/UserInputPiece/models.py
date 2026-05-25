@@ -11,3 +11,4 @@ class OutputModel(BaseModel):
     message: str
     load_csv: str
     scenario_yaml: str
+    workflow_user_input_json: str

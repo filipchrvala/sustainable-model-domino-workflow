@@ -1,20 +1,16 @@
 from __future__ import annotations
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class InputModel(BaseModel):
-    constraints: dict
-    economics: dict
-    best_kwp: float
-    best_kwh: float
-    best_payback_years: float
-    best_annual_savings_eur: float
-    best_capex_eur: float
-    best_npv_eur: float
-    grid: list[dict]
-    # Po full run: riadok z investment_evaluation.csv (KPI → časová simulácia)
-    simulation_metrics: dict | None = None
+    workflow_user_input_json: str = Field(description="Path to workflow_user_input.json")
+    sized_scenario_yaml: str = Field(description="Path to sized scenario YAML")
+    sizing_optimization_json: str = Field(description="Path to sizing optimization JSON")
+    investment_evaluation_csv: str = Field(
+        default="",
+        description="Optional path to investment_evaluation.csv for simulation-backed metrics",
+    )
 
 
 class OutputModel(BaseModel):

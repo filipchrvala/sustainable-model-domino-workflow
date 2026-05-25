@@ -9,25 +9,25 @@
   "annual_savings_eur": 10726.08,
   "capex_eur": 125000.0,
   "parametric_estimate": {
-    "payback_years": -1.0,
-    "annual_savings_eur": 0.0,
-    "npv_eur": 0.0,
+    "payback_years": 11.654,
+    "annual_savings_eur": 10726.08,
+    "npv_eur": -33190.38,
     "capex_eur": 125000.0,
     "label": "Parametrická mriežka (pieces/kit/economics – pred časovou simuláciou)"
   },
   "simulation": {
     "annual_savings_eur": 10726.08,
     "simple_payback_years": 11.654,
-    "npv_eur": 0.0,
+    "npv_eur": -33190.38,
     "total_capex_eur": 125000.0,
-    "solar_capex_eur": 0.0,
+    "solar_capex_eur": 90000.0,
     "battery_capex_eur": 35000.0,
     "solar_lcoe_eur_per_mwh": 0.0,
     "annual_co2_saved_ton": 0.0,
     "battery_cycles_est": 0.25
   },
   "cfo_notes": {
-    "scenario_summary": "Cieľová návratnosť **8.0 r.**: **NESPLNITEĽNÉ** podľa **časovej simulácie** (KPI → InvestmentEval). Payback **11.65 r.** | ročná úspora **10,726 €**. Mriežkový odhad (pred simuláciou) bol payback **-1.00 r.** (100 kWp + 100 kWh). Min. payback v prehľadávanej mriežke (orientačný): **9.04 r.**",
+    "scenario_summary": "Cieľová návratnosť **8.0 r.**: **NESPLNITEĽNÉ** podľa **časovej simulácie** (KPI → InvestmentEval). Payback **11.65 r.** | ročná úspora **10,726 €**. Mriežkový odhad (pred simuláciou) bol payback **11.65 r.** (100 kWp + 100 kWh). Min. payback v prehľadávanej mriežke (orientačný): **9.04 r.**",
     "sensitivity_matrix": [
       {
         "scenario": "Základ (simulácia alebo mriežka)",
@@ -67,7 +67,7 @@
     ],
     "sensitivity_hint": "Tabuľka: šoky ± na ročnej úspore a CAPEX (orientačné). Detailnejšiu tarifu doplň v vstupoch / časovej simulácii.",
     "estimated_co2_avoided_tons_year": 0.0,
-    "npv_eur_at_best": 0.0,
+    "npv_eur_at_best": -33190.38,
     "recommended_pv_hardware": {
       "catalog_module_count": 5,
       "catalog_source": "catalog/pv_modules_catalog.json",

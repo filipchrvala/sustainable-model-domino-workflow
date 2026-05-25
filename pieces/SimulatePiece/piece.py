@@ -1712,6 +1712,8 @@ class SimulatePiece(BasePiece):
         _log(f"Input load_csv={csv_path}")
         _log(f"Input scenario_yaml={scenario_path}")
         _log(f"Input output_dir={input_data.output_dir}")
+        _log(f"Input virtual_battery_soc_csv={input_data.virtual_battery_soc_csv}")
+        _log(f"Input battery_summary_csv={input_data.battery_summary_csv}")
         if not csv_path.is_file():
             raise FileNotFoundError(f"Load CSV not found: {csv_path}")
         if not scenario_path.is_file():
@@ -1770,6 +1772,23 @@ class SimulatePiece(BasePiece):
                 "warnings": sync.get("warnings") or [],
                 "manifest_path": str(manifest),
             }
+            report_path.write_text(json.dumps(rep, indent=2, ensure_ascii=False), encoding="utf-8")
+
+        battery_soc_path = Path(input_data.virtual_battery_soc_csv) if input_data.virtual_battery_soc_csv else None
+        battery_summary_path = Path(input_data.battery_summary_csv) if input_data.battery_summary_csv else None
+        if (battery_soc_path and battery_soc_path.is_file()) or (battery_summary_path and battery_summary_path.is_file()):
+            rep = json.loads(report_path.read_text(encoding="utf-8"))
+            artifacts = rep.setdefault("artifacts", {})
+            if battery_soc_path and battery_soc_path.is_file():
+                artifacts["virtual_battery_soc_csv"] = str(battery_soc_path)
+            if battery_summary_path and battery_summary_path.is_file():
+                artifacts["battery_summary_csv"] = str(battery_summary_path)
+                try:
+                    battery_summary = pd.read_csv(battery_summary_path)
+                    if not battery_summary.empty:
+                        rep["battery_summary"] = battery_summary.iloc[0].to_dict()
+                except Exception:
+                    pass
             report_path.write_text(json.dumps(rep, indent=2, ensure_ascii=False), encoding="utf-8")
 
         rep = json.loads(report_path.read_text(encoding="utf-8"))

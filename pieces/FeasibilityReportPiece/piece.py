@@ -194,6 +194,84 @@ def verify_module_keys_for_simulation(sam_key: str | None, cec_key: str | None) 
     return False, "Chýba sam_key aj cec_key pre overenie voči pvlib."
 
 
+def _load_workflow_context(path: Path) -> tuple[dict[str, Any], dict[str, Any]]:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    user_block = payload.get("UserInputPiece") or {}
+    constraints = dict(user_block.get("constraints") or {})
+    economics = dict(user_block.get("economics") or {})
+    return constraints, economics
+
+
+def _load_sizing_context(sized_scenario_yaml: Path, sizing_optimization_json: Path) -> dict[str, Any]:
+    sized_cfg = json.loads(json.dumps({}))
+    if sized_scenario_yaml.is_file():
+        import yaml
+
+        sized_cfg = yaml.safe_load(sized_scenario_yaml.read_text(encoding="utf-8")) or {}
+    sizing_payload = json.loads(sizing_optimization_json.read_text(encoding="utf-8"))
+    auto = sizing_payload.get("auto_optimization") or {}
+    grid = list(auto.get("grid") or [])
+    best_kwp = float(((sized_cfg.get("pv") or {}).get("installed_kwp") or 0.0))
+    best_kwh = float(((sized_cfg.get("battery") or {}).get("energy_kwh") or 0.0))
+    selected = next(
+        (
+            row
+            for row in grid
+            if abs(float(row.get("kwp", row.get("fve_kwp", 0.0))) - best_kwp) < 1e-6
+            and abs(float(row.get("kwh", row.get("bateria_kwh", 0.0))) - best_kwh) < 1e-6
+        ),
+        {},
+    )
+    return {
+        "best_kwp": best_kwp,
+        "best_kwh": best_kwh,
+        "best_payback_years": float(selected.get("payback_years", selected.get("simple_payback_years", -1.0))),
+        "best_annual_savings_eur": float(selected.get("annual_operating_savings_eur", 0.0)),
+        "best_capex_eur": float(selected.get("total_capex_eur", 0.0)),
+        "best_npv_eur": float(selected.get("npv_eur", 0.0)),
+        "grid": grid,
+    }
+
+
+def _load_simulation_metrics(path: Path) -> dict[str, Any] | None:
+    if not path.is_file():
+        return None
+    df = pd.read_csv(path)
+    if df.empty:
+        return None
+    row = df.iloc[0]
+
+    def _get_float(key: str, default: float = 0.0) -> float:
+        value = row.get(key)
+        if value is None or (isinstance(value, float) and pd.isna(value)):
+            return default
+        try:
+            return float(value)
+        except (TypeError, ValueError):
+            return default
+
+    battery_cycles = row.get("battery_cycles_est")
+    if battery_cycles is not None and not (isinstance(battery_cycles, float) and pd.isna(battery_cycles)):
+        try:
+            battery_cycles = float(battery_cycles)
+        except (TypeError, ValueError):
+            battery_cycles = None
+    else:
+        battery_cycles = None
+
+    return {
+        "annual_savings_eur": _get_float("annual_savings_eur"),
+        "simple_payback_years": _get_float("simple_payback_years", 999.0),
+        "npv_eur": _get_float("npv_operating_eur"),
+        "total_capex_eur": _get_float("total_capex_eur"),
+        "solar_capex_eur": _get_float("pv_capex_eur"),
+        "battery_capex_eur": _get_float("battery_capex_eur"),
+        "solar_lcoe_eur_per_mwh": _get_float("solar_lcoe_eur_per_mwh"),
+        "annual_co2_saved_ton": _get_float("annual_co2_saved_ton"),
+        "battery_cycles_est": battery_cycles,
+    }
+
+
 class FeasibilityReportPiece(BasePiece):
     """Porovná výsledok s cieľovou payback; doplní text pre CFO a uloží JSON."""
 
@@ -209,24 +287,35 @@ class FeasibilityReportPiece(BasePiece):
         log_path = out_dir / "feasibility_report.log"
         err_path = out_dir / "feasibility_report_error.txt"
         try:
-            c = input_data.constraints
-            e = input_data.economics
+            workflow_input_path = Path(input_data.workflow_user_input_json)
+            sized_scenario_path = Path(input_data.sized_scenario_yaml)
+            sizing_json_path = Path(input_data.sizing_optimization_json)
+            investment_eval_path = Path(input_data.investment_evaluation_csv) if input_data.investment_evaluation_csv else None
+            if not workflow_input_path.is_file():
+                raise FileNotFoundError(f"workflow_user_input.json not found: {workflow_input_path}")
+            if not sized_scenario_path.is_file():
+                raise FileNotFoundError(f"Sized scenario YAML not found: {sized_scenario_path}")
+            if not sizing_json_path.is_file():
+                raise FileNotFoundError(f"Sizing optimization JSON not found: {sizing_json_path}")
+
+            c, e = _load_workflow_context(workflow_input_path)
+            sizing_ctx = _load_sizing_context(sized_scenario_path, sizing_json_path)
             fin = e.get("finance") or {}
             years = int(fin.get("analysis_years", 15))
             dr = float(fin.get("discount_rate", 0.08))
             sens_pct = float(e.get("electricity", {}).get("price_sensitivity_pct", 10))
 
             target = float(c.get("target_payback_years", 99))
-            grid = input_data.grid
+            grid = sizing_ctx["grid"]
             finite_pbs = [row["payback_years"] for row in grid if row.get("payback_years") is not None]
             min_pb = min(finite_pbs) if finite_pbs else None
 
-            parametric_pb = float(input_data.best_payback_years)
-            parametric_sav = float(input_data.best_annual_savings_eur)
-            parametric_npv = float(input_data.best_npv_eur)
-            parametric_capex = float(input_data.best_capex_eur)
+            parametric_pb = float(sizing_ctx["best_payback_years"])
+            parametric_sav = float(sizing_ctx["best_annual_savings_eur"])
+            parametric_npv = float(sizing_ctx["best_npv_eur"])
+            parametric_capex = float(sizing_ctx["best_capex_eur"])
 
-            sim = input_data.simulation_metrics
+            sim = _load_simulation_metrics(investment_eval_path) if investment_eval_path else None
             if sim and sim.get("annual_savings_eur") is not None:
                 achieved_pb = float(sim["simple_payback_years"])
                 achieved_sav = float(sim["annual_savings_eur"])
@@ -239,7 +328,7 @@ class FeasibilityReportPiece(BasePiece):
                     f"podľa **časovej simulácie** (KPI → InvestmentEval). "
                     f"Payback **{achieved_pb:.2f} r.** | ročná úspora **{achieved_sav:,.0f} €**. "
                     f"Mriežkový odhad (pred simuláciou) bol payback **{parametric_pb:.2f} r.** "
-                    f"({input_data.best_kwp:.0f} kWp + {input_data.best_kwh:.0f} kWh)."
+                    f"({sizing_ctx['best_kwp']:.0f} kWp + {sizing_ctx['best_kwh']:.0f} kWh)."
                 )
                 if not feasible and min_pb is not None:
                     msg += f" Min. payback v prehľadávanej mriežke (orientačný): **{min_pb:.2f} r.**"
@@ -254,7 +343,7 @@ class FeasibilityReportPiece(BasePiece):
                     feasible = False
                 msg = (
                     f"Cieľová návratnosť {target} r.: {'SPLNITEĽNÉ' if feasible else 'NESPLNITEĽNÉ'}. "
-                    f"Najlepší návrh v mriežke: {input_data.best_kwp:.0f} kWp, {input_data.best_kwh:.0f} kWh, "
+                    f"Najlepší návrh v mriežke: {sizing_ctx['best_kwp']:.0f} kWp, {sizing_ctx['best_kwh']:.0f} kWh, "
                     f"payback {achieved_pb:.2f} r. (parametrický model, bez časovej simulácie v tomto behu)."
                 )
                 if not feasible and min_pb is not None:
@@ -262,15 +351,15 @@ class FeasibilityReportPiece(BasePiece):
 
             solar = e.get("solar", {})
             yield_kwp = float(solar.get("yield_kwh_per_kwp_year", 1000))
-            annual_pv_mwh = input_data.best_kwp * yield_kwp / 1000.0
+            annual_pv_mwh = float(sizing_ctx["best_kwp"]) * yield_kwp / 1000.0
             kg = float(e.get("emissions", {}).get("kg_co2_per_kwh_grid", 0.57))
             if sim and sim.get("annual_co2_saved_ton") is not None:
                 co2_tons = float(sim["annual_co2_saved_ton"])
             else:
                 co2_tons = co2_tons_year(annual_pv_mwh, kg)
 
-            pv_hw = recommend_pv_system(input_data.best_kwp, constraints=c, economics=e)
-            batt_hw = recommend_battery_system(input_data.best_kwh)
+            pv_hw = recommend_pv_system(float(sizing_ctx["best_kwp"]), constraints=c, economics=e)
+            batt_hw = recommend_battery_system(float(sizing_ctx["best_kwh"]))
             ok_key, key_msg = verify_module_keys_for_simulation(pv_hw.get("sam_key"), pv_hw.get("cec_key"))
             if not ok_key:
                 pv_hw["sam_verify_warning"] = key_msg or "Modul bez platného kľúča v pvlib (CEC/Sandia)."
@@ -306,8 +395,8 @@ class FeasibilityReportPiece(BasePiece):
                 "model_basis": model_basis,
                 "feasible": feasible,
                 "target_payback_years": target,
-                "recommended_kwp": input_data.best_kwp,
-                "recommended_kwh": input_data.best_kwh,
+                "recommended_kwp": sizing_ctx["best_kwp"],
+                "recommended_kwh": sizing_ctx["best_kwh"],
                 "achieved_payback_years": achieved_pb if math.isfinite(achieved_pb) else None,
                 "minimum_payback_in_search_space_years": min_pb,
                 "annual_savings_eur": round(achieved_sav, 2),
@@ -344,8 +433,8 @@ class FeasibilityReportPiece(BasePiece):
             return OutputModel(
                 feasible=feasible,
                 target_payback_years=target,
-                recommended_kwp=input_data.best_kwp,
-                recommended_kwh=input_data.best_kwh,
+                recommended_kwp=float(sizing_ctx["best_kwp"]),
+                recommended_kwh=float(sizing_ctx["best_kwh"]),
                 achieved_payback_years=achieved_pb if math.isfinite(achieved_pb) else -1.0,
                 minimum_payback_in_search_space_years=min_pb if min_pb is not None else -1.0,
                 message=msg,

@@ -96,6 +96,8 @@ class UserInputPiece(BasePiece):
         return repaired, filled
 
     def piece_function(self, input_data: InputModel) -> OutputModel:
+        from workflow import paths as P
+
         load_csv = Path(input_data.load_csv)
         prices_csv = Path(input_data.prices_csv) if input_data.prices_csv else None
         scenario_yaml = Path(input_data.scenario_yaml)
@@ -222,9 +224,15 @@ class UserInputPiece(BasePiece):
         (out_dir / "user_input_validated.json").write_text(
             json.dumps(summary["resolved_paths"], indent=2, ensure_ascii=False), encoding="utf-8"
         )
+        workflow_input_copy = out_dir / "workflow_user_input.json"
+        if P.WORKFLOW_USER_INPUT_JSON.is_file():
+            shutil.copy2(P.WORKFLOW_USER_INPUT_JSON, workflow_input_copy)
+        else:
+            workflow_input_copy.write_text("{}", encoding="utf-8")
 
         return OutputModel(
             message="User input validated",
             load_csv=str(merged_path),
             scenario_yaml=str(scenario_copy),
+            workflow_user_input_json=str(workflow_input_copy),
         )

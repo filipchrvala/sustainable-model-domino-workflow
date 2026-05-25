@@ -1,5 +1,6 @@
 {
   "message": "User input validated",
   "load_csv": "C:\\Users\\NTB\\Domino\\sustainable-model-domino-workflow-repo\\tests\\UserInputPiece_Output\\load_and_prices_merged.csv",
-  "scenario_yaml": "C:\\Users\\NTB\\Domino\\sustainable-model-domino-workflow-repo\\tests\\UserInputPiece_Output\\scenario_resolved.yaml"
+  "scenario_yaml": "C:\\Users\\NTB\\Domino\\sustainable-model-domino-workflow-repo\\tests\\UserInputPiece_Output\\scenario_resolved.yaml",
+  "workflow_user_input_json": "C:\\Users\\NTB\\Domino\\sustainable-model-domino-workflow-repo\\tests\\UserInputPiece_Output\\workflow_user_input.json"
 }

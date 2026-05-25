@@ -443,6 +443,7 @@ def step_simulate() -> None:
     load_csv = _predictions_to_load_csv(P.STAGING_SIM / "load_for_sim.csv")
     shutil.copy2(P.VIRTUAL_SOLAR_CSV, P.STAGING_SIM / "virtual_solar.csv")
     shutil.copy2(P.VIRTUAL_BATTERY_SOC_CSV, P.STAGING_SIM / "virtual_battery_soc.csv")
+    battery_summary_csv = P.OUT_BATTERY / "battery_summary.csv"
     scenario, _ = _ensure_generated_battery_files()
     shutil.copy2(scenario, P.STAGING_SIM / "scenario.yml")
 
@@ -458,6 +459,8 @@ def step_simulate() -> None:
             load_csv=str(load_csv),
             scenario_yaml=str(P.STAGING_SIM / "scenario.yml"),
             output_dir=str(P.OUT_SIMULATE),
+            virtual_battery_soc_csv=str(P.STAGING_SIM / "virtual_battery_soc.csv"),
+            battery_summary_csv=str(battery_summary_csv) if battery_summary_csv.is_file() else "",
             battery_strategy_recommendation_json=str(strategy_json) if strategy_json.is_file() else "",
         )
     )
@@ -790,13 +793,14 @@ def step_feasibility_report(
     use_simulation_outputs: bool = False,
 ) -> None:
     """FeasibilityReportPiece - panel/battery catalog and dashboard JSON (after KPI/Investment)."""
+    del constraints, economics, szo
     if str(root) not in sys.path:
         sys.path.insert(0, str(root))
 
     from pieces.FeasibilityReportPiece.models import InputModel as FRInput
     from pieces.FeasibilityReportPiece.piece import FeasibilityReportPiece
 
-    sim_metrics: dict[str, Any] | None = None
+    investment_eval_csv = str(P.INVESTMENT_EVAL_CSV) if use_simulation_outputs else ""
     if use_simulation_outputs:
         sim_metrics = _load_investment_eval_metrics()
         if sim_metrics is None:
@@ -804,20 +808,15 @@ def step_feasibility_report(
                 "use_simulation_outputs=True but %s is missing - feasibility remains parametric.",
                 P.INVESTMENT_EVAL_CSV,
             )
+            investment_eval_csv = ""
 
     fr = FeasibilityReportPiece.__new__(FeasibilityReportPiece)
     fr.results_path = str(P.OUT_FEASIBILITY)
     fr_input = FRInput(
-        constraints=constraints,
-        economics=economics,
-        best_kwp=szo.best_kwp,
-        best_kwh=szo.best_kwh,
-        best_payback_years=szo.best_payback_years,
-        best_annual_savings_eur=szo.best_annual_savings_eur,
-        best_capex_eur=szo.best_capex_eur,
-        best_npv_eur=szo.best_npv_eur,
-        grid=szo.grid,
-        simulation_metrics=sim_metrics,
+        workflow_user_input_json=str(P.OUT_USER_INPUT / "workflow_user_input.json"),
+        sized_scenario_yaml=str(P.OUT_SIZING_OPT / "scenario_sized.yaml"),
+        sizing_optimization_json=str(P.OUT_SIZING_OPT / "sizing_optimization.json"),
+        investment_evaluation_csv=investment_eval_csv,
     )
     _write_piece_json(P.IN_FEASIBILITY, "feasibility_report_input.json", fr_input.model_dump())
     fr.piece_function(fr_input)

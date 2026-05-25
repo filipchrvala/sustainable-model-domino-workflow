@@ -1,7 +1,7 @@
 {
   "meta": {
     "schema_version": "mrk_report_v2",
-    "run_id": "4e632d8c-794b-449e-a9b7-e42c2a21c4ca",
+    "run_id": "589de696-db24-48d5-8a10-841076eae205",
     "csv": "C:\\Users\\NTB\\Domino\\sustainable-model-domino-workflow-repo\\tests\\_staging\\simulate\\load_for_sim.csv",
     "scenario": "C:\\Users\\NTB\\Domino\\sustainable-model-domino-workflow-repo\\tests\\_staging\\simulate\\scenario.yml",
     "intervals": 676,
@@ -2615,7 +2615,9 @@
   ],
   "artifacts": {
     "baseline_vs_optimized_profile_csv": "C:\\Users\\NTB\\Domino\\sustainable-model-domino-workflow-repo\\tests\\SimulatePiece_Outputs\\baseline_vs_optimized_profile.csv",
-    "optimized_scenario_label": "pv_and_battery"
+    "optimized_scenario_label": "pv_and_battery",
+    "virtual_battery_soc_csv": "C:\\Users\\NTB\\Domino\\sustainable-model-domino-workflow-repo\\tests\\_staging\\simulate\\virtual_battery_soc.csv",
+    "battery_summary_csv": "C:\\Users\\NTB\\Domino\\sustainable-model-domino-workflow-repo\\tests\\BatterySimPiece_Outputs\\battery_summary.csv"
   },
   "trading_only_analysis": {
     "scenario": {
@@ -2656,5 +2658,10 @@
       "tax_rate_pct": 21.0,
       "ancillary_revenue_eur_per_year": 0.0
     }
+  },
+  "battery_summary": {
+    "capacity_kWh": 100.0,
+    "cycles_equivalent": 5.3533,
+    "energy_throughput_MWh": 1.0707
   }
 }
