@@ -112,6 +112,115 @@ def _safe_roll(loads: np.ndarray, i: int, w: int) -> tuple[float, float]:
     return float(hist.mean()), float(hist.std(ddof=0))
 
 
+def _to_numeric_series(s: pd.Series) -> pd.Series:
+    return pd.to_numeric(s.astype(str).str.replace(",", ".", regex=False), errors="coerce")
+
+
+def _pick_datetime_column(df: pd.DataFrame) -> str | None:
+    aliases = {"datetime", "date time", "date_time", "timestamp", "time"}
+    for c in df.columns:
+        if str(c).replace("\ufeff", "").strip().lower() in aliases:
+            return c
+    return None
+
+
+def _read_load_csv(path: Path) -> pd.DataFrame:
+    raw = pd.read_csv(path, sep=None, engine="python")
+    if len(raw.columns) == 1 and ";" in str(raw.columns[0]):
+        raw = pd.read_csv(path, sep=";")
+
+    dt_col = _pick_datetime_column(raw)
+    if dt_col is None:
+        raise ValueError(f"{path.name}: missing datetime column")
+
+    df = raw.copy()
+    dt_raw = df[dt_col].astype(str).str.strip()
+    dt = pd.to_datetime(dt_raw, format="%d.%m.%y %H:%M", errors="coerce")
+    if dt.isna().all():
+        dt = pd.to_datetime(dt_raw, dayfirst=True, errors="coerce")
+    df["datetime"] = dt
+    df = df.dropna(subset=["datetime"])
+    if dt_col != "datetime":
+        df = df.drop(columns=[dt_col])
+
+    if "load_kw" in df.columns:
+        df["load_kw"] = _to_numeric_series(df["load_kw"]).fillna(0.0)
+        if "department_id" not in df.columns:
+            dept = path.stem.replace("load_", "")
+            df["department_id"] = "default" if dept == "load" else dept
+        return df[["datetime", "department_id", "load_kw"]]
+
+    reserved = {"department_id", "price_eur_kwh", "price_eur_per_kwh", "price_eur_mwh"}
+    value_cols = [c for c in df.columns if c not in reserved]
+    if not value_cols:
+        raise ValueError(f"{path.name}: no load columns found")
+    long = df.melt(
+        id_vars=["datetime"],
+        value_vars=value_cols,
+        var_name="department_id",
+        value_name="load_kw",
+    )
+    long["department_id"] = long["department_id"].astype(str).str.strip().str.replace("prikon ", "", case=False)
+    long["load_kw"] = _to_numeric_series(long["load_kw"]).fillna(0.0)
+    return long[["datetime", "department_id", "load_kw"]]
+
+
+def _generate_prediction_input_from_load(load_path: Path, out_path: Path) -> Path:
+    n_future = 7 * 96
+    future_start = pd.Timestamp("2025-07-01 00:00:00")
+    future_dt = pd.date_range(future_start, periods=n_future, freq="15min")
+    hours = future_dt.hour.values
+    price = 0.07 + 0.035 * ((hours >= 7) & (hours <= 20))
+    price = np.clip(price, 0.06, 0.15)
+    future_base = pd.DataFrame({"datetime": future_dt, "load_kw": 0.0, "price_eur_per_kwh": price})
+
+    load_all = _read_load_csv(load_path).sort_values(["department_id", "datetime"]).reset_index(drop=True)
+    parts: list[pd.DataFrame] = []
+    for dept, group in load_all.groupby("department_id", sort=False):
+        dept_id = str(dept)
+        group = group.sort_values("datetime").reset_index(drop=True)
+        if len(group) < 4:
+            continue
+        bridge = group.tail(4)[["datetime", "load_kw"]].copy()
+        bridge["datetime"] = pd.date_range(
+            end=future_start - pd.Timedelta(minutes=15),
+            periods=4,
+            freq="15min",
+        )
+        bridge["price_eur_per_kwh"] = 0.085
+        bridge["department_id"] = dept_id
+
+        future = future_base.copy()
+        future["department_id"] = dept_id
+        parts.append(pd.concat([bridge, future], ignore_index=True))
+
+    if not parts:
+        raise RuntimeError(f"No valid department data found for prediction fallback: {load_path}")
+
+    out = pd.concat(parts, ignore_index=True).sort_values(["department_id", "datetime"]).reset_index(drop=True)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out.to_csv(out_path, index=False)
+    return out_path
+
+
+def _resolve_prediction_data_path(requested_path: Path, results_dir: Path) -> Path:
+    if requested_path.exists():
+        return requested_path
+
+    candidate_loads = [
+        requested_path.parent / "load.csv",
+        requested_path.parent / "load_and_prices.csv",
+    ]
+    for load_path in candidate_loads:
+        if load_path.is_file():
+            try:
+                return _generate_prediction_input_from_load(load_path, requested_path)
+            except OSError:
+                fallback_path = results_dir / requested_path.name
+                return _generate_prediction_input_from_load(load_path, fallback_path)
+    raise FileNotFoundError(f"Prediction data not found: {requested_path}")
+
+
 class PredictPiece(BasePiece):
 
     def piece_function(self, input_data: InputModel) -> OutputModel:
@@ -125,13 +234,11 @@ class PredictPiece(BasePiece):
             print(f"[INFO] Data path: {input_data.data_path}")
 
             model_path = Path(input_data.model_path)
-            data_path = Path(input_data.data_path)
+            data_path = _resolve_prediction_data_path(Path(input_data.data_path), results_dir)
 
             if not model_path.exists():
                 raise FileNotFoundError(f"Model not found: {model_path}")
-
-            if not data_path.exists():
-                raise FileNotFoundError(f"Prediction data not found: {data_path}")
+            print(f"[INFO] Resolved prediction data path: {data_path}")
 
             model = joblib.load(model_path)
             shift_profile = _load_shift_profile(model_path)

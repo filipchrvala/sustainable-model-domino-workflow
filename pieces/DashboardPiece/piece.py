@@ -17,6 +17,15 @@ except ImportError:
     from .models import METRIC_HELP, InputModel, OutputModel
 
 
+def _read_optional_csv(path: Path | None) -> pd.DataFrame:
+    if path is None or not path.is_file():
+        return pd.DataFrame()
+    try:
+        return pd.read_csv(path)
+    except pd.errors.EmptyDataError:
+        return pd.DataFrame()
+
+
 def render_kpi_metric(column, label: str, value: str, help_key: str, *, widget_key: str) -> None:
     """Metrika s viditeľným tlačidlom ? (popover) — help= pri st.metric býva málo viditeľné."""
     import streamlit as st
@@ -100,7 +109,7 @@ class DashboardPiece(BasePiece):
                 "drift": {},
             }
             if alerts_path and alerts_path.is_file():
-                alerts_df = pd.read_csv(alerts_path)
+                alerts_df = _read_optional_csv(alerts_path)
                 if not alerts_df.empty:
                     sev = alerts_df.get("severity", pd.Series([], dtype=str)).astype(str).str.lower()
                     alerts_block["summary"] = {
