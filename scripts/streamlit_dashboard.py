@@ -22,8 +22,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from pieces.DashboardPiece.piece import load_unified_payload, render_investment, render_unified_dashboard
-from pieces.DashboardPiece.models import METRIC_HELP
-from pieces.DashboardPiece.piece import render_kpi_metric
+from pieces.DashboardPiece.presentation_view import render_presentation_dashboard
 
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
@@ -53,9 +52,154 @@ def _maybe_auto_rerun(interval_sec: int) -> None:
         st.rerun()
 
 
+def _inject_presentation_css() -> None:
+    st.markdown(
+        """
+        <style>
+        /* Odstráni biely pruh navrchu (Streamlit toolbar / padding) */
+        header[data-testid="stHeader"] { display: none !important; }
+        [data-testid="stToolbar"] { display: none !important; }
+        [data-testid="stAppViewContainer"] {
+            background: #e8ecf1;
+            padding-top: 0 !important;
+        }
+        [data-testid="stMain"] > div:first-child {
+            padding-top: 0.5rem !important;
+        }
+        [data-testid="stMain"] .block-container {
+            max-width: 1320px;
+            padding-top: 0.25rem !important;
+            padding-bottom: 1rem;
+            font-size: 15px;
+        }
+        .cfo-header {
+            background: linear-gradient(90deg, #133667 0%, #1a4a8a 100%);
+            color: #fff;
+            padding: 1rem 1.35rem;
+            border-radius: 8px;
+            margin: 0 0 0.85rem 0;
+            box-shadow: 0 2px 12px rgba(19,54,103,0.15);
+        }
+        .cfo-header-title {
+            font-size: 1.65rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+        .cfo-header-sub {
+            font-size: 1rem;
+            opacity: 0.92;
+            margin-top: 0.35rem;
+            line-height: 1.35;
+        }
+        .cfo-tile-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.65rem;
+            margin-bottom: 0.9rem;
+        }
+        @media (max-width: 1100px) {
+            .cfo-tile-row { grid-template-columns: repeat(2, 1fr); }
+        }
+        .cfo-tile {
+            background: #f8fafc;
+            border: 1px solid #e8edf3;
+            border-radius: 8px;
+            padding: 0.6rem 0.85rem;
+            min-height: 3.6rem;
+        }
+        .cfo-tile-label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #64748b;
+            line-height: 1.25;
+        }
+        .cfo-tile-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-top: 0.2rem;
+            line-height: 1.3;
+        }
+        .cfo-section {
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #133667;
+            border-bottom: 2px solid #e6ecf4;
+            padding-bottom: 0.3rem;
+            margin: 0.55rem 0 0.45rem 0;
+        }
+        .cfo-footnote {
+            font-size: 0.92rem;
+            color: #475569;
+            line-height: 1.5;
+            margin-top: 0.75rem;
+            padding-top: 0.55rem;
+            border-top: 1px solid #e8edf3;
+        }
+        table.cfo-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        table.cfo-table th {
+            background: #f1f5f9;
+            color: #133667;
+            font-weight: 700;
+            text-align: left;
+            padding: 0.55rem 0.75rem;
+            font-size: 0.88rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        table.cfo-table td {
+            padding: 0.5rem 0.75rem;
+            border-bottom: 1px solid #eef2f6;
+            color: #1e293b;
+            vertical-align: top;
+        }
+        table.cfo-table td.val {
+            font-weight: 600;
+            text-align: right;
+            white-space: nowrap;
+        }
+        table.cfo-table tr:nth-child(even) td { background: #fafbfc; }
+        table.cfo-table tr:last-child td { border-bottom: none; }
+        [data-testid="stMetric"] {
+            background: #f8fafc;
+            border: 1px solid #e8edf3;
+            border-radius: 8px;
+            padding: 0.45rem 0.65rem;
+        }
+        [data-testid="stMetricLabel"] {
+            font-size: 0.88rem !important;
+            color: #64748b !important;
+        }
+        [data-testid="stMetricValue"] {
+            font-size: 1.35rem !important;
+            color: #0f172a !important;
+        }
+        div[data-testid="stCaptionContainer"] p {
+            font-size: 0.92rem !important;
+        }
+        [data-testid="stSidebar"] { background: #f1f5f9; }
+        footer, #MainMenu { visibility: hidden; }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def _render_live_sidebar() -> int:
-    st.sidebar.header("Live data")
-    auto = st.sidebar.checkbox("Auto-refresh obrazovky", value=True)
+    st.sidebar.header("Prevádzka (live)")
+    auto = st.sidebar.checkbox("Auto-refresh obrazovky", value=False)
     interval = int(
         st.sidebar.selectbox("Interval obnovy UI (s)", options=[15, 30, 60, 120, 300], index=2)
     )
@@ -273,15 +417,42 @@ def _render_investment_legacy(payload: dict) -> None:
                 st.plotly_chart(px.scatter(dfp, **kw), use_container_width=True)
 
 
-st.set_page_config(page_title="Alternate – VRE dashboard", layout="wide")
-st.title("Alternate – integrated dashboard")
-st.caption("Pod každou metrikou je tlačidlo **?** — kliknutím zobrazíte slovenské vysvetlenie (NPV, CAPEX, kWp…).")
+st.set_page_config(
+    page_title="SPICE UC3 – Ekonomické KPI",
+    layout="wide",
+    initial_sidebar_state="collapsed",
+)
+_inject_presentation_css()
 
-_refresh_sec = _render_live_sidebar()
+presentation_mode = st.sidebar.toggle(
+    "Režim prezentácie (screenshot)",
+    value=True,
+    help="Čistý layout pre snímku obrazovky do PowerPointu.",
+)
+
+if presentation_mode:
+    st.sidebar.markdown("---")
+    st.sidebar.caption(f"Dáta: `{UNIFIED.name}`")
+    st.sidebar.caption(f"Aktualizácia: {_file_mtime_label(UNIFIED)}")
+    _refresh_sec = 0
+else:
+    _refresh_sec = _render_live_sidebar()
+
 _maybe_auto_rerun(_refresh_sec)
 
-if not render_unified_dashboard():
+raw = load_unified_payload()
+if not raw:
+    st.warning("Chýba `tests/dashboard_data.json`. Najprv spustite workflow (napr. `prepare_abcd_run.py`).")
     st.stop()
 
-st.divider()
-st.caption(f"Data: `{UNIFIED.relative_to(ROOT)}` · refresh: `python run_workflow.py`")
+if presentation_mode:
+    render_presentation_dashboard(raw)
+else:
+    st.title("SPICE UC3 · Energetický investičný prehľad")
+    st.caption("Domino workflow – investičný návrh a časová simulácia. Nájazd myšou na metriku zobrazí vysvetlenie.")
+    if not render_unified_dashboard():
+        st.stop()
+
+if not presentation_mode:
+    st.divider()
+    st.caption(f"Súbor: `{UNIFIED.relative_to(ROOT)}` · obnova: `python scripts/prepare_abcd_run.py`")

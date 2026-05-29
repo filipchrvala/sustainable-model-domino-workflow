@@ -27,14 +27,11 @@ def _read_optional_csv(path: Path | None) -> pd.DataFrame:
 
 
 def render_kpi_metric(column, label: str, value: str, help_key: str, *, widget_key: str) -> None:
-    """Metrika s viditeľným tlačidlom ? (popover) — help= pri st.metric býva málo viditeľné."""
+    """Metrika s tooltipom (bez samostatného tlačidla ?)."""
     import streamlit as st
 
     text = METRIC_HELP.get(help_key, "")
     column.metric(label, value, help=text or None)
-    if text:
-        with column.popover("?", help="Vysvetlenie ukazovateľa", key=f"kpi_pop_{widget_key}"):
-            st.markdown(text)
 
 
 class DashboardPiece(BasePiece):
@@ -1017,7 +1014,6 @@ def render_unified_dashboard() -> bool:
     gen = raw.get("generated_at_utc")
     if gen:
         st.caption(f"Posledná aktualizácia (UTC): **{gen}**")
-    st.caption("Pod každou metrikou je tlačidlo **?** — kliknutím zobrazíte slovenské vysvetlenie.")
     with st.expander("Slovník ukazovateľov", expanded=False):
         _glossary = (
             ("Úspora (obdobie)", "savings_period"),
@@ -1028,7 +1024,7 @@ def render_unified_dashboard() -> bool:
         )
         for title, key in _glossary:
             st.markdown(f"**{title}**")
-            st.caption(METRIC_HELP[key])
+            st.caption(METRIC_HELP.get(key, "—"))
 
     if raw.get("format") == "alternate_unified_v1":
         inv = raw.get("investment")

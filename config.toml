@@ -1,5 +1,5 @@
-[repository]
+﻿[repository]
 REGISTRY_NAME = "filipchrvala"
-REPOSITORY_NAME = "sustainable-model-domino-workflow"
+REPOSITORY_NAME = "UC3.3_Industry_Sg_Vre_Sustainable_Model"
 REPOSITORY_LABEL = "Sustainable Model Domino Workflow"
 VERSION = "0.1.3"
