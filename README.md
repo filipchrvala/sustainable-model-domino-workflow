@@ -57,3 +57,20 @@ Domino metadata is tracked in:
 - `.domino/dependencies_map.json`
 
 The repository is intended to expose the full sustainable workflow piece set, with workflow logic kept directly inside real piece folders.
+
+## SPICE GitLab CI / Harbor
+
+Pipeline builds and publishes piece images to Harbor on push to `main` when `config.toml` changes.
+
+Set these CI/CD variables in GitLab (Settings → CI/CD → Variables). Mark secrets as **Masked**:
+
+| Variable | Description |
+|----------|-------------|
+| `CI_PUSH_TOKEN` | Project access token with `write_repository` (+ `api`) |
+| `CI_RELEASE_TOKEN` | Project access token with `api` |
+| `CONTAINER_REGISTRY` | `harbor.testbed.spice-platform.eu` |
+| `CONTAINER_REGISTRY_USERNAME` | Harbor user/robot (e.g. `partner`) |
+| `CONTAINER_REGISTRY_PASSWORD` | Harbor password from vault |
+| `ONEDATA_ACCESS_TOKEN` | Only if onedata tests are added later |
+
+`config.toml` `REGISTRY_NAME` must use namespace `harbor.testbed.spice-platform.eu/partner/uc3`.
