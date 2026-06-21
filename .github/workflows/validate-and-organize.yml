@@ -41,12 +41,17 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run organize and build images
+        env:
+          DOCKER_CLIENT_TIMEOUT: "1200"
+          COMPOSE_HTTP_TIMEOUT: "1200"
         run: |
           domino piece organize --build-images --source-url=https://github.com/${{ github.repository }}
 
       - name: Publish images
         env:
           GHCR_USERNAME: ${{ github.actor }}
+          DOCKER_CLIENT_TIMEOUT: "1200"
+          COMPOSE_HTTP_TIMEOUT: "1200"
         run: domino piece publish-images --registry-token ${{ secrets.GITHUB_TOKEN }}
 
       - name: Commit files
