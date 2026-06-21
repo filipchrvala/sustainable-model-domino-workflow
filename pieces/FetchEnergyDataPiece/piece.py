@@ -3,9 +3,45 @@ try:
 except ModuleNotFoundError:
     from local_compat.base_piece import BasePiece
 from .models import InputModel, OutputModel
+import os
 import pandas as pd
 from pathlib import Path
 import traceback
+
+# Shared OneData I/O layer. Import works both in Domino (pieces dir on path)
+# and in local runs (repo root on path). Falls back to local-only stubs if the
+# module is somehow unavailable, so the piece never fails to import.
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
+
+def _stem(path: str) -> str:
+    return os.path.splitext(os.path.basename(str(path)))[0]
+
+
+# Thin I/O wrappers: use the shared OneData layer when present (it routes local
+# paths to pathlib/pandas unchanged), else fall back to plain local behaviour.
+def _io_isfile(path: str) -> bool:
+    return od.isfile(path) if od is not None else Path(path).is_file()
+
+
+def _io_isdir(path: str) -> bool:
+    return od.isdir(path) if od is not None else Path(path).is_dir()
+
+
+def _io_glob(directory: str, pattern: str) -> list[str]:
+    if od is not None:
+        return od.glob(directory, pattern)
+    return sorted(str(p) for p in Path(directory).glob(pattern))
+
+
+def _io_read_csv(path: str, **kwargs) -> pd.DataFrame:
+    return od.read_csv(path, **kwargs) if od is not None else pd.read_csv(path, **kwargs)
 
 
 def _to_numeric_series(s: pd.Series) -> pd.Series:
@@ -74,27 +110,32 @@ class FetchEnergyDataPiece(BasePiece):
     Load and merge energy CSV files from shared storage
     """
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
         try:
             _log(self.results_path, "[INFO] FetchEnergyDataPiece started")
             _log(self.results_path, f"[INFO] Load CSV: {input_data.load_csv}")
             _log(self.results_path, f"[INFO] Prices CSV: {input_data.prices_csv}")
 
-            load_csv = Path(input_data.load_csv)
-            prices_csv = Path(input_data.prices_csv)
+            # Configure OneData only when secrets are supplied (Domino) or env
+            # vars are set; otherwise everything stays on the local filesystem.
+            if od is not None and od.configure_onedata(secrets_data):
+                _log(self.results_path, "[INFO] OneData backend configured for inputs")
+
+            load_csv = str(input_data.load_csv)
+            prices_csv = str(input_data.prices_csv)
 
             prices_df = pd.DataFrame()
-            if prices_csv and prices_csv.is_file():
-                prices_df = pd.read_csv(prices_csv, parse_dates=["datetime"])
+            if prices_csv and _io_isfile(prices_csv):
+                prices_df = _io_read_csv(prices_csv, parse_dates=["datetime"])
                 prices_df = prices_df.set_index("datetime")
             else:
                 _log(self.results_path, "[WARN] Prices CSV not found; continuing without price columns")
 
-            if load_csv.is_dir():
-                load_files = sorted(load_csv.glob("load*.csv"))
+            if _io_isdir(load_csv):
+                load_files = _io_glob(load_csv, "load*.csv")
                 if not load_files:
-                    load_files = [p for p in sorted(load_csv.glob("*.csv")) if "price" not in p.name.lower()]
-            elif load_csv.is_file():
+                    load_files = [p for p in _io_glob(load_csv, "*.csv") if "price" not in os.path.basename(p).lower()]
+            elif _io_isfile(load_csv):
                 load_files = [load_csv]
             else:
                 load_files = []
@@ -106,10 +147,10 @@ class FetchEnergyDataPiece(BasePiece):
             _log(self.results_path, "[INFO] Reading CSV files")
             merged_parts = []
             for lf in load_files:
-                raw = pd.read_csv(lf, sep=None, engine="python")
+                raw = _io_read_csv(lf, sep=None, engine="python")
                 if len(raw.columns) == 1 and ";" in str(raw.columns[0]):
-                    raw = pd.read_csv(lf, sep=";")
-                load_df = _normalize_load_frame(raw, lf.stem).set_index("datetime")
+                    raw = _io_read_csv(lf, sep=";")
+                load_df = _normalize_load_frame(raw, _stem(lf)).set_index("datetime")
                 if not prices_df.empty:
                     part = load_df.join(prices_df, how="left").reset_index()
                 else:

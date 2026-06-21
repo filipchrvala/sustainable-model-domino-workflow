@@ -11,3 +11,6 @@ scikit-learn>=1.3
 pyarrow>=14.0
 pvlib>=0.10
 openpyxl>=3.1
+# OneData (optional, used only by boundary pieces when secrets are configured)
+fsspec>=2023.9
+onedatarestfsspec @ git+https://github.com/bkryza/onedatarestfsspec.git@141c5630c6e04919d482c9c4ecb1adf484b70613

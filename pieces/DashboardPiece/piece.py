@@ -16,6 +16,15 @@ try:
 except ImportError:
     from .models import METRIC_HELP, InputModel, OutputModel
 
+# Optional shared OneData I/O layer (used only to publish the final JSON).
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
 
 def _read_optional_csv(path: Path | None) -> pd.DataFrame:
     if path is None or not path.is_file():
@@ -27,20 +36,17 @@ def _read_optional_csv(path: Path | None) -> pd.DataFrame:
 
 
 def render_kpi_metric(column, label: str, value: str, help_key: str, *, widget_key: str) -> None:
-    """Metrika s viditeľným tlačidlom ? (popover) — help= pri st.metric býva málo viditeľné."""
+    """Metrika s tooltipom (bez samostatného tlačidla ?)."""
     import streamlit as st
 
     text = METRIC_HELP.get(help_key, "")
     column.metric(label, value, help=text or None)
-    if text:
-        with column.popover("?", help="Vysvetlenie ukazovateľa", key=f"kpi_pop_{widget_key}"):
-            st.markdown(text)
 
 
 class DashboardPiece(BasePiece):
     """Build finance-focused dashboard payload for CFO decisions."""
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
         rep_path = Path(input_data.report_json)
         kpi_path = Path(input_data.kpi_results_csv)
         inv_path = Path(input_data.investment_evaluation_csv)
@@ -170,8 +176,20 @@ class DashboardPiece(BasePiece):
             }
 
             out_json = out_dir / "dashboard_data.json"
-            out_json.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+            payload_text = json.dumps(payload, indent=2, ensure_ascii=False)
+            out_json.write_text(payload_text, encoding="utf-8")
             _log(f"Wrote dashboard JSON: {out_json}; kpi_rows={len(kpi_df)}")
+
+            # Optional: also publish the final JSON to OneData. Purely additive —
+            # only runs when a target is given AND OneData secrets are present.
+            publish_to = getattr(input_data, "publish_to", None)
+            if publish_to and od is not None and od.configure_onedata(secrets_data):
+                try:
+                    od.write_text(publish_to, payload_text)
+                    _log(f"Published dashboard JSON to OneData: {publish_to}")
+                except Exception as pub_exc:
+                    _log(f"WARNING: OneData publish failed ({publish_to}): {pub_exc}")
+
             return OutputModel(dashboard_data_json=str(out_json))
         except Exception as exc:
             (out_dir / "dashboard_error.txt").write_text(traceback.format_exc(), encoding="utf-8")
@@ -1017,7 +1035,6 @@ def render_unified_dashboard() -> bool:
     gen = raw.get("generated_at_utc")
     if gen:
         st.caption(f"Posledná aktualizácia (UTC): **{gen}**")
-    st.caption("Pod každou metrikou je tlačidlo **?** — kliknutím zobrazíte slovenské vysvetlenie.")
     with st.expander("Slovník ukazovateľov", expanded=False):
         _glossary = (
             ("Úspora (obdobie)", "savings_period"),
@@ -1028,7 +1045,7 @@ def render_unified_dashboard() -> bool:
         )
         for title, key in _glossary:
             st.markdown(f"**{title}**")
-            st.caption(METRIC_HELP[key])
+            st.caption(METRIC_HELP.get(key, "—"))
 
     if raw.get("format") == "alternate_unified_v1":
         inv = raw.get("investment")
