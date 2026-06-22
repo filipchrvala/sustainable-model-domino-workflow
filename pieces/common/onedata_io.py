@@ -29,13 +29,35 @@ import pandas as pd
 _REMOTE_PROTOCOLS = ("onedata://",)
 
 
+def normalize_remote_path(path: str | os.PathLike[str]) -> str:
+    """Normalize Domino/UI variants like ``onedata:/space/file`` → ``onedata:///space/file``."""
+    text = str(path).strip()
+    if text.startswith("onedata:/") and not text.startswith("onedata:///"):
+        return "onedata:///" + text[len("onedata:/") :].lstrip("/")
+    return text
+
+
 def has_protocol(path: str | os.PathLike[str]) -> bool:
     """True only for paths that should be handled by fsspec (e.g. onedata://)."""
-    text = str(path)
-    return text.startswith(_REMOTE_PROTOCOLS)
+    return normalize_remote_path(path).startswith(_REMOTE_PROTOCOLS)
 
 
 _backend_ready = False
+_onedata_configured = False
+
+
+def onedata_configured() -> bool:
+    return _onedata_configured
+
+
+def _require_onedata_for(path: str | os.PathLike[str]) -> None:
+    """Raise a clear error when a remote path is used without credentials."""
+    if has_protocol(path) and not _onedata_configured:
+        raise ValueError(
+            "OneData path requires workflow secrets: onedata_onezone_host, "
+            "onedata_token (and onedata_output_dir for outputs). "
+            f"Got path: {normalize_remote_path(path)}"
+        )
 
 
 def _ensure_backend() -> None:
@@ -68,9 +90,11 @@ def configure_onedata(secrets_data: Any) -> bool:
     OneData backend was configured, ``False`` otherwise (local-only run).
     Falls back to environment variables (used by the onedata pytest jobs).
     """
+    global _onedata_configured
     host = _get(secrets_data, "onedata_onezone_host") or os.environ.get("ONEDATA_ONEZONE_HOST")
     token = _get(secrets_data, "onedata_token") or os.environ.get("ONEDATA_TOKEN")
     if not host or not token:
+        _onedata_configured = False
         return False
 
     # The vendored backend reads credentials from these env vars
@@ -80,6 +104,7 @@ def configure_onedata(secrets_data: Any) -> bool:
     os.environ["ONEDATA_TOKEN"] = str(token)
 
     _ensure_backend()
+    _onedata_configured = True
     return True
 
 
@@ -102,21 +127,27 @@ def _fs(path: str):
 # --- existence / listing -------------------------------------------------
 
 def exists(path: str | os.PathLike[str]) -> bool:
+    path = normalize_remote_path(path)
     if has_protocol(path):
+        _require_onedata_for(path)
         fs, p = _fs(str(path))
         return fs.exists(p)
     return Path(path).exists()
 
 
 def isfile(path: str | os.PathLike[str]) -> bool:
+    path = normalize_remote_path(path)
     if has_protocol(path):
+        _require_onedata_for(path)
         fs, p = _fs(str(path))
         return fs.isfile(p)
     return Path(path).is_file()
 
 
 def isdir(path: str | os.PathLike[str]) -> bool:
+    path = normalize_remote_path(path)
     if has_protocol(path):
+        _require_onedata_for(path)
         fs, p = _fs(str(path))
         return fs.isdir(p)
     return Path(path).is_dir()
@@ -374,17 +405,28 @@ def stage_inputs(input_data: Any, secrets_data: Any):
     import tempfile
 
     stage = StageHandle()
-    if not configure_onedata(secrets_data):
-        return input_data, stage
-
     try:
         values = input_data.model_dump()
     except Exception:
         return input_data, stage
 
+    remote_fields = [
+        name for name, val in values.items()
+        if isinstance(val, str) and has_protocol(normalize_remote_path(val))
+    ]
+    if remote_fields and not configure_onedata(secrets_data):
+        raise ValueError(
+            "OneData input paths require workflow secrets "
+            "(onedata_onezone_host, onedata_token). "
+            f"Fields: {', '.join(remote_fields)}"
+        )
+
     overrides: dict[str, str] = {}
     for name, val in values.items():
-        if not (isinstance(val, str) and has_protocol(val)):
+        if not isinstance(val, str):
+            continue
+        val = normalize_remote_path(val)
+        if not has_protocol(val):
             continue
         try:
             if isdir(val):

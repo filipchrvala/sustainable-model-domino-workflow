@@ -124,11 +124,19 @@ class UserInputPiece(BasePiece):
 
     def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
         _stage = None
+        _piece_out = None
+        _orig = {
+            "load_csv": getattr(input_data, "load_csv", None),
+            "scenario_yaml": getattr(input_data, "scenario_yaml", None),
+        }
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
-        _piece_out = None
+            if _stage is not None and _stage.active:
+                od.fetch_sibling(
+                    _orig.get("scenario_yaml"), input_data.scenario_yaml, "workflow_user_input.json"
+                )
         try:
-            return self._run_impl(input_data)
+            _piece_out = self._run_impl(input_data)
         finally:
             if od is not None and _piece_out is None:
                 od.cleanup_on_error(self.results_path, secrets_data, "UserInputPiece", _stage)
@@ -156,9 +164,15 @@ class UserInputPiece(BasePiece):
         _log(f"Input prices_csv={prices_csv}")
         _log(f"Input scenario_yaml={scenario_yaml}")
         if not load_csv.is_file():
-            raise FileNotFoundError(f"Load CSV not found: {load_csv}")
+            raise FileNotFoundError(
+                f"Load CSV not found: {load_csv}. "
+                "For onedata paths, set workflow secrets (onedata_onezone_host, onedata_token)."
+            )
         if not scenario_yaml.is_file():
-            raise FileNotFoundError(f"Scenario YAML not found: {scenario_yaml}")
+            raise FileNotFoundError(
+                f"Scenario YAML not found: {scenario_yaml}. "
+                "For onedata paths, set workflow secrets (onedata_onezone_host, onedata_token)."
+            )
         scenario_copy = out_dir / "scenario_resolved.yaml"
         shutil.copy2(scenario_yaml, scenario_copy)
         _log(f"Copied scenario to shared output path: {scenario_copy}")
@@ -274,7 +288,7 @@ class UserInputPiece(BasePiece):
             workflow_input_copy.write_text("{}", encoding="utf-8")
             _log("workflow_user_input.json not found near inputs; wrote empty fallback")
 
-        _piece_out = OutputModel(
+        return OutputModel(
             message="User input validated",
             load_csv=str(merged_path),
             scenario_yaml=str(scenario_copy),

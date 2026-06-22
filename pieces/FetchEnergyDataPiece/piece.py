@@ -111,19 +111,20 @@ class FetchEnergyDataPiece(BasePiece):
     """
 
     def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
         _piece_out = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
         try:
             _log(self.results_path, "[INFO] FetchEnergyDataPiece started")
             _log(self.results_path, f"[INFO] Load CSV: {input_data.load_csv}")
             _log(self.results_path, f"[INFO] Prices CSV: {input_data.prices_csv}")
 
-            # Configure OneData only when secrets are supplied (Domino) or env
-            # vars are set; otherwise everything stays on the local filesystem.
-            if od is not None and od.configure_onedata(secrets_data):
+            if od is not None and od.onedata_configured():
                 _log(self.results_path, "[INFO] OneData backend configured for inputs")
 
             load_csv = str(input_data.load_csv)
-            prices_csv = str(input_data.prices_csv)
+            prices_csv = str(input_data.prices_csv or "")
 
             prices_df = pd.DataFrame()
             if prices_csv and _io_isfile(prices_csv):
@@ -187,7 +188,9 @@ class FetchEnergyDataPiece(BasePiece):
             raise
         finally:
             if od is not None and _piece_out is None:
-                od.cleanup_on_error(self.results_path, secrets_data, "FetchEnergyDataPiece", None)
+                od.cleanup_on_error(self.results_path, secrets_data, "FetchEnergyDataPiece", _stage)
+            elif _stage is not None:
+                _stage.cleanup()
         if od is not None and _piece_out is not None:
-            return od.finish_piece(_piece_out, self.results_path, secrets_data, "FetchEnergyDataPiece", None)
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "FetchEnergyDataPiece", _stage)
         return _piece_out
