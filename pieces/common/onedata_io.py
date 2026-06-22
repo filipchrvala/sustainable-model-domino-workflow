@@ -28,6 +28,11 @@ import pandas as pd
 # drive letter, so we explicitly only route known remote schemes.
 _REMOTE_PROTOCOLS = ("onedata://",)
 
+# Production defaults — host and output dir are safe in code; token comes from env/file.
+DEFAULT_ONEZONE_HOST = "data.spice-platform.eu"
+DEFAULT_OUTPUT_DIR = "onedata:///FilipsSpace/run"
+DEFAULT_TOKEN_FILE = "/run/secrets/onedata_token"
+
 
 def normalize_remote_path(path: str | os.PathLike[str]) -> str:
     """Normalize Domino/UI variants like ``onedata:/space/file`` → ``onedata:///space/file``."""
@@ -83,7 +88,37 @@ def _ensure_backend() -> None:
     _backend_ready = True
 
 
-def configure_onedata(secrets_data: Any) -> bool:
+def _resolve_token() -> str | None:
+    token = os.environ.get("ONEDATA_TOKEN")
+    if token:
+        return str(token).strip() or None
+    token_file = os.environ.get("ONEDATA_TOKEN_FILE", DEFAULT_TOKEN_FILE)
+    try:
+        text = Path(token_file).read_text(encoding="utf-8").strip()
+        return text or None
+    except OSError:
+        return None
+
+
+def effective_secrets(secrets_data: Any, *, use_defaults: bool = False) -> dict[str, str | None]:
+    """Merge Domino secrets, env vars, and (optionally) production defaults."""
+    host = _get(secrets_data, "onedata_onezone_host") or os.environ.get("ONEDATA_ONEZONE_HOST")
+    token = _get(secrets_data, "onedata_token")
+    if not token and use_defaults:
+        token = _resolve_token()
+    if use_defaults and not host:
+        host = DEFAULT_ONEZONE_HOST
+    output = _get(secrets_data, "onedata_output_dir") or os.environ.get("ONEDATA_OUTPUT_BASE")
+    if use_defaults and not output:
+        output = DEFAULT_OUTPUT_DIR
+    return {
+        "onedata_onezone_host": host,
+        "onedata_token": token,
+        "onedata_output_dir": output,
+    }
+
+
+def configure_onedata(secrets_data: Any, *, force: bool = False) -> bool:
     """Register OneData credentials and the backend if both are present.
 
     Accepts a pydantic model, a dict, or ``None``. Returns ``True`` when the
@@ -91,8 +126,9 @@ def configure_onedata(secrets_data: Any) -> bool:
     Falls back to environment variables (used by the onedata pytest jobs).
     """
     global _onedata_configured
-    host = _get(secrets_data, "onedata_onezone_host") or os.environ.get("ONEDATA_ONEZONE_HOST")
-    token = _get(secrets_data, "onedata_token") or os.environ.get("ONEDATA_TOKEN")
+    merged = effective_secrets(secrets_data, use_defaults=force)
+    host = merged.get("onedata_onezone_host")
+    token = merged.get("onedata_token")
     if not host or not token:
         _onedata_configured = False
         return False
@@ -379,7 +415,12 @@ def _remote_name(path: str) -> str:
 
 
 def _output_base(secrets_data: Any) -> str | None:
-    return _get(secrets_data, "onedata_output_dir") or os.environ.get("ONEDATA_OUTPUT_BASE")
+    val = _get(secrets_data, "onedata_output_dir") or os.environ.get("ONEDATA_OUTPUT_BASE")
+    if val:
+        return str(val)
+    if _onedata_configured:
+        return DEFAULT_OUTPUT_DIR
+    return None
 
 
 class StageHandle:
@@ -414,10 +455,14 @@ def stage_inputs(input_data: Any, secrets_data: Any):
         name for name, val in values.items()
         if isinstance(val, str) and has_protocol(normalize_remote_path(val))
     ]
-    if remote_fields and not configure_onedata(secrets_data):
+    if remote_fields and not configure_onedata(secrets_data, force=True):
+        eff = effective_secrets(secrets_data, use_defaults=True)
         raise ValueError(
-            "OneData input paths require workflow secrets "
-            "(onedata_onezone_host, onedata_token). "
+            "OneData input paths require onedata_token. "
+            f"Host/output use defaults ({eff.get('onedata_onezone_host')}, "
+            f"{eff.get('onedata_output_dir')}). "
+            "Set env ONEDATA_TOKEN or mount token at ONEDATA_TOKEN_FILE "
+            f"(default {DEFAULT_TOKEN_FILE}). "
             f"Fields: {', '.join(remote_fields)}"
         )
 
@@ -536,7 +581,9 @@ def mirror_results(results_path: str | os.PathLike[str], secrets_data: Any,
     OneData target dir (or ``None``).
     """
     base = _output_base(secrets_data)
-    if not base or not configure_onedata(secrets_data):
+    if not base:
+        return None
+    if not _onedata_configured and not configure_onedata(secrets_data, force=True):
         return None
     rp = Path(str(results_path))
     if not rp.exists():

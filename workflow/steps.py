@@ -122,34 +122,9 @@ def _find_csv_optional(dir_path: Path, name_part: str) -> Path | None:
 
 def _predictions_to_load_csv(target_csv: Path) -> Path:
     """Create load_csv expected by MRK pieces from predictions output."""
-    if not P.PREDICTIONS_CSV.is_file():
-        raise FileNotFoundError(f"Predictions CSV missing: {P.PREDICTIONS_CSV}")
-    df = pd.read_csv(P.PREDICTIONS_CSV, parse_dates=["datetime"])
-    if "prediction_load_kw" not in df.columns:
-        raise ValueError("predictions_15min.csv must contain prediction_load_kw")
-    if "price_eur_kwh" in df.columns:
-        price = pd.to_numeric(df["price_eur_kwh"], errors="coerce")
-    elif "price_eur_per_kwh" in df.columns:
-        price = pd.to_numeric(df["price_eur_per_kwh"], errors="coerce")
-    elif "price_eur_mwh" in df.columns:
-        price = pd.to_numeric(df["price_eur_mwh"], errors="coerce") / 1000.0
-    else:
-        raise ValueError(
-            "predictions_15min.csv must contain one of: price_eur_kwh, price_eur_per_kwh, price_eur_mwh"
-        )
-    out = pd.DataFrame(
-        {
-            "datetime": pd.to_datetime(df["datetime"]),
-            "load_kw": pd.to_numeric(df["prediction_load_kw"], errors="coerce").fillna(0.0),
-            "price_eur_per_kwh": price,
-        }
-    )
-    out["price_eur_per_kwh"] = out["price_eur_per_kwh"].interpolate(limit_direction="both")
-    if out["price_eur_per_kwh"].isna().all():
-        raise ValueError("All price values in predictions are NaN after normalization")
-    target_csv.parent.mkdir(parents=True, exist_ok=True)
-    out.to_csv(target_csv, index=False)
-    return target_csv
+    from pieces.common.predictions_load import predictions_to_load_csv
+
+    return predictions_to_load_csv(P.PREDICTIONS_CSV, target_csv)
 
 
 def step_fetch() -> None:

@@ -2,7 +2,8 @@
 
 Reads test_sus.customization and writes test_sus_onedata.customization where
 local /home/shared_storage paths are replaced with onedata:///FilipsSpace/inputs/
-and image tags bumped to the current config.toml version.
+image tags bumped to config.toml version, secrets defaults applied, and the
+MRK branch wired like local run_workflow.py (Predict -> sizing/simulation).
 
 Run:  python scripts/generate_onedata_workflow.py
 """
@@ -18,7 +19,7 @@ DST = REPO / "test_sus_onedata.customization"
 
 PREFIX = "onedata:///FilipsSpace/inputs"
 RUN_PREFIX = "onedata:///FilipsSpace/run"
-IMAGE_VERSION = "0.1.13"
+IMAGE_VERSION = "0.1.14"
 
 # Map old shared_storage paths -> OneData input paths
 STATIC_MAP = {
@@ -40,12 +41,13 @@ SECRETS_SCHEMA = {
     "properties": {
         "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string",
         },
         "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string",
         },
@@ -60,6 +62,72 @@ SECRETS_SCHEMA = {
     "type": "object",
 }
 
+# Domino node / upstream ids (stable in test_sus.customization)
+PREDICT_NODE = "104_520d5908-51bd-5715-b120-38517246b71f"
+PREDICT_UPSTREAM = "PredictPie_520d590851bd5715b12038517246b71f"
+TECH_LIMITS_NODE = "108_269fe489-9457-5a76-8249-e7c85fa56d5c"
+
+# Nodes that must consume predicted load (not raw UserInput load)
+LOAD_FROM_PREDICT_NODES = (
+    "108_269fe489-9457-5a76-8249-e7c85fa56d5c",  # TechnicalLimits
+    "109_8fe65e2c-787e-5e5a-b185-8aaabfef8014",  # SizingOptimization
+    "112_68e22997-e9ce-5182-b799-55684e726d06",  # SolarSim
+    "113_c6559d37-047b-50fb-81ff-c4c26eee0457",  # BatteryStrategy
+    "114_a3931fd4-7104-52b0-bdb2-7043bb88583c",  # BatterySim
+    "115_9f734ffd-ed6b-5ddf-a85d-5567300fb901",  # Simulate
+)
+
+
+def _wire_predict_output_schema(piece: dict) -> None:
+    out = piece.get("output_schema") or {}
+    props = out.setdefault("properties", {})
+    props["runtime_load_csv"] = {
+        "description": "Load CSV for MRK sizing/simulation (from predictions)",
+        "title": "Runtime Load Csv",
+        "type": "string",
+    }
+    req = out.setdefault("required", [])
+    if "runtime_load_csv" not in req:
+        req.append("runtime_load_csv")
+
+
+def _wire_load_csv_from_predict(data: dict) -> None:
+    pieces_data = data.get("workflowPiecesData") or {}
+    for node_id in LOAD_FROM_PREDICT_NODES:
+        node = pieces_data.get(node_id)
+        if not node:
+            continue
+        inputs = node.get("inputs") or {}
+        if "load_csv" not in inputs:
+            continue
+        inputs["load_csv"] = {
+            "fromUpstream": True,
+            "upstreamId": PREDICT_UPSTREAM,
+            "upstreamArgument": "runtime_load_csv",
+            "upstreamValue": "PredictPiece (520d5908) - Runtime Load Csv",
+            "value": "",
+        }
+
+
+def _ensure_predict_before_technical_limits(data: dict) -> None:
+    edges = data.setdefault("workflowEdges", [])
+    wanted = (PREDICT_NODE, TECH_LIMITS_NODE)
+    if any(e.get("source") == wanted[0] and e.get("target") == wanted[1] for e in edges):
+        return
+    edges.append(
+        {
+            "source": PREDICT_NODE,
+            "sourceHandle": f"source-{PREDICT_NODE}",
+            "target": TECH_LIMITS_NODE,
+            "targetHandle": f"target-{TECH_LIMITS_NODE}",
+            "id": (
+                f"reactflow__edge-{PREDICT_NODE}source-{PREDICT_NODE}-"
+                f"{TECH_LIMITS_NODE}target-{TECH_LIMITS_NODE}"
+            ),
+            "markerEnd": {"type": "arrowclosed", "width": 20, "height": 20},
+        }
+    )
+
 
 def main() -> None:
     data = json.loads(SRC.read_text(encoding="utf-8"))
@@ -71,6 +139,8 @@ def main() -> None:
                 r":[\d.]+-group\d+", tag, piece["source_image"]
             )
         piece["secrets_schema"] = SECRETS_SCHEMA
+        if piece.get("name") == "PredictPiece":
+            _wire_predict_output_schema(piece)
 
     for node in data.get("workflowPiecesData", {}).values():
         inputs = node.get("inputs") or {}
@@ -80,8 +150,14 @@ def main() -> None:
                 if val in STATIC_MAP:
                     spec["value"] = STATIC_MAP[val]
 
+    _wire_load_csv_from_predict(data)
+    _ensure_predict_before_technical_limits(data)
+
     DST.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
-    print(f"Wrote {DST.name}  (images {IMAGE_VERSION}, inputs under {PREFIX})")
+    print(
+        f"Wrote {DST.name}  (images {IMAGE_VERSION}, "
+        f"Predict->MRK load wiring, secrets defaults in schema)"
+    )
 
 
 if __name__ == "__main__":

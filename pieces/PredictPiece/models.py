@@ -31,3 +31,6 @@ class SecretsModel(BaseModel):
 class OutputModel(BaseModel):
     message: str
     prediction_file_path: str
+    runtime_load_csv: str = Field(
+        description="Load CSV for MRK sizing/simulation (load_kw from predictions)",
+    )

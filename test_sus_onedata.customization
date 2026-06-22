@@ -8,7 +8,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "description": "Input model for Fetch Energy Data Piece",
         "properties": {
@@ -49,12 +49,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -107,7 +108,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "properties": {
           "input_path": {
@@ -162,12 +163,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -221,7 +223,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "properties": {
           "data_path": {
@@ -266,12 +268,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -326,7 +329,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "properties": {
           "model_path": {
@@ -368,11 +371,17 @@
           "prediction_file_path": {
             "title": "Prediction File Path",
             "type": "string"
+          },
+          "runtime_load_csv": {
+            "description": "Load CSV for MRK sizing/simulation (from predictions)",
+            "title": "Runtime Load Csv",
+            "type": "string"
           }
         },
         "required": [
           "message",
-          "prediction_file_path"
+          "prediction_file_path",
+          "runtime_load_csv"
         ],
         "title": "OutputModel",
         "type": "object"
@@ -381,12 +390,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -437,7 +447,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "properties": {
           "predictions_csv": {
@@ -479,12 +489,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -535,7 +546,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -594,12 +605,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -650,7 +662,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "description": "Domino piece input – reads saved web form state and materializes workflow files.",
         "properties": {
@@ -720,12 +732,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -776,7 +789,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -824,12 +837,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -880,7 +894,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -934,12 +948,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -990,7 +1005,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "properties": {
           "scenario_yaml": {
@@ -1047,12 +1062,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1103,7 +1119,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "properties": {
           "scenario_yaml": {
@@ -1146,12 +1162,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1202,7 +1219,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1245,12 +1262,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1301,7 +1319,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1344,12 +1362,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1400,7 +1419,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1454,12 +1473,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1510,7 +1530,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1601,12 +1621,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1657,7 +1678,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "properties": {
           "report_json": {
@@ -1694,12 +1715,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1750,7 +1772,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "properties": {
           "report_json": {
@@ -1798,12 +1820,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1854,7 +1877,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "properties": {
           "report_json": {
@@ -1924,12 +1947,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1980,7 +2004,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "properties": {
           "workflow_user_input_json": {
@@ -2065,12 +2089,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -2124,7 +2149,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2199,12 +2224,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -2255,7 +2281,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2324,12 +2350,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -2380,7 +2407,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2436,12 +2463,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -2492,7 +2520,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.13-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.14-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2582,12 +2610,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host",
+            "description": "Onedata Onezone host (default applied in code if omitted)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "description": "Onedata access token (set in Domino workflow secrets)",
+            "default": "",
+            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -2847,9 +2876,9 @@
       "inputs": {
         "load_csv": {
           "fromUpstream": true,
-          "upstreamId": "UserInputP_f58ce08160945445934981d75ab09d42",
-          "upstreamArgument": "load_csv",
-          "upstreamValue": "UserInputPiece (f58ce081) - Load Csv",
+          "upstreamId": "PredictPie_520d590851bd5715b12038517246b71f",
+          "upstreamArgument": "runtime_load_csv",
+          "upstreamValue": "PredictPiece (520d5908) - Runtime Load Csv",
           "value": ""
         },
         "scenario_yaml": {
@@ -2873,9 +2902,9 @@
       "inputs": {
         "load_csv": {
           "fromUpstream": true,
-          "upstreamId": "UserInputP_f58ce08160945445934981d75ab09d42",
-          "upstreamArgument": "load_csv",
-          "upstreamValue": "UserInputPiece (f58ce081) - Load Csv",
+          "upstreamId": "PredictPie_520d590851bd5715b12038517246b71f",
+          "upstreamArgument": "runtime_load_csv",
+          "upstreamValue": "PredictPiece (520d5908) - Runtime Load Csv",
           "value": ""
         },
         "scenario_yaml": {
@@ -2951,9 +2980,9 @@
       "inputs": {
         "load_csv": {
           "fromUpstream": true,
-          "upstreamId": "UserInputP_f58ce08160945445934981d75ab09d42",
-          "upstreamArgument": "load_csv",
-          "upstreamValue": "UserInputPiece (f58ce081) - Load Csv",
+          "upstreamId": "PredictPie_520d590851bd5715b12038517246b71f",
+          "upstreamArgument": "runtime_load_csv",
+          "upstreamValue": "PredictPiece (520d5908) - Runtime Load Csv",
           "value": ""
         },
         "scenario_yaml": {
@@ -2977,9 +3006,9 @@
       "inputs": {
         "load_csv": {
           "fromUpstream": true,
-          "upstreamId": "UserInputP_f58ce08160945445934981d75ab09d42",
-          "upstreamArgument": "load_csv",
-          "upstreamValue": "UserInputPiece (f58ce081) - Load Csv",
+          "upstreamId": "PredictPie_520d590851bd5715b12038517246b71f",
+          "upstreamArgument": "runtime_load_csv",
+          "upstreamValue": "PredictPiece (520d5908) - Runtime Load Csv",
           "value": ""
         },
         "scenario_yaml": {
@@ -3003,9 +3032,9 @@
       "inputs": {
         "load_csv": {
           "fromUpstream": true,
-          "upstreamId": "UserInputP_f58ce08160945445934981d75ab09d42",
-          "upstreamArgument": "load_csv",
-          "upstreamValue": "UserInputPiece (f58ce081) - Load Csv",
+          "upstreamId": "PredictPie_520d590851bd5715b12038517246b71f",
+          "upstreamArgument": "runtime_load_csv",
+          "upstreamValue": "PredictPiece (520d5908) - Runtime Load Csv",
           "value": ""
         },
         "scenario_yaml": {
@@ -3036,9 +3065,9 @@
       "inputs": {
         "load_csv": {
           "fromUpstream": true,
-          "upstreamId": "UserInputP_f58ce08160945445934981d75ab09d42",
-          "upstreamArgument": "load_csv",
-          "upstreamValue": "UserInputPiece (f58ce081) - Load Csv",
+          "upstreamId": "PredictPie_520d590851bd5715b12038517246b71f",
+          "upstreamArgument": "runtime_load_csv",
+          "upstreamValue": "PredictPiece (520d5908) - Runtime Load Csv",
           "value": ""
         },
         "scenario_yaml": {
@@ -4688,6 +4717,18 @@
       "target": "119_3a52b183-3ad3-51e7-8929-7c33dbb29aa0",
       "targetHandle": "target-119_3a52b183-3ad3-51e7-8929-7c33dbb29aa0",
       "id": "reactflow__edge-117_32d2992c-1718-5952-a5f8-ab89c176d6besource-117_32d2992c-1718-5952-a5f8-ab89c176d6be-119_3a52b183-3ad3-51e7-8929-7c33dbb29aa0target-119_3a52b183-3ad3-51e7-8929-7c33dbb29aa0",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "104_520d5908-51bd-5715-b120-38517246b71f",
+      "sourceHandle": "source-104_520d5908-51bd-5715-b120-38517246b71f",
+      "target": "108_269fe489-9457-5a76-8249-e7c85fa56d5c",
+      "targetHandle": "target-108_269fe489-9457-5a76-8249-e7c85fa56d5c",
+      "id": "reactflow__edge-104_520d5908-51bd-5715-b120-38517246b71fsource-104_520d5908-51bd-5715-b120-38517246b71f-108_269fe489-9457-5a76-8249-e7c85fa56d5ctarget-108_269fe489-9457-5a76-8249-e7c85fa56d5c",
       "markerEnd": {
         "type": "arrowclosed",
         "width": 20,

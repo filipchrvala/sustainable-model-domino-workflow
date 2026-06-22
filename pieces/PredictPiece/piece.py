@@ -15,11 +15,14 @@ from datetime import datetime
 
 try:
     from common import onedata_io as od
+    from common.predictions_load import predictions_to_load_csv
 except ModuleNotFoundError:
     try:
         from pieces.common import onedata_io as od
+        from pieces.common.predictions_load import predictions_to_load_csv
     except ModuleNotFoundError:
         od = None
+        predictions_to_load_csv = None
 
 
 def _default_shift_profile() -> dict:
@@ -303,6 +306,11 @@ class PredictPiece(BasePiece):
             output_path = results_dir / "predictions_15min.csv"
             df_out.to_csv(output_path, index=False)
 
+            runtime_load_path = results_dir / "runtime_load_for_sim.csv"
+            if predictions_to_load_csv is None:
+                raise RuntimeError("predictions_load helper not available")
+            predictions_to_load_csv(output_path, runtime_load_path)
+
             feature_names = list(model.get_booster().feature_names)
             log_path = results_dir / "prediction_log.txt"
             with open(log_path, "w") as f:
@@ -317,7 +325,8 @@ class PredictPiece(BasePiece):
 
             _piece_out = OutputModel(
                 message="Prediction finished successfully",
-                prediction_file_path=str(output_path)
+                prediction_file_path=str(output_path),
+                runtime_load_csv=str(runtime_load_path),
             )
         except Exception:
             err = traceback.format_exc()
