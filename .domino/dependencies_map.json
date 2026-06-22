@@ -30,9 +30,10 @@
             "AnomalyAlertPiece"
         ],
         "secrets": [
-            "onedata_onezone_host",
-            "onedata_token"
+            "onedata_token",
+            "onedata_output_dir",
+            "onedata_onezone_host"
         ],
-        "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.8-group0"
+        "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0"
     }
 }

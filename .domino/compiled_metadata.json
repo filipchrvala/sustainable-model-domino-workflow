@@ -74,7 +74,52 @@
             "title": "OutputModel",
             "type": "object"
         },
-        "secrets_schema": null,
+        "secrets_schema": {
+            "description": "Optional OneData credentials and output target. When host+token are set,\nonedata:/// input paths are read from OneData and all outputs are mirrored to\n<onedata_output_dir>/<PieceName>/. When absent, the piece runs locally.",
+            "properties": {
+                "onedata_onezone_host": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+                    "title": "Onedata Onezone Host"
+                },
+                "onedata_token": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata access token.",
+                    "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
+                }
+            },
+            "title": "SecretsModel",
+            "type": "object"
+        },
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/TrainModelPiece"
     },
     "SizingOptimizationPiece": {
@@ -147,7 +192,52 @@
             "title": "OutputModel",
             "type": "object"
         },
-        "secrets_schema": null,
+        "secrets_schema": {
+            "description": "Optional OneData credentials and output target. When host+token are set,\nonedata:/// input paths are read from OneData and all outputs are mirrored to\n<onedata_output_dir>/<PieceName>/. When absent, the piece runs locally.",
+            "properties": {
+                "onedata_onezone_host": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+                    "title": "Onedata Onezone Host"
+                },
+                "onedata_token": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata access token.",
+                    "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
+                }
+            },
+            "title": "SecretsModel",
+            "type": "object"
+        },
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/SizingOptimizationPiece"
     },
     "PreprocessEnergyDataPiece": {
@@ -234,7 +324,52 @@
             "title": "OutputModel",
             "type": "object"
         },
-        "secrets_schema": null,
+        "secrets_schema": {
+            "description": "Optional OneData credentials and output target. When host+token are set,\nonedata:/// input paths are read from OneData and all outputs are mirrored to\n<onedata_output_dir>/<PieceName>/. When absent, the piece runs locally.",
+            "properties": {
+                "onedata_onezone_host": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+                    "title": "Onedata Onezone Host"
+                },
+                "onedata_token": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata access token.",
+                    "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
+                }
+            },
+            "title": "SecretsModel",
+            "type": "object"
+        },
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/PreprocessEnergyDataPiece"
     },
     "KPIPiece": {
@@ -290,7 +425,52 @@
             "title": "OutputModel",
             "type": "object"
         },
-        "secrets_schema": null,
+        "secrets_schema": {
+            "description": "Optional OneData credentials and output target. When host+token are set,\nonedata:/// input paths are read from OneData and all outputs are mirrored to\n<onedata_output_dir>/<PieceName>/. When absent, the piece runs locally.",
+            "properties": {
+                "onedata_onezone_host": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+                    "title": "Onedata Onezone Host"
+                },
+                "onedata_token": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata access token.",
+                    "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
+                }
+            },
+            "title": "SecretsModel",
+            "type": "object"
+        },
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/KPIPiece"
     },
     "UserInputPiece": {
@@ -368,7 +548,52 @@
             "title": "OutputModel",
             "type": "object"
         },
-        "secrets_schema": null,
+        "secrets_schema": {
+            "description": "Optional OneData credentials and output target. When host+token are set,\nonedata:/// input paths are read from OneData and all outputs are mirrored to\n<onedata_output_dir>/<PieceName>/. When absent, the piece runs locally.",
+            "properties": {
+                "onedata_onezone_host": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+                    "title": "Onedata Onezone Host"
+                },
+                "onedata_token": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata access token.",
+                    "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
+                }
+            },
+            "title": "SecretsModel",
+            "type": "object"
+        },
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/UserInputPiece"
     },
     "IncrementalTrainPiece": {
@@ -456,7 +681,52 @@
             "title": "OutputModel",
             "type": "object"
         },
-        "secrets_schema": null,
+        "secrets_schema": {
+            "description": "Optional OneData credentials and output target. When host+token are set,\nonedata:/// input paths are read from OneData and all outputs are mirrored to\n<onedata_output_dir>/<PieceName>/. When absent, the piece runs locally.",
+            "properties": {
+                "onedata_onezone_host": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+                    "title": "Onedata Onezone Host"
+                },
+                "onedata_token": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata access token.",
+                    "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
+                }
+            },
+            "title": "SecretsModel",
+            "type": "object"
+        },
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/IncrementalTrainPiece"
     },
     "CatalogRankerPiece": {
@@ -518,7 +788,52 @@
             "title": "OutputModel",
             "type": "object"
         },
-        "secrets_schema": null,
+        "secrets_schema": {
+            "description": "Optional OneData credentials and output target. When host+token are set,\nonedata:/// input paths are read from OneData and all outputs are mirrored to\n<onedata_output_dir>/<PieceName>/. When absent, the piece runs locally.",
+            "properties": {
+                "onedata_onezone_host": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+                    "title": "Onedata Onezone Host"
+                },
+                "onedata_token": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata access token.",
+                    "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
+                }
+            },
+            "title": "SecretsModel",
+            "type": "object"
+        },
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/CatalogRankerPiece"
     },
     "PredictPiece": {
@@ -592,7 +907,52 @@
             "title": "OutputModel",
             "type": "object"
         },
-        "secrets_schema": null,
+        "secrets_schema": {
+            "description": "Optional OneData credentials and output target. When host+token are set,\nonedata:/// input paths are read from OneData and all outputs are mirrored to\n<onedata_output_dir>/<PieceName>/. When absent, the piece runs locally.",
+            "properties": {
+                "onedata_onezone_host": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+                    "title": "Onedata Onezone Host"
+                },
+                "onedata_token": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata access token.",
+                    "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
+                }
+            },
+            "title": "SecretsModel",
+            "type": "object"
+        },
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/PredictPiece"
     },
     "WebUserInputPiece": {
@@ -681,7 +1041,52 @@
             "title": "OutputModel",
             "type": "object"
         },
-        "secrets_schema": null,
+        "secrets_schema": {
+            "description": "Optional OneData credentials and output target. When host+token are set,\nonedata:/// input paths are read from OneData and all outputs are mirrored to\n<onedata_output_dir>/<PieceName>/. When absent, the piece runs locally.",
+            "properties": {
+                "onedata_onezone_host": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+                    "title": "Onedata Onezone Host"
+                },
+                "onedata_token": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata access token.",
+                    "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
+                }
+            },
+            "title": "SecretsModel",
+            "type": "object"
+        },
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/WebUserInputPiece"
     },
     "SustainableIngestPiece": {
@@ -803,6 +1208,19 @@
                     "default": null,
                     "description": "Onedata access token.",
                     "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
                 }
             },
             "title": "SecretsModel",
@@ -869,7 +1287,52 @@
             "title": "OutputModel",
             "type": "object"
         },
-        "secrets_schema": null,
+        "secrets_schema": {
+            "description": "Optional OneData credentials and output target. When host+token are set,\nonedata:/// input paths are read from OneData and all outputs are mirrored to\n<onedata_output_dir>/<PieceName>/. When absent, the piece runs locally.",
+            "properties": {
+                "onedata_onezone_host": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+                    "title": "Onedata Onezone Host"
+                },
+                "onedata_token": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata access token.",
+                    "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
+                }
+            },
+            "title": "SecretsModel",
+            "type": "object"
+        },
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/SolarSimPiece"
     },
     "TechnicalLimitsPiece": {
@@ -936,7 +1399,52 @@
             "title": "OutputModel",
             "type": "object"
         },
-        "secrets_schema": null,
+        "secrets_schema": {
+            "description": "Optional OneData credentials and output target. When host+token are set,\nonedata:/// input paths are read from OneData and all outputs are mirrored to\n<onedata_output_dir>/<PieceName>/. When absent, the piece runs locally.",
+            "properties": {
+                "onedata_onezone_host": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+                    "title": "Onedata Onezone Host"
+                },
+                "onedata_token": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata access token.",
+                    "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
+                }
+            },
+            "title": "SecretsModel",
+            "type": "object"
+        },
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/TechnicalLimitsPiece"
     },
     "SimulatePiece": {
@@ -1046,7 +1554,52 @@
             "title": "OutputModel",
             "type": "object"
         },
-        "secrets_schema": null,
+        "secrets_schema": {
+            "description": "Optional OneData credentials and output target. When host+token are set,\nonedata:/// input paths are read from OneData and all outputs are mirrored to\n<onedata_output_dir>/<PieceName>/. When absent, the piece runs locally.",
+            "properties": {
+                "onedata_onezone_host": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+                    "title": "Onedata Onezone Host"
+                },
+                "onedata_token": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata access token.",
+                    "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
+                }
+            },
+            "title": "SecretsModel",
+            "type": "object"
+        },
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/SimulatePiece"
     },
     "FetchEnergyDataPiece": {
@@ -1146,6 +1699,19 @@
                     "default": null,
                     "description": "Onedata access token.",
                     "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
                 }
             },
             "title": "SecretsModel",
@@ -1223,7 +1789,52 @@
             "title": "OutputModel",
             "type": "object"
         },
-        "secrets_schema": null,
+        "secrets_schema": {
+            "description": "Optional OneData credentials and output target. When host+token are set,\nonedata:/// input paths are read from OneData and all outputs are mirrored to\n<onedata_output_dir>/<PieceName>/. When absent, the piece runs locally.",
+            "properties": {
+                "onedata_onezone_host": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+                    "title": "Onedata Onezone Host"
+                },
+                "onedata_token": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata access token.",
+                    "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
+                }
+            },
+            "title": "SecretsModel",
+            "type": "object"
+        },
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/BatterySimPiece"
     },
     "DashboardPiece": {
@@ -1353,6 +1964,19 @@
                     "default": null,
                     "description": "Onedata access token.",
                     "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
                 }
             },
             "title": "SecretsModel",
@@ -1474,7 +2098,52 @@
             "title": "OutputModel",
             "type": "object"
         },
-        "secrets_schema": null,
+        "secrets_schema": {
+            "description": "Optional OneData credentials and output target. When host+token are set,\nonedata:/// input paths are read from OneData and all outputs are mirrored to\n<onedata_output_dir>/<PieceName>/. When absent, the piece runs locally.",
+            "properties": {
+                "onedata_onezone_host": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+                    "title": "Onedata Onezone Host"
+                },
+                "onedata_token": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata access token.",
+                    "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
+                }
+            },
+            "title": "SecretsModel",
+            "type": "object"
+        },
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/FeasibilityReportPiece"
     },
     "ForecastHorizonPiece": {
@@ -1549,7 +2218,52 @@
             "title": "OutputModel",
             "type": "object"
         },
-        "secrets_schema": null,
+        "secrets_schema": {
+            "description": "Optional OneData credentials and output target. When host+token are set,\nonedata:/// input paths are read from OneData and all outputs are mirrored to\n<onedata_output_dir>/<PieceName>/. When absent, the piece runs locally.",
+            "properties": {
+                "onedata_onezone_host": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+                    "title": "Onedata Onezone Host"
+                },
+                "onedata_token": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata access token.",
+                    "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
+                }
+            },
+            "title": "SecretsModel",
+            "type": "object"
+        },
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/ForecastHorizonPiece"
     },
     "ModelMonitoringPiece": {
@@ -1610,7 +2324,52 @@
             "title": "OutputModel",
             "type": "object"
         },
-        "secrets_schema": null,
+        "secrets_schema": {
+            "description": "Optional OneData credentials and output target. When host+token are set,\nonedata:/// input paths are read from OneData and all outputs are mirrored to\n<onedata_output_dir>/<PieceName>/. When absent, the piece runs locally.",
+            "properties": {
+                "onedata_onezone_host": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+                    "title": "Onedata Onezone Host"
+                },
+                "onedata_token": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata access token.",
+                    "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
+                }
+            },
+            "title": "SecretsModel",
+            "type": "object"
+        },
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/ModelMonitoringPiece"
     },
     "BatteryStrategyOptimizerPiece": {
@@ -1672,7 +2431,52 @@
             "title": "OutputModel",
             "type": "object"
         },
-        "secrets_schema": null,
+        "secrets_schema": {
+            "description": "Optional OneData credentials and output target. When host+token are set,\nonedata:/// input paths are read from OneData and all outputs are mirrored to\n<onedata_output_dir>/<PieceName>/. When absent, the piece runs locally.",
+            "properties": {
+                "onedata_onezone_host": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+                    "title": "Onedata Onezone Host"
+                },
+                "onedata_token": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata access token.",
+                    "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
+                }
+            },
+            "title": "SecretsModel",
+            "type": "object"
+        },
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/BatteryStrategyOptimizerPiece"
     },
     "InvestmentEvalPiece": {
@@ -1739,7 +2543,52 @@
             "title": "OutputModel",
             "type": "object"
         },
-        "secrets_schema": null,
+        "secrets_schema": {
+            "description": "Optional OneData credentials and output target. When host+token are set,\nonedata:/// input paths are read from OneData and all outputs are mirrored to\n<onedata_output_dir>/<PieceName>/. When absent, the piece runs locally.",
+            "properties": {
+                "onedata_onezone_host": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+                    "title": "Onedata Onezone Host"
+                },
+                "onedata_token": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata access token.",
+                    "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
+                }
+            },
+            "title": "SecretsModel",
+            "type": "object"
+        },
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/InvestmentEvalPiece"
     },
     "CatalogSyncPiece": {
@@ -1815,7 +2664,52 @@
             "title": "OutputModel",
             "type": "object"
         },
-        "secrets_schema": null,
+        "secrets_schema": {
+            "description": "Optional OneData credentials and output target. When host+token are set,\nonedata:/// input paths are read from OneData and all outputs are mirrored to\n<onedata_output_dir>/<PieceName>/. When absent, the piece runs locally.",
+            "properties": {
+                "onedata_onezone_host": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+                    "title": "Onedata Onezone Host"
+                },
+                "onedata_token": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata access token.",
+                    "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
+                }
+            },
+            "title": "SecretsModel",
+            "type": "object"
+        },
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/CatalogSyncPiece"
     },
     "AnomalyAlertPiece": {
@@ -1924,7 +2818,52 @@
             "title": "OutputModel",
             "type": "object"
         },
-        "secrets_schema": null,
+        "secrets_schema": {
+            "description": "Optional OneData credentials and output target. When host+token are set,\nonedata:/// input paths are read from OneData and all outputs are mirrored to\n<onedata_output_dir>/<PieceName>/. When absent, the piece runs locally.",
+            "properties": {
+                "onedata_onezone_host": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata Onezone host, e.g. data.spice-platform.eu",
+                    "title": "Onedata Onezone Host"
+                },
+                "onedata_token": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "Onedata access token.",
+                    "title": "Onedata Token"
+                },
+                "onedata_output_dir": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ],
+                    "default": null,
+                    "description": "OneData base dir for outputs, e.g. onedata:///FilipsSpace/run",
+                    "title": "Onedata Output Dir"
+                }
+            },
+            "title": "SecretsModel",
+            "type": "object"
+        },
         "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/AnomalyAlertPiece"
     }
 }
