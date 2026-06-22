@@ -13,6 +13,14 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
 
 def _discover_workflow_user_input_path(load_csv: Path, scenario_yaml: Path) -> Path | None:
     repo_root = Path(__file__).resolve().parents[2]
@@ -114,7 +122,19 @@ class UserInputPiece(BasePiece):
             ).fillna(med)
         return repaired, filled
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
+        try:
+            return self._run_impl(input_data)
+        finally:
+            if od is not None:
+                od.mirror_results(self.results_path, secrets_data, "UserInputPiece")
+            if _stage is not None:
+                _stage.cleanup()
+
+    def _run_impl(self, input_data: InputModel) -> OutputModel:
         load_csv = Path(input_data.load_csv)
         prices_csv = Path(input_data.prices_csv) if input_data.prices_csv else None
         scenario_yaml = Path(input_data.scenario_yaml)

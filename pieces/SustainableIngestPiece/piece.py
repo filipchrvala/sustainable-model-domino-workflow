@@ -284,3 +284,6 @@ class SustainableIngestPiece(BasePiece):
             with open(err_path, "w", encoding="utf-8") as f:
                 f.write(err)
             raise
+        finally:
+            if od is not None:
+                od.mirror_results(self.results_path, secrets_data, "SustainableIngestPiece")

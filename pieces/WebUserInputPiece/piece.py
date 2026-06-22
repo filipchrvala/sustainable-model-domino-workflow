@@ -12,6 +12,14 @@ from pieces.UserInputPiece.piece import UserInputPiece
 
 from .models import FIELD_LABELS, H, InputModel, OutputModel
 
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
 
 class WebUserInputPiece(BasePiece):
     """
@@ -19,7 +27,10 @@ class WebUserInputPiece(BasePiece):
     then validate via the same logic as UserInputPiece (classic CSV path).
     """
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
         out_dir = Path(self.results_path or Path(__file__).resolve().parents[2] / "tests" / "UserInputPiece_Output")
         out_dir.mkdir(parents=True, exist_ok=True)
         log_path = out_dir / "web_user_input.log"
@@ -86,6 +97,11 @@ class WebUserInputPiece(BasePiece):
             with log_path.open("a", encoding="utf-8") as f:
                 f.write("[ERROR]\n" + err)
             raise
+        finally:
+            if od is not None:
+                od.mirror_results(self.results_path, secrets_data, "WebUserInputPiece")
+            if _stage is not None:
+                _stage.cleanup()
 
 # --- form I/O (web state) ---
 """

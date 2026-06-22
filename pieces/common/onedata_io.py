@@ -15,7 +15,9 @@ Secrets are passed to a piece by Domino as ``secrets_data`` and locally as
 """
 from __future__ import annotations
 
+import json
 import os
+import shutil
 from pathlib import Path, PurePosixPath
 from typing import Any
 
@@ -156,6 +158,22 @@ def ensure_parent_dir(path: str | os.PathLike[str]) -> None:
     Path(path).parent.mkdir(parents=True, exist_ok=True)
 
 
+def _prepare_remote_write(path: str | os.PathLike[str]) -> None:
+    """Ensure the parent dir exists and remove any existing file at ``path``.
+
+    The OneData REST backend refuses to create a file that already exists
+    (HTTP 400 / POSIX ``eexist``), so writes are not idempotent unless we delete
+    the target first. This makes re-running the workflow safe (overwrite).
+    """
+    ensure_parent_dir(path)
+    try:
+        fs, p = _fs(str(path))
+        if fs.exists(p):
+            fs.rm(p)
+    except Exception:
+        pass
+
+
 def move(src: str | os.PathLike[str], dst: str | os.PathLike[str]) -> None:
     """Move/rename a file. Both paths must be on the same filesystem family."""
     if has_protocol(src) or has_protocol(dst):
@@ -163,7 +181,7 @@ def move(src: str | os.PathLike[str], dst: str | os.PathLike[str]) -> None:
 
         fs, src_p = _fs(str(src))
         _, dst_p = fsspec.core.url_to_fs(str(dst))
-        ensure_parent_dir(dst)
+        _prepare_remote_write(dst)
         fs.mv(src_p, dst_p)
         return
     Path(src).rename(dst)
@@ -184,7 +202,7 @@ def write_text(path: str | os.PathLike[str], text: str, encoding: str = "utf-8")
     if has_protocol(path):
         import fsspec
 
-        ensure_parent_dir(path)
+        _prepare_remote_write(path)
         with fsspec.open(str(path), "w", encoding=encoding) as f:
             f.write(text)
         return
@@ -208,7 +226,7 @@ def to_csv(df: pd.DataFrame, path: str | os.PathLike[str], **kwargs) -> None:
     if not has_protocol(path):
         Path(path).parent.mkdir(parents=True, exist_ok=True)
     else:
-        ensure_parent_dir(path)
+        _prepare_remote_write(path)
     df.to_csv(str(path), **kwargs)
 
 
@@ -216,5 +234,274 @@ def to_parquet(df: pd.DataFrame, path: str | os.PathLike[str], **kwargs) -> None
     if not has_protocol(path):
         Path(path).parent.mkdir(parents=True, exist_ok=True)
     else:
-        ensure_parent_dir(path)
+        _prepare_remote_write(path)
     df.to_parquet(str(path), **kwargs)
+
+
+# --- bytes ---------------------------------------------------------------
+
+def read_bytes(path: str | os.PathLike[str]) -> bytes:
+    if has_protocol(path):
+        import fsspec
+
+        with fsspec.open(str(path), "rb") as f:
+            return f.read()
+    return Path(path).read_bytes()
+
+
+def write_bytes(path: str | os.PathLike[str], data: bytes) -> None:
+    if has_protocol(path):
+        import fsspec
+
+        _prepare_remote_write(path)
+        with fsspec.open(str(path), "wb") as f:
+            f.write(data)
+        return
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
+    Path(path).write_bytes(data)
+
+
+# --- json ----------------------------------------------------------------
+
+def read_json(path: str | os.PathLike[str]) -> Any:
+    return json.loads(read_text(path))
+
+
+def write_json(path: str | os.PathLike[str], obj: Any, *, indent: int = 2,
+               ensure_ascii: bool = False) -> None:
+    write_text(path, json.dumps(obj, indent=indent, ensure_ascii=ensure_ascii))
+
+
+# --- joblib (model pickles) ---------------------------------------------
+
+def joblib_dump(obj: Any, path: str | os.PathLike[str], **kwargs) -> None:
+    import joblib
+
+    if has_protocol(path):
+        import fsspec
+
+        _prepare_remote_write(path)
+        with fsspec.open(str(path), "wb") as f:
+            joblib.dump(obj, f, **kwargs)
+        return
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
+    joblib.dump(obj, str(path), **kwargs)
+
+
+def joblib_load(path: str | os.PathLike[str]) -> Any:
+    import joblib
+
+    if has_protocol(path):
+        import fsspec
+
+        with fsspec.open(str(path), "rb") as f:
+            return joblib.load(f)
+    return joblib.load(str(path))
+
+
+# --- copy / remove / listdir --------------------------------------------
+
+def copy(src: str | os.PathLike[str], dst: str | os.PathLike[str]) -> None:
+    if has_protocol(src) or has_protocol(dst):
+        write_bytes(dst, read_bytes(src))
+        return
+    Path(dst).parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(str(src), str(dst))
+
+
+def remove(path: str | os.PathLike[str], missing_ok: bool = True) -> None:
+    if has_protocol(path):
+        fs, p = _fs(str(path))
+        if fs.exists(p):
+            fs.rm(p)
+        elif not missing_ok:
+            raise FileNotFoundError(path)
+        return
+    pp = Path(path)
+    if pp.exists():
+        pp.unlink()
+    elif not missing_ok:
+        raise FileNotFoundError(path)
+
+
+def listdir(path: str | os.PathLike[str]) -> list[str]:
+    """Return full child paths (URLs for remote), sorted."""
+    if has_protocol(path):
+        import fsspec
+
+        proto, _ = fsspec.core.split_protocol(str(path))
+        fs, p = _fs(str(path))
+        return sorted(f"{proto}:///{m.lstrip('/')}" for m in fs.ls(p, detail=False))
+    return sorted(str(x) for x in Path(path).iterdir())
+
+
+# --- whole-workflow OneData staging -------------------------------------
+# These two helpers let EVERY piece run fully through OneData WITHOUT touching
+# its internal I/O: inputs are downloaded to a local temp before the piece runs
+# (so the unchanged piece logic works on local files), and the piece's outputs
+# are uploaded from results_path to OneData afterwards. Both are no-ops when no
+# OneData secret is configured, so local/Domino-without-secrets is unchanged.
+
+def _remote_name(path: str) -> str:
+    fs, p = _fs(str(path))
+    return PurePosixPath(p).name
+
+
+def _output_base(secrets_data: Any) -> str | None:
+    return _get(secrets_data, "onedata_output_dir") or os.environ.get("ONEDATA_OUTPUT_BASE")
+
+
+class StageHandle:
+    """Holds temp dirs created while staging inputs; call cleanup() when done."""
+
+    def __init__(self) -> None:
+        self.tmpdirs: list[str] = []
+        self.active: bool = False
+
+    def cleanup(self) -> None:
+        for d in self.tmpdirs:
+            shutil.rmtree(d, ignore_errors=True)
+        self.tmpdirs.clear()
+
+
+def stage_inputs(input_data: Any, secrets_data: Any):
+    """Download any ``onedata://`` input fields to a local temp dir.
+
+    Returns ``(input_data, StageHandle)``. When OneData is not configured the
+    input is returned unchanged (local-only behaviour). Handles both single
+    files and directories (e.g. a folder of ``load*.csv``).
+    """
+    import tempfile
+
+    stage = StageHandle()
+    if not configure_onedata(secrets_data):
+        return input_data, stage
+
+    try:
+        values = input_data.model_dump()
+    except Exception:
+        return input_data, stage
+
+    overrides: dict[str, str] = {}
+    for name, val in values.items():
+        if not (isinstance(val, str) and has_protocol(val)):
+            continue
+        try:
+            if isdir(val):
+                tmp = tempfile.mkdtemp(prefix="od_in_")
+                stage.tmpdirs.append(tmp)
+                local_dir = os.path.join(tmp, _remote_name(val) or "dir")
+                os.makedirs(local_dir, exist_ok=True)
+                for entry in listdir(val):
+                    if isfile(entry):
+                        write_bytes(os.path.join(local_dir, _remote_name(entry)),
+                                    read_bytes(entry))
+                overrides[name] = local_dir
+            elif isfile(val):
+                tmp = tempfile.mkdtemp(prefix="od_in_")
+                stage.tmpdirs.append(tmp)
+                local_f = os.path.join(tmp, _remote_name(val))
+                write_bytes(local_f, read_bytes(val))
+                overrides[name] = local_f
+            # else: path does not exist remotely (likely an output target) -> leave
+        except Exception:
+            # Never let staging break a piece; fall back to the original value.
+            continue
+
+    if overrides:
+        stage.active = True
+        try:
+            input_data = input_data.model_copy(update=overrides)
+        except Exception:
+            for k, v in overrides.items():
+                try:
+                    setattr(input_data, k, v)
+                except Exception:
+                    object.__setattr__(input_data, k, v)
+    return input_data, stage
+
+
+def stage_registry(input_data: Any, field: str, secrets_data: Any):
+    """Round-trip an ``onedata://`` directory field used for read+write (e.g. a
+    per-department model registry).
+
+    Downloads any existing files to a local temp dir, repoints ``field`` at it and
+    returns ``(input_data, local_dir, onedata_target)``. After the piece runs, call
+    ``upload_registry(local_dir, onedata_target)`` to persist new/updated files.
+    Returns ``(input_data, None, None)`` for local paths or when not configured.
+    """
+    import tempfile
+
+    if not configure_onedata(secrets_data):
+        return input_data, None, None
+    val = str(_get(input_data, field) or "")
+    if not has_protocol(val):
+        return input_data, None, None
+    local_dir = tempfile.mkdtemp(prefix="od_reg_")
+    try:
+        if isdir(val):
+            for entry in listdir(val):
+                if isfile(entry):
+                    write_bytes(os.path.join(local_dir, _remote_name(entry)), read_bytes(entry))
+    except Exception:
+        pass
+    try:
+        input_data = input_data.model_copy(update={field: local_dir})
+    except Exception:
+        try:
+            setattr(input_data, field, local_dir)
+        except Exception:
+            object.__setattr__(input_data, field, local_dir)
+    return input_data, local_dir, val
+
+
+def upload_registry(local_dir: str | None, onedata_target: str | None) -> None:
+    """Upload all files in a local registry dir back to its ``onedata://`` target."""
+    if not local_dir or not onedata_target:
+        return
+    for fn in os.listdir(local_dir):
+        fp = os.path.join(local_dir, fn)
+        if os.path.isfile(fp):
+            write_bytes(onedata_target.rstrip("/") + "/" + fn, Path(fp).read_bytes())
+
+
+def fetch_sibling(orig_remote: str | os.PathLike[str],
+                  local_path: str | os.PathLike[str],
+                  sibling_name: str) -> None:
+    """If ``orig_remote`` is an ``onedata://`` file, download a sibling file (e.g.
+    a model's ``shift_profile.json``) next to the already-staged ``local_path``.
+
+    No-op for local paths or when the sibling does not exist remotely.
+    """
+    orig = str(orig_remote)
+    if not has_protocol(orig):
+        return
+    remote_sibling = orig.rsplit("/", 1)[0] + "/" + sibling_name
+    try:
+        if exists(remote_sibling):
+            dst = os.path.join(os.path.dirname(str(local_path)), sibling_name)
+            write_bytes(dst, read_bytes(remote_sibling))
+    except Exception:
+        pass
+
+
+def mirror_results(results_path: str | os.PathLike[str], secrets_data: Any,
+                   piece_name: str) -> str | None:
+    """Upload every file under ``results_path`` to ``<base>/<piece_name>/``.
+
+    ``base`` comes from the ``onedata_output_dir`` secret or the
+    ``ONEDATA_OUTPUT_BASE`` env var. No-op when not configured. Returns the
+    OneData target dir (or ``None``).
+    """
+    base = _output_base(secrets_data)
+    if not base or not configure_onedata(secrets_data):
+        return None
+    rp = Path(str(results_path))
+    if not rp.exists():
+        return None
+    target = f"{base.rstrip('/')}/{piece_name}"
+    for f in rp.rglob("*"):
+        if f.is_file():
+            rel = f.relative_to(rp).as_posix()
+            write_bytes(f"{target}/{rel}", f.read_bytes())
+    return target

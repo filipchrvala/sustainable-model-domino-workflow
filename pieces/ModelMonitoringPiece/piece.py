@@ -12,13 +12,24 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
 
 class ModelMonitoringPiece(BasePiece):
     """
     Monitors model quality and data drift on 15-minute predictions.
     """
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
         log_path = Path(self.results_path) / "model_monitoring.log"
         err_path = Path(self.results_path) / "model_monitoring_error.txt"
         try:
@@ -105,3 +116,8 @@ class ModelMonitoringPiece(BasePiece):
             with open(err_path, "w", encoding="utf-8") as f:
                 f.write(err)
             raise
+        finally:
+            if od is not None:
+                od.mirror_results(self.results_path, secrets_data, "ModelMonitoringPiece")
+            if _stage is not None:
+                _stage.cleanup()

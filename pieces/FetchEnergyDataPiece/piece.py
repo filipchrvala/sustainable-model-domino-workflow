@@ -184,3 +184,6 @@ class FetchEnergyDataPiece(BasePiece):
                 with open(Path(self.results_path) / "fetch_energy_data_error.txt", "w", encoding="utf-8") as f:
                     f.write(err)
             raise
+        finally:
+            if od is not None:
+                od.mirror_results(self.results_path, secrets_data, "FetchEnergyDataPiece")

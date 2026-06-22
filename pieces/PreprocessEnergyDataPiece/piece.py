@@ -8,6 +8,14 @@ from pathlib import Path
 import pandas as pd
 import traceback
 
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
 
 class PreprocessEnergyDataPiece(BasePiece):
     """
@@ -15,7 +23,10 @@ class PreprocessEnergyDataPiece(BasePiece):
     The prediction input for PredictPiece is a separate CSV and is not generated here.
     """
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
         log_path = Path(self.results_path) / "preprocess_energy_data.log"
         err_path = Path(self.results_path) / "preprocess_energy_data_error.txt"
         try:
@@ -82,3 +93,8 @@ class PreprocessEnergyDataPiece(BasePiece):
             with open(err_path, "w", encoding="utf-8") as f:
                 f.write(err)
             raise
+        finally:
+            if od is not None:
+                od.mirror_results(self.results_path, secrets_data, "PreprocessEnergyDataPiece")
+            if _stage is not None:
+                _stage.cleanup()

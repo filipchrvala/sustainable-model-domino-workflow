@@ -13,6 +13,14 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
 
 def _load_consumption_csv(path: Path | str) -> pd.DataFrame:
     p = Path(path)
@@ -108,47 +116,56 @@ def _technical_bounds_kwp_kwh(cfg: dict[str, Any], df: pd.DataFrame, dt_h: float
 class TechnicalLimitsPiece(BasePiece):
     """Calculate technical bounds from scenario constraints."""
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
-        csv_path = Path(input_data.load_csv)
-        scenario_path = Path(input_data.scenario_yaml)
-        out_dir = Path(self.results_path or scenario_path.parent)
-        out_dir.mkdir(parents=True, exist_ok=True)
-        log_path = out_dir / "technical_limits.log"
-
-        def _log(msg: str) -> None:
-            text = f"[TechnicalLimitsPiece] {msg}"
-            print(text, flush=True)
-            with log_path.open("a", encoding="utf-8") as f:
-                f.write(text + "\n")
-
-        _log(f"Input load_csv={csv_path}")
-        _log(f"Input scenario_yaml={scenario_path}")
-        if not csv_path.is_file():
-            _log("ERROR: load_csv file missing")
-            raise FileNotFoundError(f"Load CSV not found: {csv_path}")
-        if not scenario_path.is_file():
-            _log("ERROR: scenario_yaml file missing")
-            raise FileNotFoundError(f"Scenario YAML not found: {scenario_path}")
-
-        import yaml
-
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
         try:
-            cfg = yaml.safe_load(scenario_path.read_text(encoding="utf-8")) or {}
-            df = _load_consumption_csv(csv_path)
-            dt_h = _infer_timestep_hours(df)
-            bounds = _technical_bounds_kwp_kwh(cfg, df, dt_h)
-            _log(f"Loaded rows={len(df)}, inferred_step_h={dt_h:.6f}")
-        except Exception as exc:
-            trace = traceback.format_exc()
-            (out_dir / "technical_limits_error.txt").write_text(trace, encoding="utf-8")
-            _log(f"ERROR during computation: {exc}")
-            raise
+            csv_path = Path(input_data.load_csv)
+            scenario_path = Path(input_data.scenario_yaml)
+            out_dir = Path(self.results_path or scenario_path.parent)
+            out_dir.mkdir(parents=True, exist_ok=True)
+            log_path = out_dir / "technical_limits.log"
 
-        out_json = out_dir / "technical_limits.json"
-        out_json.write_text(json.dumps(bounds, indent=2, ensure_ascii=False), encoding="utf-8")
-        _log(f"Wrote technical limits to {out_json}")
-        return OutputModel(
-            message="Technical limits calculated",
-            technical_limits_json=str(out_json),
-            scenario_yaml=str(scenario_path),
-        )
+            def _log(msg: str) -> None:
+                text = f"[TechnicalLimitsPiece] {msg}"
+                print(text, flush=True)
+                with log_path.open("a", encoding="utf-8") as f:
+                    f.write(text + "\n")
+
+            _log(f"Input load_csv={csv_path}")
+            _log(f"Input scenario_yaml={scenario_path}")
+            if not csv_path.is_file():
+                _log("ERROR: load_csv file missing")
+                raise FileNotFoundError(f"Load CSV not found: {csv_path}")
+            if not scenario_path.is_file():
+                _log("ERROR: scenario_yaml file missing")
+                raise FileNotFoundError(f"Scenario YAML not found: {scenario_path}")
+
+            import yaml
+
+            try:
+                cfg = yaml.safe_load(scenario_path.read_text(encoding="utf-8")) or {}
+                df = _load_consumption_csv(csv_path)
+                dt_h = _infer_timestep_hours(df)
+                bounds = _technical_bounds_kwp_kwh(cfg, df, dt_h)
+                _log(f"Loaded rows={len(df)}, inferred_step_h={dt_h:.6f}")
+            except Exception as exc:
+                trace = traceback.format_exc()
+                (out_dir / "technical_limits_error.txt").write_text(trace, encoding="utf-8")
+                _log(f"ERROR during computation: {exc}")
+                raise
+
+            out_json = out_dir / "technical_limits.json"
+            out_json.write_text(json.dumps(bounds, indent=2, ensure_ascii=False), encoding="utf-8")
+            _log(f"Wrote technical limits to {out_json}")
+            return OutputModel(
+                message="Technical limits calculated",
+                technical_limits_json=str(out_json),
+                scenario_yaml=str(scenario_path),
+            )
+        finally:
+            if od is not None:
+                od.mirror_results(self.results_path, secrets_data, "TechnicalLimitsPiece")
+            if _stage is not None:
+                _stage.cleanup()

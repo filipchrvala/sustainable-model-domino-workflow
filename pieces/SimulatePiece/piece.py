@@ -22,6 +22,14 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
 # --- load (historická spotreba) ---
 
 
@@ -1696,7 +1704,19 @@ def run_analysis(
 class SimulatePiece(BasePiece):
     """Run MRK+PV+battery simulation and write mrk_savings_report.json."""
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
+        try:
+            return self._run_impl(input_data)
+        finally:
+            if od is not None:
+                od.mirror_results(self.results_path, secrets_data, "SimulatePiece")
+            if _stage is not None:
+                _stage.cleanup()
+
+    def _run_impl(self, input_data: InputModel) -> OutputModel:
         csv_path = Path(input_data.load_csv)
         scenario_path = Path(input_data.scenario_yaml)
         out_dir = Path(self.results_path) if self.results_path else Path(input_data.output_dir or ".")

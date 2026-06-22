@@ -47,6 +47,9 @@ class DashboardPiece(BasePiece):
     """Build finance-focused dashboard payload for CFO decisions."""
 
     def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
         rep_path = Path(input_data.report_json)
         kpi_path = Path(input_data.kpi_results_csv)
         inv_path = Path(input_data.investment_evaluation_csv)
@@ -195,6 +198,11 @@ class DashboardPiece(BasePiece):
             (out_dir / "dashboard_error.txt").write_text(traceback.format_exc(), encoding="utf-8")
             _log(f"ERROR during dashboard assembly: {exc}")
             raise
+        finally:
+            if od is not None:
+                od.mirror_results(self.results_path, secrets_data, "DashboardPiece")
+            if _stage is not None:
+                _stage.cleanup()
 
 
 # --- sizing grid UI ---

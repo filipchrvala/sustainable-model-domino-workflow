@@ -19,6 +19,9 @@ class SecretsModel(BaseModel):
     onedata_token: Optional[str] = Field(
         default=None, description="Onedata access token."
     )
+    onedata_output_dir: Optional[str] = Field(
+        default=None, description="OneData base dir for outputs, e.g. onedata:///FilipsSpace/run"
+    )
 
 
 class OutputModel(BaseModel):

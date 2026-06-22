@@ -15,6 +15,14 @@ from xgboost import XGBRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 from datetime import datetime
 
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
 
 def _hours_to_blocks(hours: list[int]) -> list[list[int]]:
     if not hours:
@@ -170,7 +178,10 @@ def _split_train_test(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
 
 class TrainModelPiece(BasePiece):
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
         results_dir = Path(self.results_path or ".")
         results_dir.mkdir(parents=True, exist_ok=True)
         piece_log = results_dir / "train_model.log"
@@ -312,3 +323,8 @@ class TrainModelPiece(BasePiece):
             with open(piece_err, "w", encoding="utf-8") as f:
                 f.write(err)
             raise
+        finally:
+            if od is not None:
+                od.mirror_results(self.results_path, secrets_data, "TrainModelPiece")
+            if _stage is not None:
+                _stage.cleanup()

@@ -12,11 +12,22 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
 
 class KPIPiece(BasePiece):
     """Extract compact KPI table from MRK report JSON."""
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
         rep_path = Path(input_data.report_json)
         out_dir = Path(self.results_path or rep_path.parent)
         out_dir.mkdir(parents=True, exist_ok=True)
@@ -68,3 +79,8 @@ class KPIPiece(BasePiece):
             (out_dir / "kpi_error.txt").write_text(traceback.format_exc(), encoding="utf-8")
             _log(f"ERROR during KPI calculation: {exc}")
             raise
+        finally:
+            if od is not None:
+                od.mirror_results(self.results_path, secrets_data, "KPIPiece")
+            if _stage is not None:
+                _stage.cleanup()
