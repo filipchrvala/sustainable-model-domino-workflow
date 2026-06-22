@@ -18,7 +18,7 @@ DST = REPO / "test_sus_onedata.customization"
 
 PREFIX = "onedata:///FilipsSpace/inputs"
 RUN_PREFIX = "onedata:///FilipsSpace/run"
-IMAGE_VERSION = "0.1.10"
+IMAGE_VERSION = "0.1.11"
 
 # Map old shared_storage paths -> OneData input paths
 STATIC_MAP = {

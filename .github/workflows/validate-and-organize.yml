@@ -8,6 +8,7 @@ on:
       - "config.toml"
       - "pieces/**"
       - "dependencies/**"
+      - ".github/workflows/validate-and-organize.yml"
 
 permissions:
   contents: write
@@ -16,6 +17,7 @@ permissions:
 jobs:
   validate-and-organize:
     runs-on: ubuntu-latest
+    timeout-minutes: 90
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -42,17 +44,31 @@ jobs:
 
       - name: Run organize and build images
         env:
-          DOCKER_CLIENT_TIMEOUT: "1200"
-          COMPOSE_HTTP_TIMEOUT: "1200"
+          DOCKER_CLIENT_TIMEOUT: "3600"
+          COMPOSE_HTTP_TIMEOUT: "3600"
         run: |
           domino piece organize --build-images --source-url=https://github.com/${{ github.repository }}
 
       - name: Publish images
         env:
           GHCR_USERNAME: ${{ github.actor }}
-          DOCKER_CLIENT_TIMEOUT: "1200"
-          COMPOSE_HTTP_TIMEOUT: "1200"
-        run: domino piece publish-images --registry-token ${{ secrets.GITHUB_TOKEN }}
+          DOCKER_CLIENT_TIMEOUT: "3600"
+          COMPOSE_HTTP_TIMEOUT: "3600"
+        run: |
+          VERSION=$(python -c "import tomli; print(tomli.load(open('config.toml','rb'))['repository']['VERSION'])")
+          IMAGE="ghcr.io/filipchrvala/sustainable-model-domino-workflow:${VERSION}-group0"
+          echo "Publishing ${IMAGE}"
+          for attempt in 1 2 3 4 5; do
+            echo "=== Push attempt ${attempt}/5 ==="
+            if docker push "$IMAGE"; then
+              echo "Published ${IMAGE}"
+              exit 0
+            fi
+            echo "Push failed, waiting 90s before retry..."
+            sleep 90
+          done
+          echo "All push attempts failed"
+          exit 1
 
       - name: Commit files
         id: commit_files
