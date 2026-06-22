@@ -37,6 +37,7 @@ class CatalogRankerPiece(BasePiece):
         _stage = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
+        _piece_out = None
         try:
             scenario_path = Path(input_data.scenario_yaml)
             pv_path = Path(input_data.pv_catalog_json)
@@ -94,9 +95,12 @@ class CatalogRankerPiece(BasePiece):
                 encoding="utf-8",
             )
             _log(f"Wrote output: {out_json}")
-            return OutputModel(message="Catalog ranking finished", catalog_ranked_recommendation_json=str(out_json))
+            _piece_out = OutputModel(message="Catalog ranking finished", catalog_ranked_recommendation_json=str(out_json))
         finally:
-            if od is not None:
-                od.mirror_results(self.results_path, secrets_data, "CatalogRankerPiece")
-            if _stage is not None:
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "CatalogRankerPiece", _stage)
+            elif _stage is not None:
                 _stage.cleanup()
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "CatalogRankerPiece", _stage)
+        return _piece_out

@@ -126,13 +126,17 @@ class UserInputPiece(BasePiece):
         _stage = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
+        _piece_out = None
         try:
             return self._run_impl(input_data)
         finally:
-            if od is not None:
-                od.mirror_results(self.results_path, secrets_data, "UserInputPiece")
-            if _stage is not None:
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "UserInputPiece", _stage)
+            elif _stage is not None:
                 _stage.cleanup()
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "UserInputPiece", _stage)
+        return _piece_out
 
     def _run_impl(self, input_data: InputModel) -> OutputModel:
         load_csv = Path(input_data.load_csv)
@@ -270,7 +274,7 @@ class UserInputPiece(BasePiece):
             workflow_input_copy.write_text("{}", encoding="utf-8")
             _log("workflow_user_input.json not found near inputs; wrote empty fallback")
 
-        return OutputModel(
+        _piece_out = OutputModel(
             message="User input validated",
             load_csv=str(merged_path),
             scenario_yaml=str(scenario_copy),

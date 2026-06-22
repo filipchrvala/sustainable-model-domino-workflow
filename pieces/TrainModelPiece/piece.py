@@ -182,6 +182,7 @@ class TrainModelPiece(BasePiece):
         _stage = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
+        _piece_out = None
         results_dir = Path(self.results_path or ".")
         results_dir.mkdir(parents=True, exist_ok=True)
         piece_log = results_dir / "train_model.log"
@@ -307,7 +308,7 @@ class TrainModelPiece(BasePiece):
 
             print(f"[SUCCESS] Model saved to {model_path}")
 
-            return OutputModel(
+            _piece_out = OutputModel(
                 message=(
                     f"Model trained. MAE={mae:.2f} kW ({mae_pct:.2f}%), "
                     f"RMSE={rmse:.2f} kW ({rmse_pct:.2f}%), MAPE={mape:.2f}%"
@@ -324,7 +325,10 @@ class TrainModelPiece(BasePiece):
                 f.write(err)
             raise
         finally:
-            if od is not None:
-                od.mirror_results(self.results_path, secrets_data, "TrainModelPiece")
-            if _stage is not None:
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "TrainModelPiece", _stage)
+            elif _stage is not None:
                 _stage.cleanup()
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "TrainModelPiece", _stage)
+        return _piece_out

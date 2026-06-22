@@ -505,3 +505,94 @@ def mirror_results(results_path: str | os.PathLike[str], secrets_data: Any,
             rel = f.relative_to(rp).as_posix()
             write_bytes(f"{target}/{rel}", f.read_bytes())
     return target
+
+
+def _rel_under_results(val: str, results_path: str | os.PathLike) -> str | None:
+    """Return a posix relative path when ``val`` points inside ``results_path``."""
+    if not val:
+        return None
+    rp = Path(str(results_path)).resolve()
+    rp_s = str(rp).replace("\\", "/").rstrip("/")
+    val_s = str(val).replace("\\", "/")
+    if val_s == rp_s:
+        return ""
+    if val_s.startswith(rp_s + "/"):
+        return val_s[len(rp_s) + 1 :]
+    try:
+        p = Path(val).resolve()
+        if p.is_relative_to(rp):
+            return p.relative_to(rp).as_posix()
+    except (ValueError, OSError, AttributeError):
+        pass
+    return None
+
+
+def rewrite_output_paths(output: Any, results_path: str | os.PathLike,
+                         onedata_target: str) -> Any:
+    """Rewrite OutputModel path fields from local ``results_path`` to OneData URLs.
+
+    Domino passes output path strings to downstream pieces; after mirror-out those
+    paths must be ``onedata:///...`` so the next piece can stage them in.
+    """
+    if output is None:
+        return output
+    base = onedata_target.rstrip("/")
+    updates: dict[str, Any] = {}
+
+    fields = getattr(output, "model_fields", None) or getattr(output, "__fields__", {})
+    for name in fields:
+        val = getattr(output, name, None)
+        if isinstance(val, str):
+            rel = _rel_under_results(val, results_path)
+            if rel is not None:
+                updates[name] = f"{base}/{rel}" if rel else base
+        elif isinstance(val, list):
+            new_list = []
+            changed = False
+            for item in val:
+                if isinstance(item, str):
+                    rel = _rel_under_results(item, results_path)
+                    if rel is not None:
+                        new_list.append(f"{base}/{rel}" if rel else base)
+                        changed = True
+                    else:
+                        new_list.append(item)
+                else:
+                    new_list.append(item)
+            if changed:
+                updates[name] = new_list
+
+    if not updates:
+        return output
+    if hasattr(output, "model_copy"):
+        return output.model_copy(update=updates)
+    for k, v in updates.items():
+        setattr(output, k, v)
+    return output
+
+
+def finish_piece(output: Any, results_path: str | os.PathLike, secrets_data: Any,
+                 piece_name: str, stage: Any = None,
+                 *, registry_local: str | None = None,
+                 registry_target: str | None = None) -> Any:
+    """Mirror results to OneData, clean up staging, return output with onedata paths."""
+    if registry_local and registry_target:
+        upload_registry(registry_local, registry_target)
+    target = mirror_results(results_path, secrets_data, piece_name)
+    if stage is not None:
+        stage.cleanup()
+    if target and output is not None:
+        return rewrite_output_paths(output, results_path, target)
+    return output
+
+
+def cleanup_on_error(results_path: str | os.PathLike, secrets_data: Any,
+                     piece_name: str, stage: Any = None,
+                     *, registry_local: str | None = None,
+                     registry_target: str | None = None) -> None:
+    """Mirror partial results and release staging after a failed piece run."""
+    if registry_local and registry_target:
+        upload_registry(registry_local, registry_target)
+    mirror_results(results_path, secrets_data, piece_name)
+    if stage is not None:
+        stage.cleanup()

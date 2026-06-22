@@ -1708,13 +1708,17 @@ class SimulatePiece(BasePiece):
         _stage = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
+        _piece_out = None
         try:
             return self._run_impl(input_data)
         finally:
-            if od is not None:
-                od.mirror_results(self.results_path, secrets_data, "SimulatePiece")
-            if _stage is not None:
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "SimulatePiece", _stage)
+            elif _stage is not None:
                 _stage.cleanup()
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "SimulatePiece", _stage)
+        return _piece_out
 
     def _run_impl(self, input_data: InputModel) -> OutputModel:
         csv_path = Path(input_data.load_csv)
@@ -1843,4 +1847,4 @@ class SimulatePiece(BasePiece):
         summary.to_csv(out_dir / "summary.csv", index=False)
         simulated.to_csv(out_dir / "simulated_results.csv", index=False)
         _log(f"Wrote outputs: {report_path}, {out_dir / 'summary.csv'}, {out_dir / 'simulated_results.csv'}")
-        return OutputModel(message="Simulation finished", report_json=str(report_path))
+        _piece_out = OutputModel(message="Simulation finished", report_json=str(report_path))

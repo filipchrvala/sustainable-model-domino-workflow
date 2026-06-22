@@ -40,6 +40,7 @@ class CatalogSyncPiece(BasePiece):
         _stage = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
+        _piece_out = None
         scenario_path = Path(input_data.scenario_yaml)
         out_dir = Path(self.results_path or scenario_path.parent)
         out_dir.mkdir(parents=True, exist_ok=True)
@@ -282,7 +283,7 @@ class CatalogSyncPiece(BasePiece):
                 msg = "Catalog sync finished with URL outage fallback"
             _log(f"Counts: pv={len(pv)}, inv={len(inv)}, bat={len(bat_products)}, url_outage={url_outage}")
             _log(f"Wrote outputs: {pv_json}, {inv_json}, {bat_json}, {manifest_json}")
-            return OutputModel(
+            _piece_out = OutputModel(
                 message=msg,
                 pv_catalog_json=str(pv_json),
                 inverter_catalog_json=str(inv_json),
@@ -295,7 +296,10 @@ class CatalogSyncPiece(BasePiece):
             _log(f"ERROR during catalog sync: {exc}")
             raise
         finally:
-            if od is not None:
-                od.mirror_results(self.results_path, secrets_data, "CatalogSyncPiece")
-            if _stage is not None:
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "CatalogSyncPiece", _stage)
+            elif _stage is not None:
                 _stage.cleanup()
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "CatalogSyncPiece", _stage)
+        return _piece_out

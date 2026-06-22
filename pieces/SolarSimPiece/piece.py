@@ -37,6 +37,7 @@ class SolarSimPiece(BasePiece):
         _stage = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
+        _piece_out = None
         try:
             csv_path = Path(input_data.load_csv)
             scenario_path = Path(input_data.scenario_yaml)
@@ -75,9 +76,12 @@ class SolarSimPiece(BasePiece):
             out_csv = out_dir / "virtual_solar.csv"
             out_df.to_csv(out_csv, index=False)
             _log(f"Wrote output: {out_csv}")
-            return OutputModel(message="Solar simulation finished", virtual_solar_csv=str(out_csv))
+            _piece_out = OutputModel(message="Solar simulation finished", virtual_solar_csv=str(out_csv))
         finally:
-            if od is not None:
-                od.mirror_results(self.results_path, secrets_data, "SolarSimPiece")
-            if _stage is not None:
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "SolarSimPiece", _stage)
+            elif _stage is not None:
                 _stage.cleanup()
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "SolarSimPiece", _stage)
+        return _piece_out

@@ -50,6 +50,7 @@ class DashboardPiece(BasePiece):
         _stage = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
+        _piece_out = None
         rep_path = Path(input_data.report_json)
         kpi_path = Path(input_data.kpi_results_csv)
         inv_path = Path(input_data.investment_evaluation_csv)
@@ -193,16 +194,19 @@ class DashboardPiece(BasePiece):
                 except Exception as pub_exc:
                     _log(f"WARNING: OneData publish failed ({publish_to}): {pub_exc}")
 
-            return OutputModel(dashboard_data_json=str(out_json))
+            _piece_out = OutputModel(dashboard_data_json=str(out_json))
         except Exception as exc:
             (out_dir / "dashboard_error.txt").write_text(traceback.format_exc(), encoding="utf-8")
             _log(f"ERROR during dashboard assembly: {exc}")
             raise
         finally:
-            if od is not None:
-                od.mirror_results(self.results_path, secrets_data, "DashboardPiece")
-            if _stage is not None:
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "DashboardPiece", _stage)
+            elif _stage is not None:
                 _stage.cleanup()
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "DashboardPiece", _stage)
+        return _piece_out
 
 
 # --- sizing grid UI ---

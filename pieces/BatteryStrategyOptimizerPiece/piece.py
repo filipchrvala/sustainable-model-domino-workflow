@@ -38,6 +38,7 @@ class BatteryStrategyOptimizerPiece(BasePiece):
         _stage = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
+        _piece_out = None
         try:
             csv_path = Path(input_data.load_csv)
             scenario_path = Path(input_data.scenario_yaml)
@@ -78,9 +79,12 @@ class BatteryStrategyOptimizerPiece(BasePiece):
             out_json = out_dir / "battery_strategy_recommendation.json"
             out_json.write_text(json.dumps(rec, indent=2, ensure_ascii=False), encoding="utf-8")
             _log(f"Wrote output: {out_json}")
-            return OutputModel(message="Battery strategy optimized", battery_strategy_recommendation_json=str(out_json))
+            _piece_out = OutputModel(message="Battery strategy optimized", battery_strategy_recommendation_json=str(out_json))
         finally:
-            if od is not None:
-                od.mirror_results(self.results_path, secrets_data, "BatteryStrategyOptimizerPiece")
-            if _stage is not None:
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "BatteryStrategyOptimizerPiece", _stage)
+            elif _stage is not None:
                 _stage.cleanup()
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "BatteryStrategyOptimizerPiece", _stage)
+        return _piece_out

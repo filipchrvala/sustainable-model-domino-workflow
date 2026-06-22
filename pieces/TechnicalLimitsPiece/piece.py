@@ -120,6 +120,7 @@ class TechnicalLimitsPiece(BasePiece):
         _stage = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
+        _piece_out = None
         try:
             csv_path = Path(input_data.load_csv)
             scenario_path = Path(input_data.scenario_yaml)
@@ -159,13 +160,16 @@ class TechnicalLimitsPiece(BasePiece):
             out_json = out_dir / "technical_limits.json"
             out_json.write_text(json.dumps(bounds, indent=2, ensure_ascii=False), encoding="utf-8")
             _log(f"Wrote technical limits to {out_json}")
-            return OutputModel(
+            _piece_out = OutputModel(
                 message="Technical limits calculated",
                 technical_limits_json=str(out_json),
                 scenario_yaml=str(scenario_path),
             )
         finally:
-            if od is not None:
-                od.mirror_results(self.results_path, secrets_data, "TechnicalLimitsPiece")
-            if _stage is not None:
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "TechnicalLimitsPiece", _stage)
+            elif _stage is not None:
                 _stage.cleanup()
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "TechnicalLimitsPiece", _stage)
+        return _piece_out

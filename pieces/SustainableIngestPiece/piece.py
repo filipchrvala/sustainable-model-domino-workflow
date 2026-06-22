@@ -189,6 +189,7 @@ def _write_history(merged: pd.DataFrame, history_path: str) -> None:
 
 class SustainableIngestPiece(BasePiece):
     def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _piece_out = None
         log_path = Path(self.results_path) / "sustainable_ingest.log"
         err_path = Path(self.results_path) / "sustainable_ingest_error.txt"
         try:
@@ -270,7 +271,7 @@ class SustainableIngestPiece(BasePiece):
                 f.write(f"[INFO] files_processed={len(files)}\n")
                 f.write(f"[INFO] new_files_ingested={len(new_parts)}\n")
 
-            return OutputModel(
+            _piece_out = OutputModel(
                 message=f"Ingest completed. rows={len(merged)}",
                 history_csv_out=str(history_path),
                 rows_total=int(len(merged)),
@@ -285,5 +286,8 @@ class SustainableIngestPiece(BasePiece):
                 f.write(err)
             raise
         finally:
-            if od is not None:
-                od.mirror_results(self.results_path, secrets_data, "SustainableIngestPiece")
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "SustainableIngestPiece", None)
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "SustainableIngestPiece", None)
+        return _piece_out

@@ -27,6 +27,7 @@ class PreprocessEnergyDataPiece(BasePiece):
         _stage = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
+        _piece_out = None
         log_path = Path(self.results_path) / "preprocess_energy_data.log"
         err_path = Path(self.results_path) / "preprocess_energy_data_error.txt"
         try:
@@ -80,7 +81,7 @@ class PreprocessEnergyDataPiece(BasePiece):
 
             self.display_result = {"file_type": "parquet", "file_path": str(train_path)}
 
-            return OutputModel(
+            _piece_out = OutputModel(
                 message="Preprocessing finished (train_dataset only)",
                 train_file_path=str(train_path),
                 predict_file_path=predict_path_str,
@@ -94,7 +95,10 @@ class PreprocessEnergyDataPiece(BasePiece):
                 f.write(err)
             raise
         finally:
-            if od is not None:
-                od.mirror_results(self.results_path, secrets_data, "PreprocessEnergyDataPiece")
-            if _stage is not None:
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "PreprocessEnergyDataPiece", _stage)
+            elif _stage is not None:
                 _stage.cleanup()
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "PreprocessEnergyDataPiece", _stage)
+        return _piece_out

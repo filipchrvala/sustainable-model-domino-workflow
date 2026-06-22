@@ -240,6 +240,7 @@ class PredictPiece(BasePiece):
             # model came from OneData, pull that sibling next to the staged model.
             if _stage is not None and _stage.active:
                 od.fetch_sibling(_orig_model_path, input_data.model_path, "shift_profile.json")
+        _piece_out = None
         results_dir = Path(self.results_path or ".")
         results_dir.mkdir(parents=True, exist_ok=True)
         piece_log = results_dir / "predict.log"
@@ -314,7 +315,7 @@ class PredictPiece(BasePiece):
             print("[SUCCESS] Prediction finished")
             print(f"[SUCCESS] Predictions saved to {output_path}")
 
-            return OutputModel(
+            _piece_out = OutputModel(
                 message="Prediction finished successfully",
                 prediction_file_path=str(output_path)
             )
@@ -327,10 +328,13 @@ class PredictPiece(BasePiece):
                 f.write(err)
             raise
         finally:
-            if od is not None:
-                od.mirror_results(self.results_path, secrets_data, "PredictPiece")
-            if _stage is not None:
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "PredictPiece", _stage)
+            elif _stage is not None:
                 _stage.cleanup()
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "PredictPiece", _stage)
+        return _piece_out
 
     def _predict_batch(self, model, df: pd.DataFrame, target: str, shift_profile: dict) -> pd.DataFrame:
         df = df.copy()

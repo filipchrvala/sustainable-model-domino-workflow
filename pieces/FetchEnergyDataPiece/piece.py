@@ -111,6 +111,7 @@ class FetchEnergyDataPiece(BasePiece):
     """
 
     def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _piece_out = None
         try:
             _log(self.results_path, "[INFO] FetchEnergyDataPiece started")
             _log(self.results_path, f"[INFO] Load CSV: {input_data.load_csv}")
@@ -173,7 +174,7 @@ class FetchEnergyDataPiece(BasePiece):
             _log(self.results_path, f"[SUCCESS] Output written to {output_path}")
 
             self.display_result = {"file_type": "parquet", "file_path": str(output_path)}
-            return OutputModel(
+            _piece_out = OutputModel(
                 message=f"Data merged successfully ({len(merged_df)} rows)",
                 output_path=str(output_path),
             )
@@ -185,5 +186,8 @@ class FetchEnergyDataPiece(BasePiece):
                     f.write(err)
             raise
         finally:
-            if od is not None:
-                od.mirror_results(self.results_path, secrets_data, "FetchEnergyDataPiece")
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "FetchEnergyDataPiece", None)
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "FetchEnergyDataPiece", None)
+        return _piece_out

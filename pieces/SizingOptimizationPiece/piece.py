@@ -38,6 +38,7 @@ class SizingOptimizationPiece(BasePiece):
         _stage = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
+        _piece_out = None
         try:
             csv_path = Path(input_data.load_csv)
             scenario_path = Path(input_data.scenario_yaml)
@@ -89,13 +90,16 @@ class SizingOptimizationPiece(BasePiece):
                 encoding="utf-8",
             )
             _log(f"Wrote outputs: {sized_yaml}, {out_json}")
-            return OutputModel(
+            _piece_out = OutputModel(
                 message="Sizing optimization finished",
                 sized_scenario_yaml=str(sized_yaml),
                 sizing_optimization_json=str(out_json),
             )
         finally:
-            if od is not None:
-                od.mirror_results(self.results_path, secrets_data, "SizingOptimizationPiece")
-            if _stage is not None:
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "SizingOptimizationPiece", _stage)
+            elif _stage is not None:
                 _stage.cleanup()
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "SizingOptimizationPiece", _stage)
+        return _piece_out

@@ -30,6 +30,7 @@ class ModelMonitoringPiece(BasePiece):
         _stage = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
+        _piece_out = None
         log_path = Path(self.results_path) / "model_monitoring.log"
         err_path = Path(self.results_path) / "model_monitoring_error.txt"
         try:
@@ -103,7 +104,7 @@ class ModelMonitoringPiece(BasePiece):
 
             with open(log_path, "a", encoding="utf-8") as f:
                 f.write("[INFO] ModelMonitoringPiece completed\n")
-            return OutputModel(
+            _piece_out = OutputModel(
                 report_json=str(report_path),
                 daily_csv=str(daily_path),
                 message="Model monitoring report generated.",
@@ -117,7 +118,10 @@ class ModelMonitoringPiece(BasePiece):
                 f.write(err)
             raise
         finally:
-            if od is not None:
-                od.mirror_results(self.results_path, secrets_data, "ModelMonitoringPiece")
-            if _stage is not None:
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "ModelMonitoringPiece", _stage)
+            elif _stage is not None:
                 _stage.cleanup()
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "ModelMonitoringPiece", _stage)
+        return _piece_out
