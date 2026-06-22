@@ -33,6 +33,6 @@
             "onedata_onezone_host",
             "onedata_token"
         ],
-        "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.7-group0"
+        "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.8-group0"
     }
 }
