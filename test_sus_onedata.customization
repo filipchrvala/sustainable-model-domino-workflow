@@ -8,7 +8,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "description": "Input model for Fetch Energy Data Piece",
         "properties": {
@@ -107,7 +107,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "properties": {
           "input_path": {
@@ -221,7 +221,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "properties": {
           "data_path": {
@@ -326,7 +326,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "properties": {
           "model_path": {
@@ -437,7 +437,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "properties": {
           "predictions_csv": {
@@ -535,7 +535,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -650,7 +650,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "description": "Domino piece input – reads saved web form state and materializes workflow files.",
         "properties": {
@@ -776,7 +776,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -880,7 +880,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -990,7 +990,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "properties": {
           "scenario_yaml": {
@@ -1103,7 +1103,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "properties": {
           "scenario_yaml": {
@@ -1202,7 +1202,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1301,7 +1301,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1400,7 +1400,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1510,7 +1510,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1657,7 +1657,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "properties": {
           "report_json": {
@@ -1750,7 +1750,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "properties": {
           "report_json": {
@@ -1854,7 +1854,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "properties": {
           "report_json": {
@@ -1980,7 +1980,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "properties": {
           "workflow_user_input_json": {
@@ -2124,7 +2124,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2255,7 +2255,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2380,7 +2380,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2492,7 +2492,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.11-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.12-group0",
       "input_schema": {
         "properties": {
           "history_csv": {

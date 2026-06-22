@@ -6,8 +6,9 @@ pydantic>=2.0
 streamlit>=1.32
 plotly>=5.0
 joblib>=1.3
-# Pin below 3.x to avoid nvidia-nccl-cu12 (~300MB) in the Docker image; CPU training only.
-xgboost>=2.0,<3.0
+# Latest XGBoost (3.x may pull nvidia-nccl-cu12 on Linux; used only if GPU training is enabled).
+# All pieces train/predict on CPU (Domino use_gpu=false); nccl is bundled for future GPU option.
+xgboost>=2.0
 scikit-learn>=1.3
 pyarrow>=14.0
 pvlib>=0.10
