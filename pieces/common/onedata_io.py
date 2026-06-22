@@ -33,8 +33,34 @@ def has_protocol(path: str | os.PathLike[str]) -> bool:
     return text.startswith(_REMOTE_PROTOCOLS)
 
 
+_backend_ready = False
+
+
+def _ensure_backend() -> None:
+    """Import the vendored onedata fsspec backend so the ``onedata`` protocol is
+    registered with fsspec.
+
+    The backend (``onedatarestfsspec``) is vendored next to this module under
+    ``common/onedatarestfsspec`` because it is git-only (not on PyPI) and the
+    Domino base image has no git to build it. Importing it runs
+    ``register_implementation('onedata', ...)`` at module load. Idempotent.
+    """
+    global _backend_ready
+    if _backend_ready:
+        return
+    try:
+        from . import onedatarestfsspec  # noqa: F401  (vendored, self-registers)
+    except Exception:
+        import sys
+        here = os.path.dirname(os.path.abspath(__file__))
+        if here not in sys.path:
+            sys.path.insert(0, here)
+        import onedatarestfsspec  # noqa: F401
+    _backend_ready = True
+
+
 def configure_onedata(secrets_data: Any) -> bool:
-    """Register OneData credentials with fsspec if both are present.
+    """Register OneData credentials and the backend if both are present.
 
     Accepts a pydantic model, a dict, or ``None``. Returns ``True`` when the
     OneData backend was configured, ``False`` otherwise (local-only run).
@@ -45,9 +71,13 @@ def configure_onedata(secrets_data: Any) -> bool:
     if not host or not token:
         return False
 
-    import fsspec  # lazy: only needed when OneData is actually used
+    # The vendored backend reads credentials from these env vars
+    # (see onedatarestfsspec.config.get_onedata_config_from_env), so set them
+    # before any onedata:// filesystem is created.
+    os.environ["ONEDATA_ONEZONE_HOST"] = str(host)
+    os.environ["ONEDATA_TOKEN"] = str(token)
 
-    fsspec.config.conf["onedata"] = {"token": token, "onezone_host": host}
+    _ensure_backend()
     return True
 
 
@@ -62,6 +92,7 @@ def _get(obj: Any, name: str) -> Any:
 def _fs(path: str):
     import fsspec
 
+    _ensure_backend()
     filesystem, fs_path = fsspec.core.url_to_fs(path)
     return filesystem, fs_path
 

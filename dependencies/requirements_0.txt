@@ -12,7 +12,8 @@ pyarrow>=14.0
 pvlib>=0.10
 openpyxl>=3.1
 # OneData (optional, used only by boundary pieces when secrets are configured).
-# fsspec is a clean PyPI wheel; the onedata:// backend (onedatarestfsspec) is
-# wired in separately because it is not published on PyPI (git-only) and the
-# Domino base image has no git to build it during the image build.
+# The onedata:// fsspec backend (onedatarestfsspec) is vendored under
+# pieces/common/onedatarestfsspec because it is git-only (not on PyPI) and the
+# Domino base image has no git to build it. Its runtime deps below ARE on PyPI.
 fsspec>=2023.9
+onedatafilerestclient>=25.0.0
