@@ -491,9 +491,16 @@ def stage_inputs(input_data: Any, secrets_data: Any):
                 write_bytes(local_f, read_bytes(val))
                 overrides[name] = local_f
             # else: path does not exist remotely (likely an output target) -> leave
-        except Exception:
-            # Never let staging break a piece; fall back to the original value.
-            continue
+        except Exception as exc:
+            host = (effective_secrets(secrets_data, use_defaults=True) or {}).get(
+                "onedata_onezone_host", DEFAULT_ONEZONE_HOST
+            )
+            raise RuntimeError(
+                f"Failed to download OneData input '{name}' ({val}): {exc}. "
+                f"Host {host} must be reachable from the piece container. "
+                "On local Domino (PC without VPN in Docker) use test_sus_local.customization "
+                "and scripts/seed_shared_storage.py instead of OneData paths."
+            ) from exc
 
     if overrides:
         stage.active = True
@@ -681,7 +688,13 @@ def cleanup_on_error(results_path: str | os.PathLike, secrets_data: Any,
                      registry_target: str | None = None) -> None:
     """Mirror partial results and release staging after a failed piece run."""
     if registry_local and registry_target:
-        upload_registry(registry_local, registry_target)
-    mirror_results(results_path, secrets_data, piece_name)
+        try:
+            upload_registry(registry_local, registry_target)
+        except Exception:
+            pass
+    try:
+        mirror_results(results_path, secrets_data, piece_name)
+    except Exception:
+        pass
     if stage is not None:
         stage.cleanup()

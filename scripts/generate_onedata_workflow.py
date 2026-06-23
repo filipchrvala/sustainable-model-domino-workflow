@@ -19,7 +19,14 @@ DST = REPO / "test_sus_onedata.customization"
 
 PREFIX = "onedata:///FilipsSpace/inputs"
 RUN_PREFIX = "onedata:///FilipsSpace/run"
-IMAGE_VERSION = "0.1.14"
+
+
+def _read_version() -> str:
+    text = (REPO / "config.toml").read_text(encoding="utf-8")
+    for line in text.splitlines():
+        if line.strip().startswith("VERSION"):
+            return line.split("=", 1)[1].strip().strip('"')
+    return "0.1.15"
 
 # Map old shared_storage paths -> OneData input paths
 STATIC_MAP = {
@@ -129,11 +136,28 @@ def _ensure_predict_before_technical_limits(data: dict) -> None:
     )
 
 
+def _set_rolling_prediction_defaults(data: dict) -> None:
+    """Match local run_workflow.py: rolling prediction with bridge rows."""
+    for piece in data.get("workflowPieces", {}).values():
+        if piece.get("name") != "PredictPiece":
+            continue
+        props = (piece.get("input_schema") or {}).get("properties") or {}
+        if "use_rolling_prediction" in props:
+            props["use_rolling_prediction"]["default"] = True
+
+    predict_node = "104_520d5908-51bd-5715-b120-38517246b71f"
+    node = (data.get("workflowPiecesData") or {}).get(predict_node) or {}
+    spec = (node.get("inputs") or {}).get("use_rolling_prediction")
+    if spec is not None:
+        spec["value"] = True
+
+
 def main() -> None:
+    version = _read_version()
     data = json.loads(SRC.read_text(encoding="utf-8"))
 
     for piece in data.get("workflowPieces", {}).values():
-        tag = f":{IMAGE_VERSION}-group0"
+        tag = f":{version}-group0"
         if "source_image" in piece:
             piece["source_image"] = re.sub(
                 r":[\d.]+-group\d+", tag, piece["source_image"]
@@ -152,11 +176,12 @@ def main() -> None:
 
     _wire_load_csv_from_predict(data)
     _ensure_predict_before_technical_limits(data)
+    _set_rolling_prediction_defaults(data)
 
     DST.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
     print(
-        f"Wrote {DST.name}  (images {IMAGE_VERSION}, "
-        f"Predict->MRK load wiring, secrets defaults in schema)"
+        f"Wrote {DST.name}  (images {version}, "
+        f"Predict->MRK load wiring, use_rolling_prediction=true, secrets defaults in schema)"
     )
 
 

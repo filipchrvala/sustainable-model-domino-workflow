@@ -293,7 +293,7 @@ class PredictPiece(BasePiece):
                     f"Columns: {df.columns.tolist()}"
                 )
 
-            use_rolling = getattr(input_data, "use_rolling_prediction", False)
+            use_rolling = getattr(input_data, "use_rolling_prediction", True)
             bridge_rows = int(getattr(input_data, "bridge_rows", 4))
 
             if use_rolling:

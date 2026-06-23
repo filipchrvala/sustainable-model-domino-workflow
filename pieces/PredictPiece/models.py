@@ -9,8 +9,8 @@ class InputModel(BaseModel):
     model_path: str = Field(description="Path to trained XGBoost model")
     data_path: str = Field(description="Path to prediction dataset (15min)")
     use_rolling_prediction: bool = Field(
-        default=False,
-        description="True: use bridge_rows of real load_kw, then compute lags from prior predictions.",
+        default=True,
+        description="True (default): bridge_rows of real load_kw, then lags from prior predictions.",
     )
     bridge_rows: int = Field(default=4, ge=1)
 

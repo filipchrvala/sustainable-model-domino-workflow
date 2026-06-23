@@ -1710,7 +1710,7 @@ class SimulatePiece(BasePiece):
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
         _piece_out = None
         try:
-            return self._run_impl(input_data)
+            _piece_out = self._run_impl(input_data)
         finally:
             if od is not None and _piece_out is None:
                 od.cleanup_on_error(self.results_path, secrets_data, "SimulatePiece", _stage)

@@ -164,14 +164,27 @@ class UserInputPiece(BasePiece):
         _log(f"Input prices_csv={prices_csv}")
         _log(f"Input scenario_yaml={scenario_yaml}")
         if not load_csv.is_file():
+            raw = str(getattr(input_data, "load_csv", load_csv))
+            if od is not None and od.has_protocol(od.normalize_remote_path(raw)):
+                raise FileNotFoundError(
+                    f"Load CSV not staged from OneData: {raw}. "
+                    "OneData is unreachable from this container (local Domino needs "
+                    "test_sus_local.customization + seed_shared_storage.py, or VPN to SPICE)."
+                )
             raise FileNotFoundError(
                 f"Load CSV not found: {load_csv}. "
-                "For onedata paths, set workflow secrets (onedata_onezone_host, onedata_token)."
+                "For local Domino run scripts/seed_shared_storage.py once."
             )
         if not scenario_yaml.is_file():
+            raw = str(getattr(input_data, "scenario_yaml", scenario_yaml))
+            if od is not None and od.has_protocol(od.normalize_remote_path(raw)):
+                raise FileNotFoundError(
+                    f"Scenario YAML not staged from OneData: {raw}. "
+                    "Use test_sus_local.customization on PC without VPN in Docker."
+                )
             raise FileNotFoundError(
                 f"Scenario YAML not found: {scenario_yaml}. "
-                "For onedata paths, set workflow secrets (onedata_onezone_host, onedata_token)."
+                "For local Domino run scripts/seed_shared_storage.py once."
             )
         scenario_copy = out_dir / "scenario_resolved.yaml"
         shutil.copy2(scenario_yaml, scenario_copy)
