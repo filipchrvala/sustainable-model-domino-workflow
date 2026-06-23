@@ -898,11 +898,17 @@
                 "prediction_file_path": {
                     "title": "Prediction File Path",
                     "type": "string"
+                },
+                "runtime_load_csv": {
+                    "description": "Load CSV for MRK sizing/simulation (load_kw from predictions)",
+                    "title": "Runtime Load Csv",
+                    "type": "string"
                 }
             },
             "required": [
                 "message",
-                "prediction_file_path"
+                "prediction_file_path",
+                "runtime_load_csv"
             ],
             "title": "OutputModel",
             "type": "object"
