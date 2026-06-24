@@ -870,8 +870,8 @@
                     "type": "string"
                 },
                 "use_rolling_prediction": {
-                    "default": false,
-                    "description": "True: use bridge_rows of real load_kw, then compute lags from prior predictions.",
+                    "default": true,
+                    "description": "True (default): bridge_rows of real load_kw, then lags from prior predictions.",
                     "title": "Use Rolling Prediction",
                     "type": "boolean"
                 },
