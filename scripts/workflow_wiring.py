@@ -5,6 +5,7 @@ from __future__ import annotations
 PREDICT_NODE = "104_520d5908-51bd-5715-b120-38517246b71f"
 PREDICT_UPSTREAM = "PredictPie_520d590851bd5715b12038517246b71f"
 TECH_LIMITS_NODE = "108_269fe489-9457-5a76-8249-e7c85fa56d5c"
+SIZING_NODE = "109_8fe65e2c-787e-5e5a-b185-8aaabfef8014"
 
 LOAD_FROM_PREDICT_NODES = (
     "108_269fe489-9457-5a76-8249-e7c85fa56d5c",  # TechnicalLimits
@@ -48,20 +49,25 @@ def wire_load_csv_from_predict(data: dict) -> None:
 
 
 def ensure_predict_before_technical_limits(data: dict) -> None:
+    _ensure_edge(data, PREDICT_NODE, TECH_LIMITS_NODE)
+
+
+def ensure_predict_before_sizing(data: dict) -> None:
+    """Domino/Airflow needs a DAG edge to pass Predict XCom to Sizing load_csv."""
+    _ensure_edge(data, PREDICT_NODE, SIZING_NODE)
+
+
+def _ensure_edge(data: dict, source: str, target: str) -> None:
     edges = data.setdefault("workflowEdges", [])
-    wanted = (PREDICT_NODE, TECH_LIMITS_NODE)
-    if any(e.get("source") == wanted[0] and e.get("target") == wanted[1] for e in edges):
+    if any(e.get("source") == source and e.get("target") == target for e in edges):
         return
     edges.append(
         {
-            "source": PREDICT_NODE,
-            "sourceHandle": f"source-{PREDICT_NODE}",
-            "target": TECH_LIMITS_NODE,
-            "targetHandle": f"target-{TECH_LIMITS_NODE}",
-            "id": (
-                f"reactflow__edge-{PREDICT_NODE}source-{PREDICT_NODE}-"
-                f"{TECH_LIMITS_NODE}target-{TECH_LIMITS_NODE}"
-            ),
+            "source": source,
+            "sourceHandle": f"source-{source}",
+            "target": target,
+            "targetHandle": f"target-{target}",
+            "id": f"reactflow__edge-{source}source-{source}-{target}target-{target}",
             "markerEnd": {"type": "arrowclosed", "width": 20, "height": 20},
         }
     )
@@ -73,3 +79,4 @@ def apply_production_wiring(data: dict) -> None:
             wire_predict_output_schema(piece)
     wire_load_csv_from_predict(data)
     ensure_predict_before_technical_limits(data)
+    ensure_predict_before_sizing(data)

@@ -8,7 +8,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "description": "Input model for Fetch Energy Data Piece",
         "properties": {
@@ -108,7 +108,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "properties": {
           "input_path": {
@@ -223,7 +223,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "properties": {
           "data_path": {
@@ -329,7 +329,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "properties": {
           "model_path": {
@@ -447,7 +447,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "properties": {
           "predictions_csv": {
@@ -546,7 +546,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -662,7 +662,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "description": "Domino piece input – reads saved web form state and materializes workflow files.",
         "properties": {
@@ -789,7 +789,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -894,7 +894,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -970,16 +970,19 @@
       },
       "container_resources": {
         "requests": {
-          "cpu": 100,
-          "memory": 128
+          "cpu": 200,
+          "memory": 512
         },
         "limits": {
-          "cpu": 500,
-          "memory": 512
+          "cpu": 1000,
+          "memory": 2048
         },
         "use_gpu": false
       },
-      "tags": [],
+      "tags": [
+        "MRK",
+        "Sizing"
+      ],
       "style": {
         "module": "SizingOptimizationPiece",
         "label": "Sizing Optimization",
@@ -1005,7 +1008,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "properties": {
           "scenario_yaml": {
@@ -1119,7 +1122,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "properties": {
           "scenario_yaml": {
@@ -1219,7 +1222,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1319,7 +1322,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1419,7 +1422,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1530,7 +1533,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1678,7 +1681,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "properties": {
           "report_json": {
@@ -1772,7 +1775,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "properties": {
           "report_json": {
@@ -1877,7 +1880,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "properties": {
           "report_json": {
@@ -2004,7 +2007,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "properties": {
           "workflow_user_input_json": {
@@ -2149,7 +2152,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2281,7 +2284,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2407,7 +2410,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2520,7 +2523,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.16-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.17-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2895,8 +2898,8 @@
         "storageAccessMode": "Read/Write"
       },
       "containerResources": {
-        "cpu": 500,
-        "memory": 512,
+        "cpu": 1000,
+        "memory": 2048,
         "useGpu": false
       },
       "inputs": {
@@ -4729,6 +4732,18 @@
       "target": "108_269fe489-9457-5a76-8249-e7c85fa56d5c",
       "targetHandle": "target-108_269fe489-9457-5a76-8249-e7c85fa56d5c",
       "id": "reactflow__edge-104_520d5908-51bd-5715-b120-38517246b71fsource-104_520d5908-51bd-5715-b120-38517246b71f-108_269fe489-9457-5a76-8249-e7c85fa56d5ctarget-108_269fe489-9457-5a76-8249-e7c85fa56d5c",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "104_520d5908-51bd-5715-b120-38517246b71f",
+      "sourceHandle": "source-104_520d5908-51bd-5715-b120-38517246b71f",
+      "target": "109_8fe65e2c-787e-5e5a-b185-8aaabfef8014",
+      "targetHandle": "target-109_8fe65e2c-787e-5e5a-b185-8aaabfef8014",
+      "id": "reactflow__edge-104_520d5908-51bd-5715-b120-38517246b71fsource-104_520d5908-51bd-5715-b120-38517246b71f-109_8fe65e2c-787e-5e5a-b185-8aaabfef8014target-109_8fe65e2c-787e-5e5a-b185-8aaabfef8014",
       "markerEnd": {
         "type": "arrowclosed",
         "width": 20,

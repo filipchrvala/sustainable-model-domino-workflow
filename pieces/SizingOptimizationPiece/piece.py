@@ -13,18 +13,23 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
+print("[INFO] SizingOptimizationPiece module loaded", flush=True)
+
 try:
     from common import onedata_io as od
-    from common.simulate_bridge import load_simulate_module
 except ModuleNotFoundError:
     try:
         from pieces.common import onedata_io as od
-        from pieces.common.simulate_bridge import load_simulate_module
     except ModuleNotFoundError:
         od = None
 
-        def load_simulate_module(*, caller: str = "piece"):
-            raise RuntimeError("simulate_bridge not available")
+
+def _load_simulate_module(*, caller: str) -> object:
+    try:
+        from common.simulate_bridge import load_simulate_module as _load
+    except ModuleNotFoundError:
+        from pieces.common.simulate_bridge import load_simulate_module as _load
+    return _load(caller=caller)
 
 
 def _require_path(field: str, value: str | None) -> str:
@@ -32,7 +37,8 @@ def _require_path(field: str, value: str | None) -> str:
     if not text:
         raise ValueError(
             f"Missing upstream input '{field}' (empty path). "
-            "Re-import test_sus_onedata.customization and ensure Predict + TechnicalLimits completed."
+            "Ensure Predict finished and workflow has Predict->Sizing edge; "
+            "re-import test_sus_onedata.customization from main."
         )
     return text
 
@@ -43,10 +49,11 @@ class SizingOptimizationPiece(BasePiece):
     def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
         print("[INFO] SizingOptimizationPiece started", flush=True)
         _stage = None
-        if od is not None:
-            input_data, _stage = od.stage_inputs(input_data, secrets_data)
         _piece_out = None
         try:
+            if od is not None:
+                input_data, _stage = od.stage_inputs(input_data, secrets_data)
+
             load_csv = _require_path("load_csv", input_data.load_csv)
             scenario_yaml = _require_path("scenario_yaml", input_data.scenario_yaml)
             technical_limits_json = _require_path("technical_limits_json", input_data.technical_limits_json)
@@ -73,24 +80,19 @@ class SizingOptimizationPiece(BasePiece):
             if not tl_path.is_file():
                 raise FileNotFoundError(f"Technical limits JSON not found: {tl_path}")
 
-            try:
-                sim = load_simulate_module(caller="SizingOptimizationPiece")
-                cfg = yaml.safe_load(scenario_path.read_text(encoding="utf-8")) or {}
-                sim._apply_system_scope(cfg)
-                df = sim.load_consumption_csv(csv_path)
+            sim = _load_simulate_module(caller="SizingOptimizationPiece")
+            cfg = yaml.safe_load(scenario_path.read_text(encoding="utf-8")) or {}
+            sim._apply_system_scope(cfg)
+            df = sim.load_consumption_csv(csv_path)
 
-                eq = cfg.get("equipment") or {}
-                mode = str(eq.get("selection_mode", "manual")).lower()
-                auto_log = None
-                final_cfg = copy.deepcopy(cfg)
-                if mode == "auto":
-                    _log(f"Running auto sizing on rows={len(df)} (may take a few minutes)")
-                    final_cfg, auto_log = sim._auto_optimize_sizes(final_cfg, df)
-                _log(f"Resolved selection_mode={mode}, rows={len(df)}")
-            except Exception as exc:
-                (out_dir / "sizing_optimization_error.txt").write_text(traceback.format_exc(), encoding="utf-8")
-                _log(f"ERROR during sizing optimization: {exc}")
-                raise
+            eq = cfg.get("equipment") or {}
+            mode = str(eq.get("selection_mode", "manual")).lower()
+            auto_log = None
+            final_cfg = copy.deepcopy(cfg)
+            if mode == "auto":
+                _log(f"Running auto sizing on rows={len(df)} (may take a few minutes)")
+                final_cfg, auto_log = sim._auto_optimize_sizes(final_cfg, df)
+            _log(f"Resolved selection_mode={mode}, rows={len(df)}")
 
             sized_yaml = out_dir / "scenario_sized.yaml"
             sized_yaml.write_text(
@@ -109,6 +111,16 @@ class SizingOptimizationPiece(BasePiece):
                 sized_scenario_yaml=str(sized_yaml),
                 sizing_optimization_json=str(out_json),
             )
+        except Exception:
+            err = traceback.format_exc()
+            print(f"[ERROR] SizingOptimizationPiece failed\n{err}", flush=True)
+            try:
+                out_dir = Path(self.results_path or ".")
+                out_dir.mkdir(parents=True, exist_ok=True)
+                (out_dir / "sizing_optimization_error.txt").write_text(err, encoding="utf-8")
+            except Exception:
+                pass
+            raise
         finally:
             if od is not None and _piece_out is None:
                 od.cleanup_on_error(self.results_path, secrets_data, "SizingOptimizationPiece", _stage)

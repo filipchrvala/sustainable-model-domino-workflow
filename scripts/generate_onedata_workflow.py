@@ -117,23 +117,15 @@ def _wire_load_csv_from_predict(data: dict) -> None:
 
 
 def _ensure_predict_before_technical_limits(data: dict) -> None:
-    edges = data.setdefault("workflowEdges", [])
-    wanted = (PREDICT_NODE, TECH_LIMITS_NODE)
-    if any(e.get("source") == wanted[0] and e.get("target") == wanted[1] for e in edges):
-        return
-    edges.append(
-        {
-            "source": PREDICT_NODE,
-            "sourceHandle": f"source-{PREDICT_NODE}",
-            "target": TECH_LIMITS_NODE,
-            "targetHandle": f"target-{TECH_LIMITS_NODE}",
-            "id": (
-                f"reactflow__edge-{PREDICT_NODE}source-{PREDICT_NODE}-"
-                f"{TECH_LIMITS_NODE}target-{TECH_LIMITS_NODE}"
-            ),
-            "markerEnd": {"type": "arrowclosed", "width": 20, "height": 20},
-        }
-    )
+    from workflow_wiring import ensure_predict_before_technical_limits
+
+    ensure_predict_before_technical_limits(data)
+
+
+def _ensure_predict_before_sizing(data: dict) -> None:
+    from workflow_wiring import ensure_predict_before_sizing
+
+    ensure_predict_before_sizing(data)
 
 
 SIZING_NODE = "109_8fe65e2c-787e-5e5a-b185-8aaabfef8014"
@@ -206,6 +198,7 @@ def main() -> None:
 
     _wire_load_csv_from_predict(data)
     _ensure_predict_before_technical_limits(data)
+    _ensure_predict_before_sizing(data)
     _set_rolling_prediction_defaults(data)
     _set_sizing_container_resources(data)
 
