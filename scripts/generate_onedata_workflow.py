@@ -136,6 +136,36 @@ def _ensure_predict_before_technical_limits(data: dict) -> None:
     )
 
 
+SIZING_NODE = "109_8fe65e2c-787e-5e5a-b185-8aaabfef8014"
+
+SIZING_CONTAINER_RESOURCES = {
+    "requests": {"cpu": 200, "memory": 512},
+    "limits": {"cpu": 1000, "memory": 2048},
+    "use_gpu": False,
+}
+
+SIZING_CONTAINER_RESOURCES_UI = {
+    "cpu": 1000,
+    "memory": 2048,
+    "useGpu": False,
+}
+
+
+def _set_sizing_container_resources(data: dict) -> None:
+    """Auto sizing loads SimulatePiece helpers and needs more RAM than default 512MB."""
+    for piece in data.get("workflowPieces", {}).values():
+        if piece.get("name") == "SizingOptimizationPiece":
+            piece["container_resources"] = {
+                "requests": {"cpu": 200, "memory": 512},
+                "limits": {"cpu": 1000, "memory": 2048},
+                "use_gpu": False,
+            }
+            piece["tags"] = ["MRK", "Sizing"]
+    node = (data.get("workflowPiecesData") or {}).get(SIZING_NODE)
+    if node is not None:
+        node["containerResources"] = dict(SIZING_CONTAINER_RESOURCES_UI)
+
+
 def _set_rolling_prediction_defaults(data: dict) -> None:
     """Match local run_workflow.py: rolling prediction with bridge rows."""
     for piece in data.get("workflowPieces", {}).values():
@@ -177,6 +207,7 @@ def main() -> None:
     _wire_load_csv_from_predict(data)
     _ensure_predict_before_technical_limits(data)
     _set_rolling_prediction_defaults(data)
+    _set_sizing_container_resources(data)
 
     DST.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
     print(

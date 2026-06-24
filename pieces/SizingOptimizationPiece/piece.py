@@ -1,10 +1,8 @@
 from __future__ import annotations
 
 import copy
-import importlib
 import json
 from pathlib import Path
-import sys
 import traceback
 
 import yaml
@@ -17,32 +15,44 @@ from .models import InputModel, OutputModel
 
 try:
     from common import onedata_io as od
+    from common.simulate_bridge import load_simulate_module
 except ModuleNotFoundError:
     try:
         from pieces.common import onedata_io as od
+        from pieces.common.simulate_bridge import load_simulate_module
     except ModuleNotFoundError:
         od = None
 
+        def load_simulate_module(*, caller: str = "piece"):
+            raise RuntimeError("simulate_bridge not available")
 
-def _load_simulate_module():
-    repo_root = Path(__file__).resolve().parents[2]
-    if str(repo_root) not in sys.path:
-        sys.path.insert(0, str(repo_root))
-    return importlib.import_module("pieces.SimulatePiece.piece")
+
+def _require_path(field: str, value: str | None) -> str:
+    text = str(value or "").strip()
+    if not text:
+        raise ValueError(
+            f"Missing upstream input '{field}' (empty path). "
+            "Re-import test_sus_onedata.customization and ensure Predict + TechnicalLimits completed."
+        )
+    return text
 
 
 class SizingOptimizationPiece(BasePiece):
     """Resolve final scenario sizing (manual or auto)."""
 
     def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        print("[INFO] SizingOptimizationPiece started", flush=True)
         _stage = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
         _piece_out = None
         try:
-            csv_path = Path(input_data.load_csv)
-            scenario_path = Path(input_data.scenario_yaml)
-            tl_path = Path(input_data.technical_limits_json)
+            load_csv = _require_path("load_csv", input_data.load_csv)
+            scenario_yaml = _require_path("scenario_yaml", input_data.scenario_yaml)
+            technical_limits_json = _require_path("technical_limits_json", input_data.technical_limits_json)
+            csv_path = Path(load_csv)
+            scenario_path = Path(scenario_yaml)
+            tl_path = Path(technical_limits_json)
             out_dir = Path(self.results_path or scenario_path.parent)
             out_dir.mkdir(parents=True, exist_ok=True)
             log_path = out_dir / "sizing_optimization.log"
@@ -64,7 +74,7 @@ class SizingOptimizationPiece(BasePiece):
                 raise FileNotFoundError(f"Technical limits JSON not found: {tl_path}")
 
             try:
-                sim = _load_simulate_module()
+                sim = load_simulate_module(caller="SizingOptimizationPiece")
                 cfg = yaml.safe_load(scenario_path.read_text(encoding="utf-8")) or {}
                 sim._apply_system_scope(cfg)
                 df = sim.load_consumption_csv(csv_path)
@@ -74,6 +84,7 @@ class SizingOptimizationPiece(BasePiece):
                 auto_log = None
                 final_cfg = copy.deepcopy(cfg)
                 if mode == "auto":
+                    _log(f"Running auto sizing on rows={len(df)} (may take a few minutes)")
                     final_cfg, auto_log = sim._auto_optimize_sizes(final_cfg, df)
                 _log(f"Resolved selection_mode={mode}, rows={len(df)}")
             except Exception as exc:
@@ -82,7 +93,10 @@ class SizingOptimizationPiece(BasePiece):
                 raise
 
             sized_yaml = out_dir / "scenario_sized.yaml"
-            sized_yaml.write_text(yaml.safe_dump(final_cfg, allow_unicode=True, sort_keys=False), encoding="utf-8")
+            sized_yaml.write_text(
+                yaml.safe_dump(final_cfg, allow_unicode=True, sort_keys=False),
+                encoding="utf-8",
+            )
 
             out_json = out_dir / "sizing_optimization.json"
             out_json.write_text(

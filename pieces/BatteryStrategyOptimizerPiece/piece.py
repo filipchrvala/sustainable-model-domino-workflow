@@ -1,9 +1,7 @@
 from __future__ import annotations
 
-import importlib
 import json
 from pathlib import Path
-import sys
 import traceback
 
 import numpy as np
@@ -17,24 +15,23 @@ from .models import InputModel, OutputModel
 
 try:
     from common import onedata_io as od
+    from common.simulate_bridge import load_simulate_module
 except ModuleNotFoundError:
     try:
         from pieces.common import onedata_io as od
+        from pieces.common.simulate_bridge import load_simulate_module
     except ModuleNotFoundError:
         od = None
 
-
-def _load_simulate_module():
-    repo_root = Path(__file__).resolve().parents[2]
-    if str(repo_root) not in sys.path:
-        sys.path.insert(0, str(repo_root))
-    return importlib.import_module("pieces.SimulatePiece.piece")
+        def load_simulate_module(*, caller: str = "piece"):
+            raise RuntimeError("simulate_bridge not available")
 
 
 class BatteryStrategyOptimizerPiece(BasePiece):
     """Build simple price-driven strategy thresholds for battery operation."""
 
     def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        print("[INFO] BatteryStrategyOptimizerPiece started", flush=True)
         _stage = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
@@ -60,7 +57,7 @@ class BatteryStrategyOptimizerPiece(BasePiece):
                 raise FileNotFoundError(f"Scenario YAML not found: {scenario_path}")
 
             try:
-                sim = _load_simulate_module()
+                sim = load_simulate_module(caller="BatteryStrategyOptimizerPiece")
                 cfg = yaml.safe_load(scenario_path.read_text(encoding="utf-8")) or {}
                 df = sim.load_consumption_csv(csv_path)
                 price = sim.build_price_series(df, cfg).values.astype(float)
@@ -79,7 +76,10 @@ class BatteryStrategyOptimizerPiece(BasePiece):
             out_json = out_dir / "battery_strategy_recommendation.json"
             out_json.write_text(json.dumps(rec, indent=2, ensure_ascii=False), encoding="utf-8")
             _log(f"Wrote output: {out_json}")
-            _piece_out = OutputModel(message="Battery strategy optimized", battery_strategy_recommendation_json=str(out_json))
+            _piece_out = OutputModel(
+                message="Battery strategy optimized",
+                battery_strategy_recommendation_json=str(out_json),
+            )
         finally:
             if od is not None and _piece_out is None:
                 od.cleanup_on_error(self.results_path, secrets_data, "BatteryStrategyOptimizerPiece", _stage)
