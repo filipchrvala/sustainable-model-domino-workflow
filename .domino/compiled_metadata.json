@@ -149,7 +149,7 @@
         "container_resources": {
             "requests": {
                 "cpu": 200,
-                "memory": 512
+                "memory": 2048
             },
             "limits": {
                 "cpu": 1000,
@@ -1271,7 +1271,7 @@
         "container_resources": {
             "requests": {
                 "cpu": 200,
-                "memory": 512
+                "memory": 2048
             },
             "limits": {
                 "cpu": 1000,
@@ -1500,7 +1500,7 @@
         "container_resources": {
             "requests": {
                 "cpu": 500,
-                "memory": 1024
+                "memory": 4096
             },
             "limits": {
                 "cpu": 2000,
@@ -1782,7 +1782,7 @@
         "container_resources": {
             "requests": {
                 "cpu": 200,
-                "memory": 512
+                "memory": 2048
             },
             "limits": {
                 "cpu": 1000,
@@ -2445,7 +2445,7 @@
         "container_resources": {
             "requests": {
                 "cpu": 200,
-                "memory": 512
+                "memory": 2048
             },
             "limits": {
                 "cpu": 1000,
