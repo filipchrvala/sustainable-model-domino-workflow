@@ -31,7 +31,6 @@ class WebUserInputPiece(BasePiece):
         _stage = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
-        _piece_out = None
         out_dir = Path(self.results_path or Path(__file__).resolve().parents[2] / "tests" / "UserInputPiece_Output")
         out_dir.mkdir(parents=True, exist_ok=True)
         log_path = out_dir / "web_user_input.log"
@@ -85,7 +84,7 @@ class WebUserInputPiece(BasePiece):
                 encoding="utf-8",
             )
 
-            _piece_out = OutputModel(
+            return OutputModel(
                 message="Web user input materialized and validated",
                 load_csv=classic_out.load_csv,
                 scenario_yaml=classic_out.scenario_yaml,
@@ -99,13 +98,10 @@ class WebUserInputPiece(BasePiece):
                 f.write("[ERROR]\n" + err)
             raise
         finally:
-            if od is not None and _piece_out is None:
-                od.cleanup_on_error(self.results_path, secrets_data, "WebUserInputPiece", _stage)
-            elif _stage is not None:
+            if od is not None:
+                od.mirror_results(self.results_path, secrets_data, "WebUserInputPiece")
+            if _stage is not None:
                 _stage.cleanup()
-        if od is not None and _piece_out is not None:
-            return od.finish_piece(_piece_out, self.results_path, secrets_data, "WebUserInputPiece", _stage)
-        return _piece_out
 
 # --- form I/O (web state) ---
 """

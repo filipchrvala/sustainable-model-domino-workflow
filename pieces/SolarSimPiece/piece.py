@@ -15,20 +15,17 @@ from .models import InputModel, OutputModel
 print("[INFO] SolarSimPiece module loaded", flush=True)
 
 try:
+    from common import mrk_helpers as mrk
+except ModuleNotFoundError:
+    from pieces.common import mrk_helpers as mrk
+
+try:
     from common import onedata_io as od
 except ModuleNotFoundError:
     try:
         from pieces.common import onedata_io as od
     except ModuleNotFoundError:
         od = None
-
-
-def _load_simulate_module(*, caller: str) -> object:
-    try:
-        from common.simulate_bridge import load_simulate_module as _load
-    except ModuleNotFoundError:
-        from pieces.common.simulate_bridge import load_simulate_module as _load
-    return _load(caller=caller)
 
 
 class SolarSimPiece(BasePiece):
@@ -61,13 +58,12 @@ class SolarSimPiece(BasePiece):
                 raise FileNotFoundError(f"Scenario YAML not found: {scenario_path}")
 
             try:
-                sim = _load_simulate_module(caller="SolarSimPiece")
                 cfg = yaml.safe_load(scenario_path.read_text(encoding="utf-8")) or {}
                 pv = cfg.get("pv") or {}
                 installed_kwp = float(pv.get("installed_kwp", 0.0))
                 yield_kwp = float(pv.get("yield_kwh_per_kwp_year", 1000.0))
-                df = sim.load_consumption_csv(csv_path)
-                pv_kw = sim.synthetic_pv_kw(df["datetime"], installed_kwp, yield_kwh_per_kwp_year=yield_kwp)
+                df = mrk.load_consumption_csv(csv_path)
+                pv_kw = mrk.synthetic_pv_kw(df["datetime"], installed_kwp, yield_kwh_per_kwp_year=yield_kwp)
                 out_df = pd.DataFrame({"datetime": df["datetime"], "pv_kw": pv_kw})
                 _log(f"Computed virtual solar rows={len(out_df)}, installed_kwp={installed_kwp}")
             except Exception as exc:

@@ -13,21 +13,21 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
+print("[INFO] BatteryStrategyOptimizerPiece module loaded", flush=True)
+
 try:
     from common import onedata_io as od
-    from common.simulate_bridge import load_simulate_module
+    from common import mrk_helpers as mrk
 except ModuleNotFoundError:
     try:
         from pieces.common import onedata_io as od
-        from pieces.common.simulate_bridge import load_simulate_module
+        from pieces.common import mrk_helpers as mrk
     except ModuleNotFoundError:
         od = None
-
-        def load_simulate_module(*, caller: str = "piece"):
-            raise RuntimeError("simulate_bridge not available")
+        mrk = None
 
 
-print("[INFO] BatteryStrategyOptimizerPiece module loaded", flush=True)
+class BatteryStrategyOptimizerPiece(BasePiece):
     """Build simple price-driven strategy thresholds for battery operation."""
 
     def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
@@ -57,10 +57,11 @@ print("[INFO] BatteryStrategyOptimizerPiece module loaded", flush=True)
                 raise FileNotFoundError(f"Scenario YAML not found: {scenario_path}")
 
             try:
-                sim = load_simulate_module(caller="BatteryStrategyOptimizerPiece")
+                if mrk is None:
+                    raise RuntimeError("mrk_helpers not available")
                 cfg = yaml.safe_load(scenario_path.read_text(encoding="utf-8")) or {}
-                df = sim.load_consumption_csv(csv_path)
-                price = sim.build_price_series(df, cfg).values.astype(float)
+                df = mrk.load_consumption_csv(csv_path)
+                price = mrk.build_price_series(df, cfg).values.astype(float)
                 rec = {
                     "charge_below_eur_per_kwh": round(float(np.quantile(price, 0.30)), 6),
                     "discharge_above_eur_per_kwh": round(float(np.quantile(price, 0.75)), 6),

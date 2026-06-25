@@ -28,7 +28,6 @@ class InvestmentEvalPiece(BasePiece):
         _stage = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
-        _piece_out = None
         rep_path = Path(input_data.report_json)
         kpi_path = Path(input_data.kpi_results_csv)
         out_dir = Path(self.results_path or rep_path.parent)
@@ -90,7 +89,7 @@ class InvestmentEvalPiece(BasePiece):
             pd.DataFrame([row]).to_csv(out_csv, index=False)
             out_json.write_text(json.dumps({"investment_evaluation": [row]}, indent=2, ensure_ascii=False), encoding="utf-8")
             _log(f"Wrote outputs: {out_csv}, {out_json}")
-            _piece_out = OutputModel(
+            return OutputModel(
                 message="Investment evaluation finished",
                 investment_evaluation_csv=str(out_csv),
                 investment_evaluation_json=str(out_json),
@@ -100,10 +99,7 @@ class InvestmentEvalPiece(BasePiece):
             _log(f"ERROR during investment evaluation: {exc}")
             raise
         finally:
-            if od is not None and _piece_out is None:
-                od.cleanup_on_error(self.results_path, secrets_data, "InvestmentEvalPiece", _stage)
-            elif _stage is not None:
+            if od is not None:
+                od.mirror_results(self.results_path, secrets_data, "InvestmentEvalPiece")
+            if _stage is not None:
                 _stage.cleanup()
-        if od is not None and _piece_out is not None:
-            return od.finish_piece(_piece_out, self.results_path, secrets_data, "InvestmentEvalPiece", _stage)
-        return _piece_out
