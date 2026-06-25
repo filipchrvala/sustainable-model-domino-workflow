@@ -95,4 +95,12 @@ jobs:
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: domino piece release
+        run: |
+          VERSION=$(python -c "import tomli; print(tomli.load(open('config.toml','rb'))['repository']['VERSION'])")
+          git fetch --tags origin
+          if git rev-parse "refs/tags/${VERSION}" >/dev/null 2>&1; then
+            echo "Release tag ${VERSION} already exists — skipping domino piece release"
+            echo "Docker image ${VERSION}-group0 was still published above."
+          else
+            domino piece release
+          fi
