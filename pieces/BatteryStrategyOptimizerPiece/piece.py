@@ -27,7 +27,7 @@ except ModuleNotFoundError:
             raise RuntimeError("simulate_bridge not available")
 
 
-class BatteryStrategyOptimizerPiece(BasePiece):
+print("[INFO] BatteryStrategyOptimizerPiece module loaded", flush=True)
     """Build simple price-driven strategy thresholds for battery operation."""
 
     def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
