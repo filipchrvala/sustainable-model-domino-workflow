@@ -1,6 +1,0 @@
-{
-  "workflow_user_input_json": "C:\\Users\\NTB\\Domino\\sustainable-model-domino-workflow-repo\\tests\\UserInputPiece_Output\\workflow_user_input.json",
-  "sized_scenario_yaml": "C:\\Users\\NTB\\Domino\\sustainable-model-domino-workflow-repo\\tests\\SizingOptimizationPiece_Output\\scenario_sized.yaml",
-  "sizing_optimization_json": "C:\\Users\\NTB\\Domino\\sustainable-model-domino-workflow-repo\\tests\\SizingOptimizationPiece_Output\\sizing_optimization.json",
-  "investment_evaluation_csv": "C:\\Users\\NTB\\Domino\\sustainable-model-domino-workflow-repo\\tests\\InvestmentEvalPiece_Outputs\\investment_evaluation.csv"
-}

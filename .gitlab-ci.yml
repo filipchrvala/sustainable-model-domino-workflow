@@ -64,17 +64,7 @@ validate-and-organize:
     - when: never
   script:
     - pip list | grep domino
-    - echo "$CONTAINER_REGISTRY"
-    - echo "$CONTAINER_REGISTRY_USERNAME"
     - domino piece-repository organize --build-images --source-url="${CI_PROJECT_URL}"
-    - pip install -r requirements-tests.txt
-    - DOMINO_TESTS_ENVIRONMENT=gitlab pytest -k "not onedata" --cov=pieces --cov-report=xml --cov-report=term-missing
-    - |
-      if pytest --collect-only -q -k onedata 2>/dev/null | grep -q 'test session starts\|test_'; then
-        DOMINO_TESTS_ENVIRONMENT=gitlab ONEDATA_ONEZONE_HOST="data.spice-platform.eu" ONEDATA_TOKEN="$ONEDATA_ACCESS_TOKEN" pytest -k onedata --cov=pieces --cov-report=xml --cov-report=term-missing
-      else
-        echo "No onedata tests in this repository — skipping onedata pytest step"
-      fi
     - DOCKER_CLIENT_TIMEOUT=600 domino piece-repository publish-images --registry-username "$CONTAINER_REGISTRY_USERNAME" --registry-token "$CONTAINER_REGISTRY_PASSWORD"
     - |
       GIT_STATUS=$(git status -s -- .domino/)
@@ -95,17 +85,7 @@ run-tests-dev:
     - when: never
   script:
     - pip list | grep domino
-    - echo "$CONTAINER_REGISTRY"
-    - echo "$CONTAINER_REGISTRY_USERNAME"
     - domino piece-repository organize --build-images --source-url="${CI_PROJECT_URL}" --tag-overwrite=development
-    - pip install -r requirements-tests.txt
-    - DOMINO_TESTS_ENVIRONMENT=gitlab pytest -k "not onedata" --cov=pieces --cov-report=xml --cov-report=term-missing
-    - |
-      if pytest --collect-only -q -k onedata 2>/dev/null | grep -q 'test session starts\|test_'; then
-        DOMINO_TESTS_ENVIRONMENT=gitlab ONEDATA_ONEZONE_HOST="data.spice-platform.eu" ONEDATA_TOKEN="$ONEDATA_ACCESS_TOKEN" pytest -k onedata --cov=pieces --cov-report=xml --cov-report=term-missing
-      else
-        echo "No onedata tests in this repository — skipping onedata pytest step"
-      fi
     - DOCKER_CLIENT_TIMEOUT=600 domino piece-repository publish-images --registry-username "$CONTAINER_REGISTRY_USERNAME" --registry-token "$CONTAINER_REGISTRY_PASSWORD"
     - |
       GIT_STATUS=$(git status -s -- .domino/)

@@ -2,6 +2,7 @@ FROM harbor.testbed.spice-platform.eu/partner/iisas/domino/domino-base-piece:lat
 
 COPY config.toml domino/pieces_repository/
 COPY pieces domino/pieces_repository/pieces
+COPY catalog domino/pieces_repository/catalog
 COPY .domino domino/pieces_repository/.domino
 
 COPY dependencies/requirements.txt domino/pieces_repository/dependencies/
