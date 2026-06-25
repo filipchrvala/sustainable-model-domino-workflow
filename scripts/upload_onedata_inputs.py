@@ -28,6 +28,7 @@ from common.onedata_defaults import (  # noqa: E402
 )
 
 PREFIX = os.environ.get("ONEDATA_INPUT_PREFIX", "onedata:///FilipsSpace/inputs").rstrip("/")
+RUN_PREFIX = os.environ.get("ONEDATA_RUN_PREFIX", "onedata:///FilipsSpace/run").rstrip("/")
 
 SECRETS = {
     "onedata_onezone_host": os.environ.get("ONEDATA_ONEZONE_HOST", DEFAULT_ONEZONE_HOST),
@@ -102,6 +103,9 @@ def main() -> None:
         marker = f"{PREFIX}/{sub}/.keep"
         od.write_bytes(marker, b"")
         print(f"  OK  {sub}/")
+
+    od.write_bytes(f"{RUN_PREFIX}/mrk_outputs/.keep", b"")
+    print("  OK  run/mrk_outputs/")
 
     print(f"\nDone. Workflow reads onedata:///FilipsSpace/inputs/…")
 

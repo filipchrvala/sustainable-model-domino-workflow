@@ -65,9 +65,8 @@ class IncrementalTrainPiece(BasePiece):
         _stage = None
         _reg_local = None
         _reg_target = None
+        _piece_out = None
         if od is not None:
-            # The model registry is read AND written, so round-trip it explicitly
-            # (download existing models, write locally, upload back afterwards).
             input_data, _reg_local, _reg_target = od.stage_registry(
                 input_data, "model_registry_dir", secrets_data)
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
@@ -146,7 +145,7 @@ class IncrementalTrainPiece(BasePiece):
             sum_path.write_text(json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8")
             with open(log_path, "a", encoding="utf-8") as f:
                 f.write(f"[INFO] departments={len(models_index)}\n")
-            return OutputModel(
+            _piece_out = OutputModel(
                 message=f"Incremental training completed for {len(models_index)} departments",
                 models_index_json=str(idx_path),
                 training_summary_json=str(sum_path),
@@ -160,8 +159,25 @@ class IncrementalTrainPiece(BasePiece):
                 f.write(err)
             raise
         finally:
-            if od is not None:
-                od.upload_registry(_reg_local, _reg_target)
-                od.mirror_results(self.results_path, secrets_data, "IncrementalTrainPiece")
-            if _stage is not None:
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(
+                    self.results_path,
+                    secrets_data,
+                    "IncrementalTrainPiece",
+                    _stage,
+                    registry_local=_reg_local,
+                    registry_target=_reg_target,
+                )
+            elif _stage is not None:
                 _stage.cleanup()
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(
+                _piece_out,
+                self.results_path,
+                secrets_data,
+                "IncrementalTrainPiece",
+                _stage,
+                registry_local=_reg_local,
+                registry_target=_reg_target,
+            )
+        return _piece_out

@@ -74,6 +74,7 @@ def _fcols() -> list[str]:
 class ForecastHorizonPiece(BasePiece):
     def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
         _stage = None
+        _piece_out = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
         log_path = Path(self.results_path) / "forecast_horizon.log"
@@ -122,7 +123,7 @@ class ForecastHorizonPiece(BasePiece):
             pd.DataFrame(rows).to_csv(out_path, index=False)
             with open(log_path, "a", encoding="utf-8") as f:
                 f.write(f"[INFO] forecast_rows={len(rows)}\n")
-            return OutputModel(message=f"Forecast completed, rows={len(rows)}", forecast_csv=str(out_path))
+            _piece_out = OutputModel(message=f"Forecast completed, rows={len(rows)}", forecast_csv=str(out_path))
         except Exception:
             err = traceback.format_exc()
             with open(log_path, "a", encoding="utf-8") as f:
@@ -132,7 +133,10 @@ class ForecastHorizonPiece(BasePiece):
                 f.write(err)
             raise
         finally:
-            if od is not None:
-                od.mirror_results(self.results_path, secrets_data, "ForecastHorizonPiece")
-            if _stage is not None:
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "ForecastHorizonPiece", _stage)
+            elif _stage is not None:
                 _stage.cleanup()
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "ForecastHorizonPiece", _stage)
+        return _piece_out

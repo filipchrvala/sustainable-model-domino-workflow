@@ -28,6 +28,9 @@ import pandas as pd
 # drive letter, so we explicitly only route known remote schemes.
 _REMOTE_PROTOCOLS = ("onedata://",)
 
+# Input fields that may point at OneData output locations (created by the piece run).
+_STAGE_SKIP_FIELDS = frozenset({"output_dir"})
+
 # Production defaults — TEMPORARY: token also in onedata_defaults.py (remove before release).
 from .onedata_defaults import (
     DEFAULT_ONEDATA_TOKEN,
@@ -476,6 +479,8 @@ def stage_inputs(input_data: Any, secrets_data: Any):
             continue
         val = normalize_remote_path(val)
         if not has_protocol(val):
+            continue
+        if name in _STAGE_SKIP_FIELDS:
             continue
         try:
             if isdir(val):

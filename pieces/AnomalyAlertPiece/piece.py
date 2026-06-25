@@ -91,6 +91,7 @@ def _psi(ref: np.ndarray, cur: np.ndarray, bins: int = 10) -> float:
 class AnomalyAlertPiece(BasePiece):
     def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
         _stage = None
+        _piece_out = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
         log_path = Path(self.results_path) / "anomaly_alert.log"
@@ -190,7 +191,7 @@ class AnomalyAlertPiece(BasePiece):
                     f"[INFO] drift_states: critical={drift_summary['critical_count']}, "
                     f"warning={drift_summary['warning_count']}, ok={drift_summary['ok_count']}\n"
                 )
-            return OutputModel(
+            _piece_out = OutputModel(
                 message=f"Anomaly alerts generated, rows={len(alerts)}",
                 alerts_csv=str(out_path),
                 drift_report_json=str(drift_path),
@@ -204,7 +205,10 @@ class AnomalyAlertPiece(BasePiece):
                 f.write(err)
             raise
         finally:
-            if od is not None:
-                od.mirror_results(self.results_path, secrets_data, "AnomalyAlertPiece")
-            if _stage is not None:
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "AnomalyAlertPiece", _stage)
+            elif _stage is not None:
                 _stage.cleanup()
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "AnomalyAlertPiece", _stage)
+        return _piece_out
