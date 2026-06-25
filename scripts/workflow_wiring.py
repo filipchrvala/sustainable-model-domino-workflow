@@ -57,6 +57,12 @@ def ensure_predict_before_sizing(data: dict) -> None:
     _ensure_edge(data, PREDICT_NODE, SIZING_NODE)
 
 
+def ensure_predict_before_load_csv_consumers(data: dict) -> None:
+    """Airflow only resolves fromUpstream XCom when the upstream task is a DAG ancestor."""
+    for node_id in LOAD_FROM_PREDICT_NODES:
+        _ensure_edge(data, PREDICT_NODE, node_id)
+
+
 def _ensure_edge(data: dict, source: str, target: str) -> None:
     edges = data.setdefault("workflowEdges", [])
     if any(e.get("source") == source and e.get("target") == target for e in edges):
@@ -78,5 +84,4 @@ def apply_production_wiring(data: dict) -> None:
         if piece.get("name") == "PredictPiece":
             wire_predict_output_schema(piece)
     wire_load_csv_from_predict(data)
-    ensure_predict_before_technical_limits(data)
-    ensure_predict_before_sizing(data)
+    ensure_predict_before_load_csv_consumers(data)

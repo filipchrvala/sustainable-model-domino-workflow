@@ -162,7 +162,7 @@ def _set_mrk_sim_container_resources(data: dict) -> None:
             continue
         _node_id, mem_mb = spec
         piece["container_resources"] = {
-            "requests": {"cpu": 200, "memory": min(512, mem_mb // 2)},
+            "requests": {"cpu": 200, "memory": mem_mb},
             "limits": {"cpu": 1000 if mem_mb <= 2048 else 2000, "memory": mem_mb},
             "use_gpu": False,
         }
@@ -220,8 +220,9 @@ def main() -> None:
                     spec["value"] = STATIC_MAP[val]
 
     _wire_load_csv_from_predict(data)
-    _ensure_predict_before_technical_limits(data)
-    _ensure_predict_before_sizing(data)
+    from workflow_wiring import ensure_predict_before_load_csv_consumers
+
+    ensure_predict_before_load_csv_consumers(data)
     _set_rolling_prediction_defaults(data)
     _set_sizing_container_resources(data)
 
