@@ -30,10 +30,10 @@
             "AnomalyAlertPiece"
         ],
         "secrets": [
-            "onedata_output_dir",
+            "onedata_onezone_host",
             "onedata_token",
-            "onedata_onezone_host"
+            "onedata_output_dir"
         ],
-        "source_image": "harbor.testbed.spice-platform.eu/partner/iisas/domino/domino-base-piece:latest"
+        "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.30-group0"
     }
 }
