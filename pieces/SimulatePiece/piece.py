@@ -1847,4 +1847,4 @@ class SimulatePiece(BasePiece):
         summary.to_csv(out_dir / "summary.csv", index=False)
         simulated.to_csv(out_dir / "simulated_results.csv", index=False)
         _log(f"Wrote outputs: {report_path}, {out_dir / 'summary.csv'}, {out_dir / 'simulated_results.csv'}")
-        _piece_out = OutputModel(message="Simulation finished", report_json=str(report_path))
+        return OutputModel(message="Simulation finished", report_json=str(report_path))
