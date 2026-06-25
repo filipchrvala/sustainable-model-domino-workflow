@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 import traceback
 from pathlib import Path
 from typing import Any
@@ -159,11 +160,14 @@ class TechnicalLimitsPiece(BasePiece):
 
             out_json = out_dir / "technical_limits.json"
             out_json.write_text(json.dumps(bounds, indent=2, ensure_ascii=False), encoding="utf-8")
+            scenario_out = out_dir / "scenario_resolved.yaml"
+            shutil.copy2(scenario_path, scenario_out)
             _log(f"Wrote technical limits to {out_json}")
+            _log(f"Copied scenario to {scenario_out}")
             _piece_out = OutputModel(
                 message="Technical limits calculated",
                 technical_limits_json=str(out_json),
-                scenario_yaml=str(scenario_path),
+                scenario_yaml=str(scenario_out),
             )
         finally:
             if od is not None and _piece_out is None:
