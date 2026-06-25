@@ -14,6 +14,14 @@ from xgboost import XGBRegressor
 
 from .models import InputModel, OutputModel
 
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
 
 def _features(df: pd.DataFrame) -> pd.DataFrame:
     out = df.sort_values("datetime").reset_index(drop=True).copy()
@@ -53,7 +61,16 @@ def _fcols() -> list[str]:
 
 
 class IncrementalTrainPiece(BasePiece):
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        _reg_local = None
+        _reg_target = None
+        if od is not None:
+            # The model registry is read AND written, so round-trip it explicitly
+            # (download existing models, write locally, upload back afterwards).
+            input_data, _reg_local, _reg_target = od.stage_registry(
+                input_data, "model_registry_dir", secrets_data)
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
         log_path = Path(self.results_path) / "incremental_train.log"
         err_path = Path(self.results_path) / "incremental_train_error.txt"
         try:
@@ -142,3 +159,9 @@ class IncrementalTrainPiece(BasePiece):
             with open(err_path, "w", encoding="utf-8") as f:
                 f.write(err)
             raise
+        finally:
+            if od is not None:
+                od.upload_registry(_reg_local, _reg_target)
+                od.mirror_results(self.results_path, secrets_data, "IncrementalTrainPiece")
+            if _stage is not None:
+                _stage.cleanup()

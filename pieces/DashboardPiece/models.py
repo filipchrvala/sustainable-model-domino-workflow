@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel, Field
 
 METRIC_HELP: dict[str, str] = {
@@ -35,6 +37,27 @@ class InputModel(BaseModel):
     investment_evaluation_csv: str = Field(description="Path to investment_evaluation.csv")
     anomaly_alerts_csv: str | None = Field(default=None, description="Optional path to anomaly_alerts.csv")
     drift_report_json: str | None = Field(default=None, description="Optional path to drift_report.json")
+    publish_to: str | None = Field(
+        default=None,
+        description="Optional OneData target for the final dashboard JSON, e.g. "
+                    "'onedata:///MySpace/uc3/dashboard_data.json'. When set together "
+                    "with OneData secrets, the dashboard JSON is also copied there. "
+                    "Local output is always written regardless.",
+    )
+
+
+class SecretsModel(BaseModel):
+    """Optional OneData credentials; absent => local-only output (unchanged)."""
+
+    onedata_onezone_host: Optional[str] = Field(
+        default=None, description="Onedata Onezone host, e.g. data.spice-platform.eu"
+    )
+    onedata_token: Optional[str] = Field(
+        default=None, description="Onedata access token."
+    )
+    onedata_output_dir: Optional[str] = Field(
+        default=None, description="OneData base dir for outputs, e.g. onedata:///FilipsSpace/run"
+    )
 
 
 class OutputModel(BaseModel):

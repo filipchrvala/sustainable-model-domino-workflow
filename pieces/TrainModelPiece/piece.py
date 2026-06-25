@@ -15,6 +15,14 @@ from xgboost import XGBRegressor
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 from datetime import datetime
 
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
 
 def _hours_to_blocks(hours: list[int]) -> list[list[int]]:
     if not hours:
@@ -170,7 +178,11 @@ def _split_train_test(df: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
 
 class TrainModelPiece(BasePiece):
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
+        _piece_out = None
         results_dir = Path(self.results_path or ".")
         results_dir.mkdir(parents=True, exist_ok=True)
         piece_log = results_dir / "train_model.log"
@@ -296,7 +308,7 @@ class TrainModelPiece(BasePiece):
 
             print(f"[SUCCESS] Model saved to {model_path}")
 
-            return OutputModel(
+            _piece_out = OutputModel(
                 message=(
                     f"Model trained. MAE={mae:.2f} kW ({mae_pct:.2f}%), "
                     f"RMSE={rmse:.2f} kW ({rmse_pct:.2f}%), MAPE={mape:.2f}%"
@@ -312,3 +324,11 @@ class TrainModelPiece(BasePiece):
             with open(piece_err, "w", encoding="utf-8") as f:
                 f.write(err)
             raise
+        finally:
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "TrainModelPiece", _stage)
+            elif _stage is not None:
+                _stage.cleanup()
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "TrainModelPiece", _stage)
+        return _piece_out

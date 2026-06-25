@@ -22,6 +22,14 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
 # --- load (historická spotreba) ---
 
 
@@ -1696,7 +1704,23 @@ def run_analysis(
 class SimulatePiece(BasePiece):
     """Run MRK+PV+battery simulation and write mrk_savings_report.json."""
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
+        _piece_out = None
+        try:
+            _piece_out = self._run_impl(input_data)
+        finally:
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "SimulatePiece", _stage)
+            elif _stage is not None:
+                _stage.cleanup()
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "SimulatePiece", _stage)
+        return _piece_out
+
+    def _run_impl(self, input_data: InputModel) -> OutputModel:
         csv_path = Path(input_data.load_csv)
         scenario_path = Path(input_data.scenario_yaml)
         out_dir = Path(self.results_path) if self.results_path else Path(input_data.output_dir or ".")
@@ -1823,4 +1847,4 @@ class SimulatePiece(BasePiece):
         summary.to_csv(out_dir / "summary.csv", index=False)
         simulated.to_csv(out_dir / "simulated_results.csv", index=False)
         _log(f"Wrote outputs: {report_path}, {out_dir / 'summary.csv'}, {out_dir / 'simulated_results.csv'}")
-        return OutputModel(message="Simulation finished", report_json=str(report_path))
+        _piece_out = OutputModel(message="Simulation finished", report_json=str(report_path))

@@ -13,6 +13,17 @@ from pathlib import Path
 import joblib
 from datetime import datetime
 
+try:
+    from common import onedata_io as od
+    from common.predictions_load import predictions_to_load_csv
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+        from pieces.common.predictions_load import predictions_to_load_csv
+    except ModuleNotFoundError:
+        od = None
+        predictions_to_load_csv = None
+
 
 def _default_shift_profile() -> dict:
     return {"by_dayofweek": {}, "global": {"active_hours": [], "blocks": []}}
@@ -223,7 +234,16 @@ def _resolve_prediction_data_path(requested_path: Path, results_dir: Path) -> Pa
 
 class PredictPiece(BasePiece):
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        _orig_model_path = getattr(input_data, "model_path", None)
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
+            # The model's shift_profile.json lives next to the model file; when the
+            # model came from OneData, pull that sibling next to the staged model.
+            if _stage is not None and _stage.active:
+                od.fetch_sibling(_orig_model_path, input_data.model_path, "shift_profile.json")
+        _piece_out = None
         results_dir = Path(self.results_path or ".")
         results_dir.mkdir(parents=True, exist_ok=True)
         piece_log = results_dir / "predict.log"
@@ -273,7 +293,7 @@ class PredictPiece(BasePiece):
                     f"Columns: {df.columns.tolist()}"
                 )
 
-            use_rolling = getattr(input_data, "use_rolling_prediction", False)
+            use_rolling = getattr(input_data, "use_rolling_prediction", True)
             bridge_rows = int(getattr(input_data, "bridge_rows", 4))
 
             if use_rolling:
@@ -285,6 +305,11 @@ class PredictPiece(BasePiece):
 
             output_path = results_dir / "predictions_15min.csv"
             df_out.to_csv(output_path, index=False)
+
+            runtime_load_path = results_dir / "runtime_load_for_sim.csv"
+            if predictions_to_load_csv is None:
+                raise RuntimeError("predictions_load helper not available")
+            predictions_to_load_csv(output_path, runtime_load_path)
 
             feature_names = list(model.get_booster().feature_names)
             log_path = results_dir / "prediction_log.txt"
@@ -298,9 +323,10 @@ class PredictPiece(BasePiece):
             print("[SUCCESS] Prediction finished")
             print(f"[SUCCESS] Predictions saved to {output_path}")
 
-            return OutputModel(
+            _piece_out = OutputModel(
                 message="Prediction finished successfully",
-                prediction_file_path=str(output_path)
+                prediction_file_path=str(output_path),
+                runtime_load_csv=str(runtime_load_path),
             )
         except Exception:
             err = traceback.format_exc()
@@ -310,6 +336,14 @@ class PredictPiece(BasePiece):
             with open(piece_err, "w", encoding="utf-8") as f:
                 f.write(err)
             raise
+        finally:
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "PredictPiece", _stage)
+            elif _stage is not None:
+                _stage.cleanup()
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "PredictPiece", _stage)
+        return _piece_out
 
     def _predict_batch(self, model, df: pd.DataFrame, target: str, shift_profile: dict) -> pd.DataFrame:
         df = df.copy()

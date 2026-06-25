@@ -16,6 +16,15 @@ try:
 except ImportError:
     from .models import METRIC_HELP, InputModel, OutputModel
 
+# Optional shared OneData I/O layer (used only to publish the final JSON).
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
 
 def _read_optional_csv(path: Path | None) -> pd.DataFrame:
     if path is None or not path.is_file():
@@ -37,7 +46,11 @@ def render_kpi_metric(column, label: str, value: str, help_key: str, *, widget_k
 class DashboardPiece(BasePiece):
     """Build finance-focused dashboard payload for CFO decisions."""
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
+        _piece_out = None
         rep_path = Path(input_data.report_json)
         kpi_path = Path(input_data.kpi_results_csv)
         inv_path = Path(input_data.investment_evaluation_csv)
@@ -167,13 +180,33 @@ class DashboardPiece(BasePiece):
             }
 
             out_json = out_dir / "dashboard_data.json"
-            out_json.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+            payload_text = json.dumps(payload, indent=2, ensure_ascii=False)
+            out_json.write_text(payload_text, encoding="utf-8")
             _log(f"Wrote dashboard JSON: {out_json}; kpi_rows={len(kpi_df)}")
-            return OutputModel(dashboard_data_json=str(out_json))
+
+            # Optional: also publish the final JSON to OneData. Purely additive —
+            # only runs when a target is given AND OneData secrets are present.
+            publish_to = getattr(input_data, "publish_to", None)
+            if publish_to and od is not None and od.configure_onedata(secrets_data, force=True):
+                try:
+                    od.write_text(publish_to, payload_text)
+                    _log(f"Published dashboard JSON to OneData: {publish_to}")
+                except Exception as pub_exc:
+                    _log(f"WARNING: OneData publish failed ({publish_to}): {pub_exc}")
+
+            _piece_out = OutputModel(dashboard_data_json=str(out_json))
         except Exception as exc:
             (out_dir / "dashboard_error.txt").write_text(traceback.format_exc(), encoding="utf-8")
             _log(f"ERROR during dashboard assembly: {exc}")
             raise
+        finally:
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "DashboardPiece", _stage)
+            elif _stage is not None:
+                _stage.cleanup()
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "DashboardPiece", _stage)
+        return _piece_out
 
 
 # --- sizing grid UI ---

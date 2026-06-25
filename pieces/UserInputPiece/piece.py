@@ -13,6 +13,14 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
 
 def _discover_workflow_user_input_path(load_csv: Path, scenario_yaml: Path) -> Path | None:
     repo_root = Path(__file__).resolve().parents[2]
@@ -114,7 +122,31 @@ class UserInputPiece(BasePiece):
             ).fillna(med)
         return repaired, filled
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        _piece_out = None
+        _orig = {
+            "load_csv": getattr(input_data, "load_csv", None),
+            "scenario_yaml": getattr(input_data, "scenario_yaml", None),
+        }
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
+            if _stage is not None and _stage.active:
+                od.fetch_sibling(
+                    _orig.get("scenario_yaml"), input_data.scenario_yaml, "workflow_user_input.json"
+                )
+        try:
+            _piece_out = self._run_impl(input_data)
+        finally:
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "UserInputPiece", _stage)
+            elif _stage is not None:
+                _stage.cleanup()
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "UserInputPiece", _stage)
+        return _piece_out
+
+    def _run_impl(self, input_data: InputModel) -> OutputModel:
         load_csv = Path(input_data.load_csv)
         prices_csv = Path(input_data.prices_csv) if input_data.prices_csv else None
         scenario_yaml = Path(input_data.scenario_yaml)
@@ -132,9 +164,28 @@ class UserInputPiece(BasePiece):
         _log(f"Input prices_csv={prices_csv}")
         _log(f"Input scenario_yaml={scenario_yaml}")
         if not load_csv.is_file():
-            raise FileNotFoundError(f"Load CSV not found: {load_csv}")
+            raw = str(getattr(input_data, "load_csv", load_csv))
+            if od is not None and od.has_protocol(od.normalize_remote_path(raw)):
+                raise FileNotFoundError(
+                    f"Load CSV not staged from OneData: {raw}. "
+                    "OneData is unreachable from this container (local Domino needs "
+                    "test_sus_local.customization + seed_shared_storage.py, or VPN to SPICE)."
+                )
+            raise FileNotFoundError(
+                f"Load CSV not found: {load_csv}. "
+                "For local Domino run scripts/seed_shared_storage.py once."
+            )
         if not scenario_yaml.is_file():
-            raise FileNotFoundError(f"Scenario YAML not found: {scenario_yaml}")
+            raw = str(getattr(input_data, "scenario_yaml", scenario_yaml))
+            if od is not None and od.has_protocol(od.normalize_remote_path(raw)):
+                raise FileNotFoundError(
+                    f"Scenario YAML not staged from OneData: {raw}. "
+                    "Use test_sus_local.customization on PC without VPN in Docker."
+                )
+            raise FileNotFoundError(
+                f"Scenario YAML not found: {scenario_yaml}. "
+                "For local Domino run scripts/seed_shared_storage.py once."
+            )
         scenario_copy = out_dir / "scenario_resolved.yaml"
         shutil.copy2(scenario_yaml, scenario_copy)
         _log(f"Copied scenario to shared output path: {scenario_copy}")

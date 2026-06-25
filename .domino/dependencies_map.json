@@ -5,31 +5,35 @@
             "requirements_file": "requirements_0.txt"
         },
         "pieces": [
-            "ModelMonitoringPiece",
-            "FetchEnergyDataPiece",
-            "KPIPiece",
-            "ForecastHorizonPiece",
             "TrainModelPiece",
+            "SizingOptimizationPiece",
             "PreprocessEnergyDataPiece",
+            "KPIPiece",
+            "UserInputPiece",
             "IncrementalTrainPiece",
-            "TechnicalLimitsPiece",
+            "CatalogRankerPiece",
+            "PredictPiece",
+            "WebUserInputPiece",
             "SustainableIngestPiece",
             "SolarSimPiece",
-            "DashboardPiece",
-            "BatterySimPiece",
-            "UserInputPiece",
-            "InvestmentEvalPiece",
-            "SizingOptimizationPiece",
+            "TechnicalLimitsPiece",
             "SimulatePiece",
-            "BatteryStrategyOptimizerPiece",
-            "AnomalyAlertPiece",
-            "WebUserInputPiece",
-            "CatalogSyncPiece",
+            "FetchEnergyDataPiece",
+            "BatterySimPiece",
+            "DashboardPiece",
             "FeasibilityReportPiece",
-            "CatalogRankerPiece",
-            "PredictPiece"
+            "ForecastHorizonPiece",
+            "ModelMonitoringPiece",
+            "BatteryStrategyOptimizerPiece",
+            "InvestmentEvalPiece",
+            "CatalogSyncPiece",
+            "AnomalyAlertPiece"
         ],
-        "secrets": [],
-        "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.3-group0"
+        "secrets": [
+            "onedata_onezone_host",
+            "onedata_token",
+            "onedata_output_dir"
+        ],
+        "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.18-group0"
     }
 }

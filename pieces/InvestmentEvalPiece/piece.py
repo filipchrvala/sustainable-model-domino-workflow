@@ -12,11 +12,22 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
 
 class InvestmentEvalPiece(BasePiece):
     """Investment metrics from report + KPI."""
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
         rep_path = Path(input_data.report_json)
         kpi_path = Path(input_data.kpi_results_csv)
         out_dir = Path(self.results_path or rep_path.parent)
@@ -87,3 +98,8 @@ class InvestmentEvalPiece(BasePiece):
             (out_dir / "investment_eval_error.txt").write_text(traceback.format_exc(), encoding="utf-8")
             _log(f"ERROR during investment evaluation: {exc}")
             raise
+        finally:
+            if od is not None:
+                od.mirror_results(self.results_path, secrets_data, "InvestmentEvalPiece")
+            if _stage is not None:
+                _stage.cleanup()

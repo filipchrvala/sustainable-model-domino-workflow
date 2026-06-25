@@ -17,6 +17,14 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
+try:
+    from common import onedata_io as od
+except ModuleNotFoundError:
+    try:
+        from pieces.common import onedata_io as od
+    except ModuleNotFoundError:
+        od = None
+
 DEFAULT_PV_URL = "https://raw.githubusercontent.com/NREL/SAM/patch/deploy/libraries/CEC%20Modules.csv"
 DEFAULT_INV_URL = "https://raw.githubusercontent.com/NREL/SAM/develop/deploy/libraries/CEC%20Inverters.csv"
 
@@ -28,7 +36,11 @@ class CatalogSyncPiece(BasePiece):
     def _project_root() -> Path:
         return Path(__file__).resolve().parents[2]
 
-    def piece_function(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        _stage = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
+        _piece_out = None
         scenario_path = Path(input_data.scenario_yaml)
         out_dir = Path(self.results_path or scenario_path.parent)
         out_dir.mkdir(parents=True, exist_ok=True)
@@ -271,7 +283,7 @@ class CatalogSyncPiece(BasePiece):
                 msg = "Catalog sync finished with URL outage fallback"
             _log(f"Counts: pv={len(pv)}, inv={len(inv)}, bat={len(bat_products)}, url_outage={url_outage}")
             _log(f"Wrote outputs: {pv_json}, {inv_json}, {bat_json}, {manifest_json}")
-            return OutputModel(
+            _piece_out = OutputModel(
                 message=msg,
                 pv_catalog_json=str(pv_json),
                 inverter_catalog_json=str(inv_json),
@@ -283,3 +295,11 @@ class CatalogSyncPiece(BasePiece):
             (out_dir / "catalog_sync_error.txt").write_text(traceback.format_exc(), encoding="utf-8")
             _log(f"ERROR during catalog sync: {exc}")
             raise
+        finally:
+            if od is not None and _piece_out is None:
+                od.cleanup_on_error(self.results_path, secrets_data, "CatalogSyncPiece", _stage)
+            elif _stage is not None:
+                _stage.cleanup()
+        if od is not None and _piece_out is not None:
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "CatalogSyncPiece", _stage)
+        return _piece_out
