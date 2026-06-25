@@ -74,3 +74,17 @@ Set these CI/CD variables in GitLab (Settings → CI/CD → Variables). Mark sec
 | `ONEDATA_ACCESS_TOKEN` | Only if onedata tests are added later |
 
 `config.toml` `REGISTRY_NAME` must use namespace `harbor.testbed.spice-platform.eu/partner/uc3`.
+
+## OneData secrets (Domino workflow)
+
+The repository does **not** contain OneData access tokens. After importing `test_sus_onedata.customization` in Domino, set workflow **Secrets**:
+
+| Secret | Example | Notes |
+|--------|---------|-------|
+| `onedata_onezone_host` | `data.spice-platform.eu` | Pre-filled in workflow schema |
+| `onedata_token` | *(your token)* | From OneData UI — required for every run |
+| `onedata_output_dir` | `onedata:///FilipsSpace/run` | Pre-filled; change space/path per deployment |
+
+For local scripts (`upload_onedata_inputs.py`, integration tests), export `ONEDATA_TOKEN` (see `.env.example`). GitLab CI uses masked variable `ONEDATA_ACCESS_TOKEN`.
+
+**Note:** If a token was ever committed to GitHub history, rotate it in OneData and treat the old one as compromised.

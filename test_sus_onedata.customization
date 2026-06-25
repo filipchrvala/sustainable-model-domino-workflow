@@ -8,7 +8,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "description": "Input model for Fetch Energy Data Piece",
         "properties": {
@@ -49,13 +49,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -108,7 +107,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "properties": {
           "input_path": {
@@ -163,13 +162,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -223,7 +221,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "properties": {
           "data_path": {
@@ -268,13 +266,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -329,7 +326,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "properties": {
           "model_path": {
@@ -390,13 +387,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -447,7 +443,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "properties": {
           "predictions_csv": {
@@ -489,13 +485,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -546,7 +541,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -605,13 +600,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -662,7 +656,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "description": "Domino piece input – reads saved web form state and materializes workflow files.",
         "properties": {
@@ -732,13 +726,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -789,7 +782,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -837,13 +830,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -894,7 +886,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -948,13 +940,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1008,7 +999,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "properties": {
           "scenario_yaml": {
@@ -1065,13 +1056,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1122,7 +1112,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "properties": {
           "scenario_yaml": {
@@ -1165,13 +1155,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1222,7 +1211,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1265,13 +1254,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1322,7 +1310,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1365,13 +1353,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1422,7 +1409,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1476,13 +1463,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1533,7 +1519,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1624,13 +1610,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1681,7 +1666,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "properties": {
           "report_json": {
@@ -1718,13 +1703,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1775,7 +1759,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "properties": {
           "report_json": {
@@ -1823,13 +1807,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1880,7 +1863,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "properties": {
           "report_json": {
@@ -1950,13 +1933,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -2007,7 +1989,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "properties": {
           "workflow_user_input_json": {
@@ -2092,13 +2074,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -2152,7 +2133,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2227,13 +2208,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -2284,7 +2264,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2353,13 +2333,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -2410,7 +2389,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2466,13 +2445,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -2523,7 +2501,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.24-group0",
+      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.25-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2613,13 +2591,12 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
-            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+            "description": "OneData access token — set in Domino workflow secrets (not in git)",
             "title": "Onedata Token",
             "type": "string"
           },

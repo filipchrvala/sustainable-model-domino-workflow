@@ -3,7 +3,7 @@
 Reads local test/catalog files and mirrors them to a stable OneData prefix so
 Domino workflow nodes can reference onedata:/// paths instead of shared_storage.
 
-Uses hardcoded onedata_defaults when env vars are not set (Domino dev convenience).
+Requires ``ONEDATA_TOKEN`` in the environment (see ``.env.example``).
 
 Run:
   python scripts/generate_weekly_test_data.py
@@ -21,20 +21,23 @@ sys.path.insert(0, str(REPO))
 sys.path.insert(0, str(REPO / "pieces"))
 
 from common import onedata_io as od  # noqa: E402
-from common.onedata_defaults import (  # noqa: E402
-    DEFAULT_ONEDATA_TOKEN,
-    DEFAULT_ONEZONE_HOST,
-    DEFAULT_OUTPUT_DIR,
-)
+from common.onedata_defaults import DEFAULT_ONEZONE_HOST, DEFAULT_OUTPUT_DIR  # noqa: E402
 
 PREFIX = os.environ.get("ONEDATA_INPUT_PREFIX", "onedata:///FilipsSpace/inputs").rstrip("/")
 RUN_PREFIX = os.environ.get("ONEDATA_RUN_PREFIX", "onedata:///FilipsSpace/run").rstrip("/")
 
-SECRETS = {
-    "onedata_onezone_host": os.environ.get("ONEDATA_ONEZONE_HOST", DEFAULT_ONEZONE_HOST),
-    "onedata_token": os.environ.get("ONEDATA_TOKEN", DEFAULT_ONEDATA_TOKEN),
-    "onedata_output_dir": os.environ.get("ONEDATA_OUTPUT_DIR", DEFAULT_OUTPUT_DIR),
-}
+def _secrets() -> dict[str, str]:
+    token = (os.environ.get("ONEDATA_TOKEN") or "").strip()
+    if not token:
+        raise SystemExit(
+            "ONEDATA_TOKEN is required. Export your OneData token or use a .env file "
+            "(see .env.example)."
+        )
+    return {
+        "onedata_onezone_host": os.environ.get("ONEDATA_ONEZONE_HOST", DEFAULT_ONEZONE_HOST),
+        "onedata_token": token,
+        "onedata_output_dir": os.environ.get("ONEDATA_OUTPUT_DIR", DEFAULT_OUTPUT_DIR),
+    }
 
 TESTS = REPO / "tests"
 WEEKLY = TESTS / "weekly"
@@ -70,7 +73,7 @@ def main() -> None:
         print("Missing tests/weekly — run: python scripts/generate_weekly_test_data.py")
         sys.exit(1)
 
-    od.configure_onedata(SECRETS, force=True)
+    od.configure_onedata(_secrets(), force=True)
     mode = "weekly (~7 days)" if args.weekly else "full seed"
     print(f"Uploading {mode} to {PREFIX}/\n")
 

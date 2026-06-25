@@ -31,12 +31,7 @@ _REMOTE_PROTOCOLS = ("onedata://",)
 # Input fields that may point at OneData output locations (created by the piece run).
 _STAGE_SKIP_FIELDS = frozenset({"output_dir"})
 
-# Production defaults — TEMPORARY: token also in onedata_defaults.py (remove before release).
-from .onedata_defaults import (
-    DEFAULT_ONEDATA_TOKEN,
-    DEFAULT_ONEZONE_HOST,
-    DEFAULT_OUTPUT_DIR,
-)
+from .onedata_defaults import DEFAULT_ONEZONE_HOST, DEFAULT_OUTPUT_DIR
 
 DEFAULT_TOKEN_FILE = "/run/secrets/onedata_token"
 
@@ -112,7 +107,7 @@ def effective_secrets(secrets_data: Any, *, use_defaults: bool = False) -> dict[
     host = _get(secrets_data, "onedata_onezone_host") or os.environ.get("ONEDATA_ONEZONE_HOST")
     token = _get(secrets_data, "onedata_token")
     if not token and use_defaults:
-        token = _resolve_token() or DEFAULT_ONEDATA_TOKEN
+        token = _resolve_token()
     if use_defaults and not host:
         host = DEFAULT_ONEZONE_HOST
     output = _get(secrets_data, "onedata_output_dir") or os.environ.get("ONEDATA_OUTPUT_BASE")

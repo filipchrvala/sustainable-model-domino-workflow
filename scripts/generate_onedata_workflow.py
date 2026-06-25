@@ -25,23 +25,18 @@ def _secrets_schema() -> dict:
     import sys
 
     sys.path.insert(0, str(REPO / "pieces"))
-    from common.onedata_defaults import (
-        DEFAULT_ONEDATA_TOKEN,
-        DEFAULT_ONEZONE_HOST,
-        DEFAULT_OUTPUT_DIR,
-    )
+    from common.onedata_defaults import DEFAULT_ONEZONE_HOST, DEFAULT_OUTPUT_DIR
 
     return {
         "properties": {
             "onedata_onezone_host": {
                 "default": DEFAULT_ONEZONE_HOST,
-                "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+                "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
                 "title": "Onedata Onezone Host",
                 "type": "string",
             },
             "onedata_token": {
-                "default": DEFAULT_ONEDATA_TOKEN,
-                "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+                "description": "OneData access token — set in Domino workflow secrets (not in git)",
                 "title": "Onedata Token",
                 "type": "string",
             },

@@ -1,5 +1,8 @@
-"""TEMPORARY hardcoded OneData credentials for Domino dev (remove before release)."""
+"""Non-secret OneData defaults for SPICE testbed (host, output prefix).
+
+Access tokens are never stored here — configure them via Domino workflow secrets,
+``ONEDATA_TOKEN`` / ``ONEDATA_TOKEN_FILE`` env vars, or GitLab CI ``ONEDATA_ACCESS_TOKEN``.
+"""
 
 DEFAULT_ONEZONE_HOST = "data.spice-platform.eu"
 DEFAULT_OUTPUT_DIR = "onedata:///FilipsSpace/run"
-DEFAULT_ONEDATA_TOKEN = 'MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo'
