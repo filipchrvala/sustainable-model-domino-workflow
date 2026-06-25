@@ -1268,6 +1268,16 @@
         },
         "description": "Generate synthetic PV profile for selected sizing",
         "dependencies_group": "0",
+        "container_resources": {
+            "requests": {
+                "cpu": 200,
+                "memory": 512
+            },
+            "limits": {
+                "cpu": 1000,
+                "memory": 2048
+            }
+        },
         "input_schema": {
             "properties": {
                 "load_csv": {
@@ -1487,6 +1497,16 @@
         },
         "description": "Run MRK simulation baseline/PV/battery",
         "dependencies_group": "0",
+        "container_resources": {
+            "requests": {
+                "cpu": 500,
+                "memory": 1024
+            },
+            "limits": {
+                "cpu": 2000,
+                "memory": 4096
+            }
+        },
         "input_schema": {
             "properties": {
                 "load_csv": {
@@ -1759,6 +1779,16 @@
         },
         "description": "Generate battery SOC timeseries from load and PV profile",
         "dependencies_group": "0",
+        "container_resources": {
+            "requests": {
+                "cpu": 200,
+                "memory": 512
+            },
+            "limits": {
+                "cpu": 1000,
+                "memory": 2048
+            }
+        },
         "input_schema": {
             "properties": {
                 "load_csv": {
@@ -2412,6 +2442,16 @@
         },
         "description": "Create battery dispatch strategy recommendation",
         "dependencies_group": "0",
+        "container_resources": {
+            "requests": {
+                "cpu": 200,
+                "memory": 512
+            },
+            "limits": {
+                "cpu": 1000,
+                "memory": 2048
+            }
+        },
         "input_schema": {
             "properties": {
                 "load_csv": {
