@@ -194,7 +194,7 @@ class SustainableIngestPiece(BasePiece):
         err_path = Path(self.results_path) / "sustainable_ingest_error.txt"
         try:
             # OneData is enabled only when secrets/env provide credentials.
-            if od is not None and od.configure_onedata(secrets_data):
+            if od is not None and od.configure_onedata(secrets_data, force=True):
                 with open(log_path, "a", encoding="utf-8") as f:
                     f.write("[INFO] OneData backend configured\n")
 

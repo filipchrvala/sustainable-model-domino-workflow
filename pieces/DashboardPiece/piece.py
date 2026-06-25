@@ -187,7 +187,7 @@ class DashboardPiece(BasePiece):
             # Optional: also publish the final JSON to OneData. Purely additive —
             # only runs when a target is given AND OneData secrets are present.
             publish_to = getattr(input_data, "publish_to", None)
-            if publish_to and od is not None and od.configure_onedata(secrets_data):
+            if publish_to and od is not None and od.configure_onedata(secrets_data, force=True):
                 try:
                     od.write_text(publish_to, payload_text)
                     _log(f"Published dashboard JSON to OneData: {publish_to}")

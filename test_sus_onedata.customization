@@ -49,13 +49,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -163,13 +163,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -268,13 +268,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -390,13 +390,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -489,13 +489,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -605,13 +605,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -732,13 +732,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -837,13 +837,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -948,13 +948,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1065,13 +1065,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1165,13 +1165,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1265,13 +1265,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1365,13 +1365,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1476,13 +1476,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1624,13 +1624,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1718,13 +1718,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1823,13 +1823,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -1950,13 +1950,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -2092,13 +2092,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -2227,13 +2227,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -2353,13 +2353,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -2466,13 +2466,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },
@@ -2613,13 +2613,13 @@
         "properties": {
           "onedata_onezone_host": {
             "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
+            "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
             "title": "Onedata Onezone Host",
             "type": "string"
           },
           "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2ZGlkZW500aWZpZXIgMi900bXAtMS91c3ItYzNmM2Q00Nzc2MTczMGIyOTg5ZmQ3MTJlMmY4NzhhYmJjaGUxN2IvYWN00L2RhNTAwYTNhNDJiZjM1YzZlNGFlNjI4MTI00YzU00NmIxY2g1MWQ3CjAwMWFjaWQgdGltZSA8IDE3ODQ5NzA5NjIKMDAyZnNpZ25hdHVyZSAtAIj3dnzqedlP8QhCPGk56gOXWM1nKFlDqTQtCqd9jQo",
+            "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
             "title": "Onedata Token",
             "type": "string"
           },

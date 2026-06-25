@@ -21,6 +21,42 @@ PREFIX = "onedata:///FilipsSpace/inputs"
 RUN_PREFIX = "onedata:///FilipsSpace/run"
 
 
+def _secrets_schema() -> dict:
+    import sys
+
+    sys.path.insert(0, str(REPO / "pieces"))
+    from common.onedata_defaults import (
+        DEFAULT_ONEDATA_TOKEN,
+        DEFAULT_ONEZONE_HOST,
+        DEFAULT_OUTPUT_DIR,
+    )
+
+    return {
+        "properties": {
+            "onedata_onezone_host": {
+                "default": DEFAULT_ONEZONE_HOST,
+                "description": "Onedata Onezone host (hardcoded default in onedata_defaults.py)",
+                "title": "Onedata Onezone Host",
+                "type": "string",
+            },
+            "onedata_token": {
+                "default": DEFAULT_ONEDATA_TOKEN,
+                "description": "TEMPORARY: hardcoded in onedata_defaults.py — remove before release",
+                "title": "Onedata Token",
+                "type": "string",
+            },
+            "onedata_output_dir": {
+                "default": DEFAULT_OUTPUT_DIR,
+                "description": "OneData base dir for mirrored piece outputs",
+                "title": "Onedata Output Dir",
+                "type": "string",
+            },
+        },
+        "title": "SecretsModel",
+        "type": "object",
+    }
+
+
 def _read_version() -> str:
     text = (REPO / "config.toml").read_text(encoding="utf-8")
     for line in text.splitlines():
@@ -44,30 +80,7 @@ STATIC_MAP = {
     "/home/shared_storage/prices.csv": f"{PREFIX}/prices.csv",
 }
 
-SECRETS_SCHEMA = {
-    "properties": {
-        "onedata_onezone_host": {
-            "default": "data.spice-platform.eu",
-            "description": "Onedata Onezone host (default applied in code if omitted)",
-            "title": "Onedata Onezone Host",
-            "type": "string",
-        },
-        "onedata_token": {
-            "default": "",
-            "description": "Optional; if empty, piece reads ONEDATA_TOKEN env or /run/secrets/onedata_token",
-            "title": "Onedata Token",
-            "type": "string",
-        },
-        "onedata_output_dir": {
-            "default": RUN_PREFIX,
-            "description": "OneData base dir for mirrored piece outputs",
-            "title": "Onedata Output Dir",
-            "type": "string",
-        },
-    },
-    "title": "SecretsModel",
-    "type": "object",
-}
+SECRETS_SCHEMA = _secrets_schema()
 
 # Domino node / upstream ids (stable in test_sus.customization)
 PREDICT_NODE = "104_520d5908-51bd-5715-b120-38517246b71f"
