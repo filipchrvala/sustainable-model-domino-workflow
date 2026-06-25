@@ -36,8 +36,10 @@ class CatalogRankerPiece(BasePiece):
     def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
         _stage = None
         _piece_out = None
+        _run_id = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
+            _run_id = od.resolve_run_id(input_data, secrets_data, generate=False)
         try:
             scenario_path = Path(input_data.scenario_yaml)
             pv_path = Path(input_data.pv_catalog_json)
@@ -98,9 +100,9 @@ class CatalogRankerPiece(BasePiece):
             _piece_out = OutputModel(message="Catalog ranking finished", catalog_ranked_recommendation_json=str(out_json))
         finally:
             if od is not None and _piece_out is None:
-                od.cleanup_on_error(self.results_path, secrets_data, "CatalogRankerPiece", _stage)
+                od.cleanup_on_error(self.results_path, secrets_data, "CatalogRankerPiece", _stage, run_id=_run_id)
             elif _stage is not None:
                 _stage.cleanup()
         if od is not None and _piece_out is not None:
-            return od.finish_piece(_piece_out, self.results_path, secrets_data, "CatalogRankerPiece", _stage)
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "CatalogRankerPiece", _stage, run_id=_run_id)
         return _piece_out

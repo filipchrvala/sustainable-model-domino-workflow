@@ -123,9 +123,9 @@ class SizingOptimizationPiece(BasePiece):
             raise
         finally:
             if od is not None and _piece_out is None:
-                od.cleanup_on_error(self.results_path, secrets_data, "SizingOptimizationPiece", _stage)
+                od.cleanup_on_error(self.results_path, secrets_data, "SizingOptimizationPiece", _stage, run_id=_run_id)
             elif _stage is not None:
                 _stage.cleanup()
         if od is not None and _piece_out is not None:
-            return od.finish_piece(_piece_out, self.results_path, secrets_data, "SizingOptimizationPiece", _stage)
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "SizingOptimizationPiece", _stage, run_id=_run_id)
         return _piece_out

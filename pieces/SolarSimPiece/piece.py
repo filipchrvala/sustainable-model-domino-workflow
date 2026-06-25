@@ -47,7 +47,7 @@ class SolarSimPiece(BasePiece):
             except Exception as exc:
                 boot.bootstrap_log(self.results_path, "SolarSimPiece", f"stage_inputs FAILED: {exc}")
                 if od is not None:
-                    od.cleanup_on_error(self.results_path, secrets_data, "SolarSimPiece", _stage)
+                    od.cleanup_on_error(self.results_path, secrets_data, "SolarSimPiece", _stage, run_id=_run_id)
                 raise
         _piece_out = None
         try:
@@ -90,9 +90,9 @@ class SolarSimPiece(BasePiece):
             _piece_out = OutputModel(message="Solar simulation finished", virtual_solar_csv=str(out_csv))
         finally:
             if od is not None and _piece_out is None:
-                od.cleanup_on_error(self.results_path, secrets_data, "SolarSimPiece", _stage)
+                od.cleanup_on_error(self.results_path, secrets_data, "SolarSimPiece", _stage, run_id=_run_id)
             elif _stage is not None:
                 _stage.cleanup()
         if od is not None and _piece_out is not None:
-            return od.finish_piece(_piece_out, self.results_path, secrets_data, "SolarSimPiece", _stage)
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "SolarSimPiece", _stage, run_id=_run_id)
         return _piece_out

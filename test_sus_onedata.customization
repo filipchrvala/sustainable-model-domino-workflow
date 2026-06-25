@@ -8,7 +8,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "description": "Input model for Fetch Energy Data Piece",
         "properties": {
@@ -22,6 +22,12 @@
             "default": "/home/shared_storage/prices.csv",
             "description": "Path to prices CSV file",
             "title": "Prices Csv",
+            "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
             "type": "string"
           }
         },
@@ -40,6 +46,12 @@
             "default": "",
             "title": "Output Path",
             "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "title": "OutputModel",
@@ -54,12 +66,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -107,7 +120,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "properties": {
           "input_path": {
@@ -126,6 +139,12 @@
             "description": "If False (default): only train_dataset.parquet. Predict uses separate CSV in PredictPiece.",
             "title": "Generate Predict Dataset",
             "type": "boolean"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -149,6 +168,12 @@
             "description": "Empty if generate_predict_dataset is False",
             "title": "Predict File Path",
             "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -167,12 +192,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -221,12 +247,18 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "properties": {
           "data_path": {
             "description": "Path to preprocessed parquet or CSV dataset",
             "title": "Training dataset path",
+            "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
             "type": "string"
           }
         },
@@ -252,6 +284,12 @@
             "description": "Path to training log file",
             "title": "Train Log Path",
             "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -271,12 +309,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -326,7 +365,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "properties": {
           "model_path": {
@@ -350,6 +389,12 @@
             "minimum": 1,
             "title": "Bridge Rows",
             "type": "integer"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -373,6 +418,12 @@
             "description": "Load CSV for MRK sizing/simulation (from predictions)",
             "title": "Runtime Load Csv",
             "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -392,12 +443,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -443,12 +495,18 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "properties": {
           "predictions_csv": {
             "description": "CSV with prediction_load_kw and optionally load_kw",
             "title": "Predictions Csv",
+            "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
             "type": "string"
           }
         },
@@ -471,6 +529,12 @@
           "message": {
             "title": "Message",
             "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -490,12 +554,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -541,7 +606,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -558,6 +623,12 @@
           "scenario_yaml": {
             "description": "Path to scenario YAML",
             "title": "Scenario Yaml",
+            "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
             "type": "string"
           }
         },
@@ -585,6 +656,12 @@
           "workflow_user_input_json": {
             "title": "Workflow User Input Json",
             "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -605,12 +682,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -656,7 +734,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "description": "Domino piece input – reads saved web form state and materializes workflow files.",
         "properties": {
@@ -675,6 +753,12 @@
             "description": "If true and web CSV paths missing, use FetchEnergyDataPiece_Inputs CSV files",
             "title": "Use Classic Csv Fallback",
             "type": "boolean"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -710,6 +794,12 @@
             "default": "web",
             "title": "Input Mode",
             "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -731,12 +821,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -782,7 +873,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -793,6 +884,12 @@
           "scenario_yaml": {
             "description": "Path to scenario YAML",
             "title": "Scenario Yaml",
+            "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
             "type": "string"
           }
         },
@@ -816,6 +913,12 @@
           "scenario_yaml": {
             "title": "Scenario Yaml",
             "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -835,12 +938,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -886,7 +990,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -902,6 +1006,12 @@
           "technical_limits_json": {
             "description": "Path to technical limits json",
             "title": "Technical Limits Json",
+            "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
             "type": "string"
           }
         },
@@ -926,6 +1036,12 @@
           "sizing_optimization_json": {
             "title": "Sizing Optimization Json",
             "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -945,12 +1061,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -999,12 +1116,18 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "properties": {
           "scenario_yaml": {
             "description": "Path to scenario YAML",
             "title": "Scenario Yaml",
+            "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
             "type": "string"
           }
         },
@@ -1039,6 +1162,12 @@
           "url_outage_detected": {
             "title": "Url Outage Detected",
             "type": "boolean"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -1061,12 +1190,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -1112,7 +1242,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "properties": {
           "scenario_yaml": {
@@ -1123,6 +1253,12 @@
           "pv_catalog_json": {
             "description": "Path to synced PV catalog JSON",
             "title": "Pv Catalog Json",
+            "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
             "type": "string"
           }
         },
@@ -1142,6 +1278,12 @@
           "catalog_ranked_recommendation_json": {
             "title": "Catalog Ranked Recommendation Json",
             "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -1160,12 +1302,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -1211,7 +1354,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1222,6 +1365,12 @@
           "scenario_yaml": {
             "description": "Path to sized scenario YAML",
             "title": "Scenario Yaml",
+            "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
             "type": "string"
           }
         },
@@ -1241,6 +1390,12 @@
           "virtual_solar_csv": {
             "title": "Virtual Solar Csv",
             "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -1259,12 +1414,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -1310,7 +1466,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1321,6 +1477,12 @@
           "scenario_yaml": {
             "description": "Path to sized scenario YAML",
             "title": "Scenario Yaml",
+            "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
             "type": "string"
           }
         },
@@ -1340,6 +1502,12 @@
           "battery_strategy_recommendation_json": {
             "title": "Battery Strategy Recommendation Json",
             "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -1358,12 +1526,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -1409,7 +1578,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1425,6 +1594,12 @@
           "virtual_solar_csv": {
             "description": "Path to virtual_solar.csv",
             "title": "Virtual Solar Csv",
+            "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
             "type": "string"
           }
         },
@@ -1449,6 +1624,12 @@
           "battery_summary_csv": {
             "title": "Battery Summary Csv",
             "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -1468,12 +1649,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -1519,7 +1701,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1579,6 +1761,12 @@
             "description": "Optional catalog sync manifest JSON",
             "title": "Catalog Manifest Json",
             "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -1596,6 +1784,12 @@
           },
           "report_json": {
             "title": "Report Json",
+            "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
             "type": "string"
           }
         },
@@ -1615,12 +1809,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -1666,12 +1861,18 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "properties": {
           "report_json": {
             "description": "Path to mrk_savings_report.json",
             "title": "Report Json",
+            "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
             "type": "string"
           }
         },
@@ -1689,6 +1890,12 @@
           },
           "kpi_results_csv": {
             "title": "Kpi Results Csv",
+            "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
             "type": "string"
           }
         },
@@ -1708,12 +1915,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -1759,7 +1967,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "properties": {
           "report_json": {
@@ -1770,6 +1978,12 @@
           "kpi_results_csv": {
             "description": "Path to kpi_results.csv",
             "title": "Kpi Results Csv",
+            "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
             "type": "string"
           }
         },
@@ -1793,6 +2007,12 @@
           "investment_evaluation_json": {
             "title": "Investment Evaluation Json",
             "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -1812,12 +2032,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -1863,7 +2084,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "properties": {
           "report_json": {
@@ -1906,6 +2127,12 @@
             "default": null,
             "description": "Optional path to drift_report.json",
             "title": "Drift Report Json"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -1920,6 +2147,12 @@
         "properties": {
           "dashboard_data_json": {
             "title": "Dashboard Data Json",
+            "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
             "type": "string"
           }
         },
@@ -1938,12 +2171,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -1989,7 +2223,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "properties": {
           "workflow_user_input_json": {
@@ -2011,6 +2245,12 @@
             "default": "",
             "description": "Optional path to investment_evaluation.csv for simulation-backed metrics",
             "title": "Investment Evaluation Csv",
+            "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
             "type": "string"
           }
         },
@@ -2055,6 +2295,12 @@
           "cfo_notes": {
             "title": "Cfo Notes",
             "type": "object"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -2079,12 +2325,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -2133,7 +2380,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2163,6 +2410,12 @@
             "default": null,
             "description": "Optional parquet for first run bootstrap",
             "title": "Bootstrap Parquet"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -2193,6 +2446,12 @@
             },
             "title": "Departments",
             "type": "array"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -2213,12 +2472,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -2264,7 +2524,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2297,6 +2557,12 @@
             "minimum": 10,
             "title": "Incremental Trees",
             "type": "integer"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -2319,6 +2585,12 @@
           "training_summary_json": {
             "title": "Training Summary Json",
             "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -2338,12 +2610,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -2389,7 +2662,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2413,6 +2686,12 @@
             "minimum": 1,
             "title": "Horizon Hours",
             "type": "integer"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -2432,6 +2711,12 @@
           "forecast_csv": {
             "title": "Forecast Csv",
             "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -2450,12 +2735,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -2501,7 +2787,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.29-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.30-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2554,6 +2840,12 @@
             "minimum": 0.0,
             "title": "Critical Kw Threshold",
             "type": "number"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -2577,6 +2869,12 @@
           "drift_report_json": {
             "title": "Drift Report Json",
             "type": "string"
+          },
+          "run_id": {
+            "default": "",
+            "description": "Workflow run id for OneData per-run output folder",
+            "title": "Run Id",
+            "type": "string"
           }
         },
         "required": [
@@ -2596,12 +2894,13 @@
             "type": "string"
           },
           "onedata_token": {
-            "description": "OneData access token — set in Domino workflow secrets (not in git)",
+            "description": "Onedata access token (default in code; Domino secrets optional)",
             "title": "Onedata Token",
-            "type": "string"
+            "type": "string",
+            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
           },
           "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/run",
+            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
             "description": "OneData base dir for mirrored piece outputs",
             "title": "Onedata Output Dir",
             "type": "string"
@@ -2656,14 +2955,14 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "onedata:///FilipsSpace/inputs/load.csv"
+          "value": "onedata:///FilipsSpace/sustainable_model/inputs/load.csv"
         },
         "prices_csv": {
           "fromUpstream": false,
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "onedata:///FilipsSpace/inputs/prices.csv"
+          "value": "onedata:///FilipsSpace/sustainable_model/inputs/prices.csv"
         }
       }
     },
@@ -2697,6 +2996,13 @@
           "upstreamArgument": "",
           "upstreamValue": "",
           "value": false
+        },
+        "run_id": {
+          "fromUpstream": true,
+          "upstreamId": "FetchEnerg_d9d6dabb53d8582f85569a70b5fee765",
+          "upstreamArgument": "run_id",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -2715,6 +3021,13 @@
           "upstreamId": "Preprocess_755787aabf3f51779722aa08ad1c6465",
           "upstreamArgument": "train_file_path",
           "upstreamValue": "PreprocessEnergyDataPiece (755787aa) - Train File Path",
+          "value": ""
+        },
+        "run_id": {
+          "fromUpstream": true,
+          "upstreamId": "FetchEnerg_d9d6dabb53d8582f85569a70b5fee765",
+          "upstreamArgument": "run_id",
+          "upstreamValue": "",
           "value": ""
         }
       }
@@ -2741,7 +3054,7 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "onedata:///FilipsSpace/inputs/predict_planned_load_halfyear.csv"
+          "value": "onedata:///FilipsSpace/sustainable_model/inputs/predict_planned_load_halfyear.csv"
         },
         "use_rolling_prediction": {
           "fromUpstream": false,
@@ -2756,6 +3069,13 @@
           "upstreamArgument": "",
           "upstreamValue": "",
           "value": 4
+        },
+        "run_id": {
+          "fromUpstream": true,
+          "upstreamId": "FetchEnerg_d9d6dabb53d8582f85569a70b5fee765",
+          "upstreamArgument": "run_id",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -2775,6 +3095,13 @@
           "upstreamArgument": "prediction_file_path",
           "upstreamValue": "PredictPiece (520d5908) - Prediction File Path",
           "value": ""
+        },
+        "run_id": {
+          "fromUpstream": true,
+          "upstreamId": "FetchEnerg_d9d6dabb53d8582f85569a70b5fee765",
+          "upstreamArgument": "run_id",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -2793,21 +3120,21 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "onedata:///FilipsSpace/inputs/load.csv"
+          "value": "onedata:///FilipsSpace/sustainable_model/inputs/load.csv"
         },
         "prices_csv": {
           "fromUpstream": false,
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "onedata:///FilipsSpace/inputs/prices.csv"
+          "value": "onedata:///FilipsSpace/sustainable_model/inputs/prices.csv"
         },
         "scenario_yaml": {
           "fromUpstream": false,
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "onedata:///FilipsSpace/inputs/scenario.yaml"
+          "value": "onedata:///FilipsSpace/sustainable_model/inputs/scenario.yaml"
         }
       }
     },
@@ -2826,14 +3153,14 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "onedata:///FilipsSpace/inputs/web_form_state.json"
+          "value": "onedata:///FilipsSpace/sustainable_model/inputs/web_form_state.json"
         },
         "scenario_yaml": {
           "fromUpstream": false,
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "onedata:///FilipsSpace/inputs/scenario.yaml"
+          "value": "onedata:///FilipsSpace/sustainable_model/inputs/scenario.yaml"
         },
         "use_classic_csv_fallback": {
           "fromUpstream": false,
@@ -2866,6 +3193,13 @@
           "upstreamId": "UserInputP_f58ce08160945445934981d75ab09d42",
           "upstreamArgument": "scenario_yaml",
           "upstreamValue": "UserInputPiece (f58ce081) - Scenario Yaml",
+          "value": ""
+        },
+        "run_id": {
+          "fromUpstream": true,
+          "upstreamId": "UserInputP_f58ce08160945445934981d75ab09d42",
+          "upstreamArgument": "run_id",
+          "upstreamValue": "",
           "value": ""
         }
       }
@@ -2900,6 +3234,13 @@
           "upstreamArgument": "technical_limits_json",
           "upstreamValue": "TechnicalLimitsPiece (269fe489) - Technical Limits Json",
           "value": ""
+        },
+        "run_id": {
+          "fromUpstream": true,
+          "upstreamId": "UserInputP_f58ce08160945445934981d75ab09d42",
+          "upstreamArgument": "run_id",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -2918,6 +3259,13 @@
           "upstreamId": "UserInputP_f58ce08160945445934981d75ab09d42",
           "upstreamArgument": "scenario_yaml",
           "upstreamValue": "UserInputPiece (f58ce081) - Scenario Yaml",
+          "value": ""
+        },
+        "run_id": {
+          "fromUpstream": true,
+          "upstreamId": "UserInputP_f58ce08160945445934981d75ab09d42",
+          "upstreamArgument": "run_id",
+          "upstreamValue": "",
           "value": ""
         }
       }
@@ -2945,6 +3293,13 @@
           "upstreamArgument": "pv_catalog_json",
           "upstreamValue": "CatalogSyncPiece (df232408) - Pv Catalog Json",
           "value": ""
+        },
+        "run_id": {
+          "fromUpstream": true,
+          "upstreamId": "UserInputP_f58ce08160945445934981d75ab09d42",
+          "upstreamArgument": "run_id",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -2971,6 +3326,13 @@
           "upstreamArgument": "sized_scenario_yaml",
           "upstreamValue": "SizingOptimizationPiece (8fe65e2c) - Sized Scenario Yaml",
           "value": ""
+        },
+        "run_id": {
+          "fromUpstream": true,
+          "upstreamId": "UserInputP_f58ce08160945445934981d75ab09d42",
+          "upstreamArgument": "run_id",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -2996,6 +3358,13 @@
           "upstreamId": "SizingOpti_8fe65e2c787e5e5ab1858aaabfef8014",
           "upstreamArgument": "sized_scenario_yaml",
           "upstreamValue": "SizingOptimizationPiece (8fe65e2c) - Sized Scenario Yaml",
+          "value": ""
+        },
+        "run_id": {
+          "fromUpstream": true,
+          "upstreamId": "UserInputP_f58ce08160945445934981d75ab09d42",
+          "upstreamArgument": "run_id",
+          "upstreamValue": "",
           "value": ""
         }
       }
@@ -3030,6 +3399,13 @@
           "upstreamArgument": "virtual_solar_csv",
           "upstreamValue": "SolarSimPiece (68e22997) - Virtual Solar Csv",
           "value": ""
+        },
+        "run_id": {
+          "fromUpstream": true,
+          "upstreamId": "UserInputP_f58ce08160945445934981d75ab09d42",
+          "upstreamArgument": "run_id",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -3062,7 +3438,7 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "onedata:///FilipsSpace/run/mrk_outputs"
+          "value": ""
         },
         "battery_strategy_recommendation_json": {
           "fromUpstream": true,
@@ -3112,6 +3488,13 @@
           "upstreamArgument": "battery_summary_csv",
           "upstreamValue": "BatterySimPiece (a3931fd4) - Battery Summary Csv",
           "value": ""
+        },
+        "run_id": {
+          "fromUpstream": true,
+          "upstreamId": "UserInputP_f58ce08160945445934981d75ab09d42",
+          "upstreamArgument": "run_id",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -3130,6 +3513,13 @@
           "upstreamId": "SimulatePi_9f734ffded6b5ddfa85d5567300fb901",
           "upstreamArgument": "report_json",
           "upstreamValue": "SimulatePiece (9f734ffd) - Report Json",
+          "value": ""
+        },
+        "run_id": {
+          "fromUpstream": true,
+          "upstreamId": "UserInputP_f58ce08160945445934981d75ab09d42",
+          "upstreamArgument": "run_id",
+          "upstreamValue": "",
           "value": ""
         }
       }
@@ -3156,6 +3546,13 @@
           "upstreamId": "KPIPiece_5565de0768cc5447be89116539d1a504",
           "upstreamArgument": "kpi_results_csv",
           "upstreamValue": "KPIPiece (5565de07) - Kpi Results Csv",
+          "value": ""
+        },
+        "run_id": {
+          "fromUpstream": true,
+          "upstreamId": "UserInputP_f58ce08160945445934981d75ab09d42",
+          "upstreamArgument": "run_id",
+          "upstreamValue": "",
           "value": ""
         }
       }
@@ -3204,6 +3601,13 @@
           "upstreamArgument": "drift_report_json",
           "upstreamValue": "AnomalyAlertPiece (1f714198) - Drift Report Json",
           "value": ""
+        },
+        "run_id": {
+          "fromUpstream": true,
+          "upstreamId": "UserInputP_f58ce08160945445934981d75ab09d42",
+          "upstreamArgument": "run_id",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -3244,6 +3648,13 @@
           "upstreamArgument": "investment_evaluation_csv",
           "upstreamValue": "InvestmentEvalPiece (32d2992c) - Investment Evaluation Csv",
           "value": ""
+        },
+        "run_id": {
+          "fromUpstream": true,
+          "upstreamId": "UserInputP_f58ce08160945445934981d75ab09d42",
+          "upstreamArgument": "run_id",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -3262,27 +3673,34 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "onedata:///FilipsSpace/inputs/sustainable/history/energy_history.csv"
+          "value": "onedata:///FilipsSpace/sustainable_model/inputs/sustainable/history/energy_history.csv"
         },
         "updates_dir": {
           "fromUpstream": false,
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "onedata:///FilipsSpace/inputs/sustainable/company_drop"
+          "value": "onedata:///FilipsSpace/sustainable_model/inputs/sustainable/company_drop"
         },
         "archive_dir": {
           "fromUpstream": false,
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "onedata:///FilipsSpace/inputs/sustainable/company_archive"
+          "value": "onedata:///FilipsSpace/sustainable_model/inputs/sustainable/company_archive"
         },
         "bootstrap_parquet": {
           "fromUpstream": true,
           "upstreamId": "FetchEnerg_d9d6dabb53d8582f85569a70b5fee765",
           "upstreamArgument": "output_path",
           "upstreamValue": "FetchEnergyDataPiece (d9d6dabb) - Output Path",
+          "value": ""
+        },
+        "run_id": {
+          "fromUpstream": true,
+          "upstreamId": "FetchEnerg_d9d6dabb53d8582f85569a70b5fee765",
+          "upstreamArgument": "run_id",
+          "upstreamValue": "",
           "value": ""
         }
       }
@@ -3309,7 +3727,7 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "onedata:///FilipsSpace/inputs/sustainable/model_registry"
+          "value": "onedata:///FilipsSpace/sustainable_model/inputs/sustainable/model_registry"
         },
         "incremental_window_days": {
           "fromUpstream": false,
@@ -3331,6 +3749,13 @@
           "upstreamArgument": "",
           "upstreamValue": "",
           "value": 50
+        },
+        "run_id": {
+          "fromUpstream": true,
+          "upstreamId": "FetchEnerg_d9d6dabb53d8582f85569a70b5fee765",
+          "upstreamArgument": "run_id",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -3363,7 +3788,7 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "onedata:///FilipsSpace/inputs/sustainable/model_registry"
+          "value": "onedata:///FilipsSpace/sustainable_model/inputs/sustainable/model_registry"
         },
         "horizon_hours": {
           "fromUpstream": false,
@@ -3371,6 +3796,13 @@
           "upstreamArgument": "",
           "upstreamValue": "",
           "value": 24
+        },
+        "run_id": {
+          "fromUpstream": true,
+          "upstreamId": "FetchEnerg_d9d6dabb53d8582f85569a70b5fee765",
+          "upstreamArgument": "run_id",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     },
@@ -3403,7 +3835,7 @@
           "upstreamId": "",
           "upstreamArgument": "",
           "upstreamValue": "",
-          "value": "onedata:///FilipsSpace/inputs/sustainable/model_registry"
+          "value": "onedata:///FilipsSpace/sustainable_model/inputs/sustainable/model_registry"
         },
         "lookback_rows": {
           "fromUpstream": false,
@@ -3446,6 +3878,13 @@
           "upstreamArgument": "",
           "upstreamValue": "",
           "value": 25.0
+        },
+        "run_id": {
+          "fromUpstream": true,
+          "upstreamId": "FetchEnerg_d9d6dabb53d8582f85569a70b5fee765",
+          "upstreamArgument": "run_id",
+          "upstreamValue": "",
+          "value": ""
         }
       }
     }
@@ -4774,6 +5213,127 @@
         "width": 20,
         "height": 20
       }
+    },
+    {
+      "source": "101_d9d6dabb-53d8-582f-8556-9a70b5fee765",
+      "sourceHandle": "source-101_d9d6dabb-53d8-582f-8556-9a70b5fee765",
+      "target": "103_b8bf39a4-77d8-54fa-9078-743659a1770c",
+      "targetHandle": "target-103_b8bf39a4-77d8-54fa-9078-743659a1770c",
+      "id": "reactflow__edge-101_d9d6dabb-53d8-582f-8556-9a70b5fee765source-101_d9d6dabb-53d8-582f-8556-9a70b5fee765-103_b8bf39a4-77d8-54fa-9078-743659a1770ctarget-103_b8bf39a4-77d8-54fa-9078-743659a1770c",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "101_d9d6dabb-53d8-582f-8556-9a70b5fee765",
+      "sourceHandle": "source-101_d9d6dabb-53d8-582f-8556-9a70b5fee765",
+      "target": "104_520d5908-51bd-5715-b120-38517246b71f",
+      "targetHandle": "target-104_520d5908-51bd-5715-b120-38517246b71f",
+      "id": "reactflow__edge-101_d9d6dabb-53d8-582f-8556-9a70b5fee765source-101_d9d6dabb-53d8-582f-8556-9a70b5fee765-104_520d5908-51bd-5715-b120-38517246b71ftarget-104_520d5908-51bd-5715-b120-38517246b71f",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "101_d9d6dabb-53d8-582f-8556-9a70b5fee765",
+      "sourceHandle": "source-101_d9d6dabb-53d8-582f-8556-9a70b5fee765",
+      "target": "105_c3ae72d4-356f-5201-9c11-92b0c0f10776",
+      "targetHandle": "target-105_c3ae72d4-356f-5201-9c11-92b0c0f10776",
+      "id": "reactflow__edge-101_d9d6dabb-53d8-582f-8556-9a70b5fee765source-101_d9d6dabb-53d8-582f-8556-9a70b5fee765-105_c3ae72d4-356f-5201-9c11-92b0c0f10776target-105_c3ae72d4-356f-5201-9c11-92b0c0f10776",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "106_f58ce081-6094-5445-9349-81d75ab09d42",
+      "sourceHandle": "source-106_f58ce081-6094-5445-9349-81d75ab09d42",
+      "target": "111_27a6672b-7684-5d91-9d7b-09f6d8959287",
+      "targetHandle": "target-111_27a6672b-7684-5d91-9d7b-09f6d8959287",
+      "id": "reactflow__edge-106_f58ce081-6094-5445-9349-81d75ab09d42source-106_f58ce081-6094-5445-9349-81d75ab09d42-111_27a6672b-7684-5d91-9d7b-09f6d8959287target-111_27a6672b-7684-5d91-9d7b-09f6d8959287",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "106_f58ce081-6094-5445-9349-81d75ab09d42",
+      "sourceHandle": "source-106_f58ce081-6094-5445-9349-81d75ab09d42",
+      "target": "116_5565de07-68cc-5447-be89-116539d1a504",
+      "targetHandle": "target-116_5565de07-68cc-5447-be89-116539d1a504",
+      "id": "reactflow__edge-106_f58ce081-6094-5445-9349-81d75ab09d42source-106_f58ce081-6094-5445-9349-81d75ab09d42-116_5565de07-68cc-5447-be89-116539d1a504target-116_5565de07-68cc-5447-be89-116539d1a504",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "106_f58ce081-6094-5445-9349-81d75ab09d42",
+      "sourceHandle": "source-106_f58ce081-6094-5445-9349-81d75ab09d42",
+      "target": "117_32d2992c-1718-5952-a5f8-ab89c176d6be",
+      "targetHandle": "target-117_32d2992c-1718-5952-a5f8-ab89c176d6be",
+      "id": "reactflow__edge-106_f58ce081-6094-5445-9349-81d75ab09d42source-106_f58ce081-6094-5445-9349-81d75ab09d42-117_32d2992c-1718-5952-a5f8-ab89c176d6betarget-117_32d2992c-1718-5952-a5f8-ab89c176d6be",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "106_f58ce081-6094-5445-9349-81d75ab09d42",
+      "sourceHandle": "source-106_f58ce081-6094-5445-9349-81d75ab09d42",
+      "target": "118_dc71abf5-794e-55d6-8711-7edbdaf45bf4",
+      "targetHandle": "target-118_dc71abf5-794e-55d6-8711-7edbdaf45bf4",
+      "id": "reactflow__edge-106_f58ce081-6094-5445-9349-81d75ab09d42source-106_f58ce081-6094-5445-9349-81d75ab09d42-118_dc71abf5-794e-55d6-8711-7edbdaf45bf4target-118_dc71abf5-794e-55d6-8711-7edbdaf45bf4",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "101_d9d6dabb-53d8-582f-8556-9a70b5fee765",
+      "sourceHandle": "source-101_d9d6dabb-53d8-582f-8556-9a70b5fee765",
+      "target": "121_f2d798f9-bd6c-566b-b165-bd0b82ab32a3",
+      "targetHandle": "target-121_f2d798f9-bd6c-566b-b165-bd0b82ab32a3",
+      "id": "reactflow__edge-101_d9d6dabb-53d8-582f-8556-9a70b5fee765source-101_d9d6dabb-53d8-582f-8556-9a70b5fee765-121_f2d798f9-bd6c-566b-b165-bd0b82ab32a3target-121_f2d798f9-bd6c-566b-b165-bd0b82ab32a3",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "101_d9d6dabb-53d8-582f-8556-9a70b5fee765",
+      "sourceHandle": "source-101_d9d6dabb-53d8-582f-8556-9a70b5fee765",
+      "target": "122_84794e69-a3a8-54c0-98f5-dcf0ac16690b",
+      "targetHandle": "target-122_84794e69-a3a8-54c0-98f5-dcf0ac16690b",
+      "id": "reactflow__edge-101_d9d6dabb-53d8-582f-8556-9a70b5fee765source-101_d9d6dabb-53d8-582f-8556-9a70b5fee765-122_84794e69-a3a8-54c0-98f5-dcf0ac16690btarget-122_84794e69-a3a8-54c0-98f5-dcf0ac16690b",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
+    },
+    {
+      "source": "101_d9d6dabb-53d8-582f-8556-9a70b5fee765",
+      "sourceHandle": "source-101_d9d6dabb-53d8-582f-8556-9a70b5fee765",
+      "target": "123_1f714198-c270-5ec2-87cb-585eb533c443",
+      "targetHandle": "target-123_1f714198-c270-5ec2-87cb-585eb533c443",
+      "id": "reactflow__edge-101_d9d6dabb-53d8-582f-8556-9a70b5fee765source-101_d9d6dabb-53d8-582f-8556-9a70b5fee765-123_1f714198-c270-5ec2-87cb-585eb533c443target-123_1f714198-c270-5ec2-87cb-585eb533c443",
+      "markerEnd": {
+        "type": "arrowclosed",
+        "width": 20,
+        "height": 20
+      }
     }
-  ]
+  ],
+  "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.30-group0"
 }

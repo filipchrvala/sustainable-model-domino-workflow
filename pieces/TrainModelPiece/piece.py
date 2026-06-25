@@ -180,9 +180,11 @@ class TrainModelPiece(BasePiece):
 
     def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
         _stage = None
+        _piece_out = None
+        _run_id = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
-        _piece_out = None
+            _run_id = od.resolve_run_id(input_data, secrets_data, generate=False)
         results_dir = Path(self.results_path or ".")
         results_dir.mkdir(parents=True, exist_ok=True)
         piece_log = results_dir / "train_model.log"
@@ -326,9 +328,9 @@ class TrainModelPiece(BasePiece):
             raise
         finally:
             if od is not None and _piece_out is None:
-                od.cleanup_on_error(self.results_path, secrets_data, "TrainModelPiece", _stage)
+                od.cleanup_on_error(self.results_path, secrets_data, "TrainModelPiece", _stage, run_id=_run_id)
             elif _stage is not None:
                 _stage.cleanup()
         if od is not None and _piece_out is not None:
-            return od.finish_piece(_piece_out, self.results_path, secrets_data, "TrainModelPiece", _stage)
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "TrainModelPiece", _stage, run_id=_run_id)
         return _piece_out

@@ -1,5 +1,11 @@
 from typing import Optional
 
+try:
+    from common.onedata_models import OneDataSecretsModel, RunIdInputMixin
+except ModuleNotFoundError:
+    from pieces.common.onedata_models import OneDataSecretsModel, RunIdInputMixin
+
+
 from pydantic import BaseModel, Field
 
 # --- field help (web formulár) ---
@@ -140,7 +146,7 @@ FIELD_LABELS: dict[str, str] = {
 FIELD_HELP = H
 
 
-class InputModel(BaseModel):
+class InputModel(RunIdInputMixin):
     """Domino piece input – reads saved web form state and materializes workflow files."""
 
     web_form_state_json: str = Field(
@@ -155,17 +161,9 @@ class InputModel(BaseModel):
     )
 
 
-class SecretsModel(BaseModel):
-    """Optional OneData credentials and output target. When host+token are set,
-    onedata:/// input paths are read from OneData and all outputs are mirrored to
-    <onedata_output_dir>/<PieceName>/. When absent, the piece runs locally."""
+class SecretsModel(OneDataSecretsModel):
+    pass
 
-    onedata_onezone_host: Optional[str] = Field(
-        default=None, description="Onedata Onezone host, e.g. data.spice-platform.eu")
-    onedata_token: Optional[str] = Field(
-        default=None, description="Onedata access token.")
-    onedata_output_dir: Optional[str] = Field(
-        default=None, description="OneData base dir for outputs, e.g. onedata:///FilipsSpace/run")
 
 
 class OutputModel(BaseModel):

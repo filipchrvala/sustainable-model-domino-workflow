@@ -113,8 +113,10 @@ class FetchEnergyDataPiece(BasePiece):
     def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
         _stage = None
         _piece_out = None
+        _run_id = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
+            _run_id = od.resolve_run_id(input_data, secrets_data, generate=True)
         try:
             _log(self.results_path, "[INFO] FetchEnergyDataPiece started")
             _log(self.results_path, f"[INFO] Load CSV: {input_data.load_csv}")
@@ -178,6 +180,7 @@ class FetchEnergyDataPiece(BasePiece):
             _piece_out = OutputModel(
                 message=f"Data merged successfully ({len(merged_df)} rows)",
                 output_path=str(output_path),
+                run_id=_run_id or "",
             )
         except Exception:
             err = traceback.format_exc()
@@ -188,9 +191,9 @@ class FetchEnergyDataPiece(BasePiece):
             raise
         finally:
             if od is not None and _piece_out is None:
-                od.cleanup_on_error(self.results_path, secrets_data, "FetchEnergyDataPiece", _stage)
+                od.cleanup_on_error(self.results_path, secrets_data, "FetchEnergyDataPiece", _stage, run_id=_run_id)
             elif _stage is not None:
                 _stage.cleanup()
         if od is not None and _piece_out is not None:
-            return od.finish_piece(_piece_out, self.results_path, secrets_data, "FetchEnergyDataPiece", _stage)
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "FetchEnergyDataPiece", _stage, run_id=_run_id)
         return _piece_out

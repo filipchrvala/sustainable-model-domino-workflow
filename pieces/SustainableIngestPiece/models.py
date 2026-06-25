@@ -1,27 +1,24 @@
 from typing import Optional
 
+try:
+    from common.onedata_models import OneDataSecretsModel, RunIdInputMixin
+except ModuleNotFoundError:
+    from pieces.common.onedata_models import OneDataSecretsModel, RunIdInputMixin
+
+
 from pydantic import BaseModel, Field
 
 
-class InputModel(BaseModel):
+class InputModel(RunIdInputMixin):
     history_csv: str = Field(description="Long-term history CSV path (local or 'onedata:///...')")
     updates_dir: str = Field(description="Folder with new delivered CSV files (local or 'onedata:///...')")
     archive_dir: str = Field(description="Archive folder for already processed files (local or 'onedata:///...')")
     bootstrap_parquet: str | None = Field(default=None, description="Optional parquet for first run bootstrap")
 
 
-class SecretsModel(BaseModel):
-    """Optional OneData credentials; absent => local filesystem (unchanged)."""
+class SecretsModel(OneDataSecretsModel):
+    pass
 
-    onedata_onezone_host: Optional[str] = Field(
-        default=None, description="Onedata Onezone host, e.g. data.spice-platform.eu"
-    )
-    onedata_token: Optional[str] = Field(
-        default=None, description="Onedata access token."
-    )
-    onedata_output_dir: Optional[str] = Field(
-        default=None, description="OneData base dir for outputs, e.g. onedata:///FilipsSpace/run"
-    )
 
 
 class OutputModel(BaseModel):

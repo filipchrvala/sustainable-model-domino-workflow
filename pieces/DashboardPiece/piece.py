@@ -48,9 +48,11 @@ class DashboardPiece(BasePiece):
 
     def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
         _stage = None
+        _piece_out = None
+        _run_id = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
-        _piece_out = None
+            _run_id = od.resolve_run_id(input_data, secrets_data, generate=False)
         rep_path = Path(input_data.report_json)
         kpi_path = Path(input_data.kpi_results_csv)
         inv_path = Path(input_data.investment_evaluation_csv)
@@ -201,11 +203,11 @@ class DashboardPiece(BasePiece):
             raise
         finally:
             if od is not None and _piece_out is None:
-                od.cleanup_on_error(self.results_path, secrets_data, "DashboardPiece", _stage)
+                od.cleanup_on_error(self.results_path, secrets_data, "DashboardPiece", _stage, run_id=_run_id)
             elif _stage is not None:
                 _stage.cleanup()
         if od is not None and _piece_out is not None:
-            return od.finish_piece(_piece_out, self.results_path, secrets_data, "DashboardPiece", _stage)
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "DashboardPiece", _stage, run_id=_run_id)
         return _piece_out
 
 

@@ -1,9 +1,15 @@
 from typing import Optional
 
+try:
+    from common.onedata_models import OneDataSecretsModel, RunIdInputMixin
+except ModuleNotFoundError:
+    from pieces.common.onedata_models import OneDataSecretsModel, RunIdInputMixin
+
+
 from pydantic import BaseModel, Field
 
 
-class InputModel(BaseModel):
+class InputModel(RunIdInputMixin):
     """
     Input model for Fetch Energy Data Piece
     """
@@ -20,31 +26,16 @@ class InputModel(BaseModel):
     )
 
 
-class SecretsModel(BaseModel):
-    """
-    Optional OneData credentials. When both are provided, input paths using the
-    'onedata:///...' scheme are read from the SPICE OneData store. When absent,
-    the piece reads from the local filesystem exactly as before.
-    """
+class SecretsModel(OneDataSecretsModel):
+    pass
 
-    onedata_onezone_host: Optional[str] = Field(
-        default=None,
-        description="Onedata Onezone host, e.g. data.spice-platform.eu"
-    )
-    onedata_token: Optional[str] = Field(
-        default=None,
-        description="Onedata access token."
-    )
-    onedata_output_dir: Optional[str] = Field(
-        default=None,
-        description="OneData base dir for outputs, e.g. onedata:///FilipsSpace/run"
-    )
 
 
 class OutputModel(BaseModel):
     """
     Output model for Fetch Energy Data Piece
     """
+    run_id: str = Field(default="", description="Workflow run id for OneData output subfolder")
 
     message: str = Field(default="")
     output_path: str = Field(default="")

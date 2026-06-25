@@ -1,5 +1,11 @@
 from typing import Optional
 
+try:
+    from common.onedata_models import OneDataSecretsModel, RunIdInputMixin
+except ModuleNotFoundError:
+    from pieces.common.onedata_models import OneDataSecretsModel, RunIdInputMixin
+
+
 from pydantic import BaseModel, Field
 
 METRIC_HELP: dict[str, str] = {
@@ -31,7 +37,7 @@ METRIC_HELP: dict[str, str] = {
 }
 
 
-class InputModel(BaseModel):
+class InputModel(RunIdInputMixin):
     report_json: str = Field(description="Path to mrk_savings_report.json")
     kpi_results_csv: str = Field(description="Path to kpi_results.csv")
     investment_evaluation_csv: str = Field(description="Path to investment_evaluation.csv")
@@ -46,18 +52,9 @@ class InputModel(BaseModel):
     )
 
 
-class SecretsModel(BaseModel):
-    """Optional OneData credentials; absent => local-only output (unchanged)."""
+class SecretsModel(OneDataSecretsModel):
+    pass
 
-    onedata_onezone_host: Optional[str] = Field(
-        default=None, description="Onedata Onezone host, e.g. data.spice-platform.eu"
-    )
-    onedata_token: Optional[str] = Field(
-        default=None, description="Onedata access token."
-    )
-    onedata_output_dir: Optional[str] = Field(
-        default=None, description="OneData base dir for outputs, e.g. onedata:///FilipsSpace/run"
-    )
 
 
 class OutputModel(BaseModel):

@@ -167,7 +167,7 @@ class IncrementalTrainPiece(BasePiece):
                     _stage,
                     registry_local=_reg_local,
                     registry_target=_reg_target,
-                )
+                , run_id=_run_id)
             elif _stage is not None:
                 _stage.cleanup()
         if od is not None and _piece_out is not None:
@@ -179,5 +179,5 @@ class IncrementalTrainPiece(BasePiece):
                 _stage,
                 registry_local=_reg_local,
                 registry_target=_reg_target,
-            )
+            , run_id=_run_id)
         return _piece_out

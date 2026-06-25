@@ -31,7 +31,12 @@ _REMOTE_PROTOCOLS = ("onedata://",)
 # Input fields that may point at OneData output locations (created by the piece run).
 _STAGE_SKIP_FIELDS = frozenset({"output_dir"})
 
-from .onedata_defaults import DEFAULT_ONEZONE_HOST, DEFAULT_OUTPUT_DIR
+from .onedata_defaults import (
+    DEFAULT_INPUT_DIR,
+    DEFAULT_ONEDATA_TOKEN,
+    DEFAULT_ONEZONE_HOST,
+    DEFAULT_OUTPUT_DIR,
+)
 
 DEFAULT_TOKEN_FILE = "/run/secrets/onedata_token"
 
@@ -107,7 +112,7 @@ def effective_secrets(secrets_data: Any, *, use_defaults: bool = False) -> dict[
     host = _get(secrets_data, "onedata_onezone_host") or os.environ.get("ONEDATA_ONEZONE_HOST")
     token = _get(secrets_data, "onedata_token")
     if not token and use_defaults:
-        token = _resolve_token()
+        token = _resolve_token() or DEFAULT_ONEDATA_TOKEN
     if use_defaults and not host:
         host = DEFAULT_ONEZONE_HOST
     output = _get(secrets_data, "onedata_output_dir") or os.environ.get("ONEDATA_OUTPUT_BASE")
@@ -425,6 +430,29 @@ def _output_base(secrets_data: Any) -> str | None:
     return None
 
 
+def resolve_run_id(input_data: Any, secrets_data: Any, *, generate: bool = False) -> str | None:
+    """Per-workflow run folder under ``onedata_output_dir`` (e.g. ``.../outputs/<run_id>/``)."""
+    rid = _get(input_data, "run_id")
+    if rid and str(rid).strip():
+        return str(rid).strip()
+    rid = _get(secrets_data, "onedata_run_id") or os.environ.get("ONEDATA_RUN_ID")
+    if rid and str(rid).strip():
+        return str(rid).strip()
+    if generate:
+        import uuid
+        return uuid.uuid4().hex[:12]
+    return None
+
+
+def _mirror_base(secrets_data: Any, run_id: str | None) -> str | None:
+    base = _output_base(secrets_data)
+    if not base:
+        return None
+    if run_id:
+        return f"{base.rstrip('/')}/{run_id}"
+    return base
+
+
 class StageHandle:
     """Holds temp dirs created while staging inputs; call cleanup() when done."""
 
@@ -589,14 +617,14 @@ def fetch_sibling(orig_remote: str | os.PathLike[str],
 
 
 def mirror_results(results_path: str | os.PathLike[str], secrets_data: Any,
-                   piece_name: str) -> str | None:
-    """Upload every file under ``results_path`` to ``<base>/<piece_name>/``.
+                   piece_name: str, *, run_id: str | None = None) -> str | None:
+    """Upload every file under ``results_path`` to ``<base>/<run_id>/<piece_name>/``.
 
     ``base`` comes from the ``onedata_output_dir`` secret or the
-    ``ONEDATA_OUTPUT_BASE`` env var. No-op when not configured. Returns the
-    OneData target dir (or ``None``).
+    ``ONEDATA_OUTPUT_BASE`` env var. When ``run_id`` is set, outputs are isolated
+    per workflow run. No-op when not configured. Returns the OneData target dir.
     """
-    base = _output_base(secrets_data)
+    base = _mirror_base(secrets_data, run_id)
     if not base:
         return None
     if not _onedata_configured and not configure_onedata(secrets_data, force=True):
@@ -679,11 +707,12 @@ def rewrite_output_paths(output: Any, results_path: str | os.PathLike,
 def finish_piece(output: Any, results_path: str | os.PathLike, secrets_data: Any,
                  piece_name: str, stage: Any = None,
                  *, registry_local: str | None = None,
-                 registry_target: str | None = None) -> Any:
+                 registry_target: str | None = None,
+                 run_id: str | None = None) -> Any:
     """Mirror results to OneData, clean up staging, return output with onedata paths."""
     if registry_local and registry_target:
         upload_registry(registry_local, registry_target)
-    target = mirror_results(results_path, secrets_data, piece_name)
+    target = mirror_results(results_path, secrets_data, piece_name, run_id=run_id)
     if stage is not None:
         stage.cleanup()
     if target and output is not None:
@@ -694,7 +723,8 @@ def finish_piece(output: Any, results_path: str | os.PathLike, secrets_data: Any
 def cleanup_on_error(results_path: str | os.PathLike, secrets_data: Any,
                      piece_name: str, stage: Any = None,
                      *, registry_local: str | None = None,
-                     registry_target: str | None = None) -> None:
+                     registry_target: str | None = None,
+                     run_id: str | None = None) -> None:
     """Mirror partial results and release staging after a failed piece run."""
     if registry_local and registry_target:
         try:
@@ -702,7 +732,7 @@ def cleanup_on_error(results_path: str | os.PathLike, secrets_data: Any,
         except Exception:
             pass
     try:
-        mirror_results(results_path, secrets_data, piece_name)
+        mirror_results(results_path, secrets_data, piece_name, run_id=run_id)
     except Exception:
         pass
     if stage is not None:

@@ -1,0 +1,120 @@
+name: Validate and organize repo, build and publish Docker images
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "config.toml"
+      - "pieces/**"
+      - "dependencies/**"
+      - ".github/workflows/validate-and-organize.yml"
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  validate-and-organize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+
+      - name: Pip install packages
+        run: |
+          python -m pip install -U pip
+          pip install --no-cache-dir domino-py[cli]
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Normalize config.toml (strip UTF-8 BOM)
+        run: |
+          python -c "
+          from pathlib import Path
+          import tomli
+          p = Path('config.toml')
+          b = p.read_bytes()
+          if b.startswith(b'\xef\xbb\xbf'):
+              p.write_bytes(b[3:])
+              print('Removed UTF-8 BOM from config.toml')
+          tomli.load(p.open('rb'))
+          print('config.toml parses OK')
+          "
+
+      - name: Run organize and build images
+        env:
+          DOCKER_CLIENT_TIMEOUT: "3600"
+          COMPOSE_HTTP_TIMEOUT: "3600"
+        run: |
+          domino piece organize --build-images --source-url=https://github.com/${{ github.repository }}
+
+      - name: Publish images
+        env:
+          GHCR_USERNAME: ${{ github.actor }}
+          DOCKER_CLIENT_TIMEOUT: "3600"
+          COMPOSE_HTTP_TIMEOUT: "3600"
+        run: |
+          VERSION=$(python -c "import tomli; print(tomli.load(open('config.toml','rb'))['repository']['VERSION'])")
+          IMAGE="ghcr.io/filipchrvala/sustainable-model-domino-workflow:${VERSION}-group0"
+          echo "Publishing ${IMAGE}"
+          for attempt in 1 2 3 4 5; do
+            echo "=== Push attempt ${attempt}/5 ==="
+            if docker push "$IMAGE"; then
+              echo "Published ${IMAGE}"
+              exit 0
+            fi
+            echo "Push failed, waiting 90s before retry..."
+            sleep 90
+          done
+          echo "All push attempts failed"
+          exit 1
+
+      - name: Commit files
+        id: commit_files
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          GIT_STATUS=$(git status -s)
+          if [[ ! -z "$GIT_STATUS" ]]; then
+            git add .domino/* && git commit -m "auto-organize" -a
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "No changes to commit"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Push changes
+        if: steps.commit_files.outputs.has_changes == 'true'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.REPO_PUSH_TOKEN || secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+
+      - name: Create Release
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION=$(python -c "import tomli; print(tomli.load(open('config.toml','rb'))['repository']['VERSION'])")
+          git fetch --tags origin
+          if git rev-parse "refs/tags/${VERSION}" >/dev/null 2>&1; then
+            echo "Release tag ${VERSION} already exists — skipping domino piece release"
+            echo "Docker image ${VERSION}-group0 was still published above."
+          else
+            domino piece release
+          fi

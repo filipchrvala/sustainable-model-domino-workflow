@@ -190,6 +190,11 @@ def _write_history(merged: pd.DataFrame, history_path: str) -> None:
 class SustainableIngestPiece(BasePiece):
     def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
         _piece_out = None
+        _stage = None
+        _run_id = None
+        if od is not None:
+            input_data, _stage = od.stage_inputs(input_data, secrets_data)
+            _run_id = od.resolve_run_id(input_data, secrets_data, generate=False)
         log_path = Path(self.results_path) / "sustainable_ingest.log"
         err_path = Path(self.results_path) / "sustainable_ingest_error.txt"
         try:
@@ -287,7 +292,11 @@ class SustainableIngestPiece(BasePiece):
             raise
         finally:
             if od is not None and _piece_out is None:
-                od.cleanup_on_error(self.results_path, secrets_data, "SustainableIngestPiece", None)
+                od.cleanup_on_error(self.results_path, secrets_data, "SustainableIngestPiece", _stage, run_id=_run_id)
+            elif _stage is not None:
+                _stage.cleanup()
         if od is not None and _piece_out is not None:
-            return od.finish_piece(_piece_out, self.results_path, secrets_data, "SustainableIngestPiece", None)
+            return od.finish_piece(
+                _piece_out, self.results_path, secrets_data, "SustainableIngestPiece", _stage, run_id=_run_id
+            )
         return _piece_out

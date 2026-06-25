@@ -125,28 +125,30 @@ class UserInputPiece(BasePiece):
     def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
         _stage = None
         _piece_out = None
+        _run_id = None
         _orig = {
             "load_csv": getattr(input_data, "load_csv", None),
             "scenario_yaml": getattr(input_data, "scenario_yaml", None),
         }
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
+            _run_id = od.resolve_run_id(input_data, secrets_data, generate=True)
             if _stage is not None and _stage.active:
                 od.fetch_sibling(
                     _orig.get("scenario_yaml"), input_data.scenario_yaml, "workflow_user_input.json"
                 )
         try:
-            _piece_out = self._run_impl(input_data)
+            _piece_out = self._run_impl(input_data, _run_id)
         finally:
             if od is not None and _piece_out is None:
-                od.cleanup_on_error(self.results_path, secrets_data, "UserInputPiece", _stage)
+                od.cleanup_on_error(self.results_path, secrets_data, "UserInputPiece", _stage, run_id=_run_id)
             elif _stage is not None:
                 _stage.cleanup()
         if od is not None and _piece_out is not None:
-            return od.finish_piece(_piece_out, self.results_path, secrets_data, "UserInputPiece", _stage)
+            return od.finish_piece(_piece_out, self.results_path, secrets_data, "UserInputPiece", _stage, run_id=_run_id)
         return _piece_out
 
-    def _run_impl(self, input_data: InputModel) -> OutputModel:
+    def _run_impl(self, input_data: InputModel, run_id: str | None = None) -> OutputModel:
         load_csv = Path(input_data.load_csv)
         prices_csv = Path(input_data.prices_csv) if input_data.prices_csv else None
         scenario_yaml = Path(input_data.scenario_yaml)
@@ -306,4 +308,5 @@ class UserInputPiece(BasePiece):
             load_csv=str(merged_path),
             scenario_yaml=str(scenario_copy),
             workflow_user_input_json=str(workflow_input_copy),
+            run_id=run_id or "",
         )
