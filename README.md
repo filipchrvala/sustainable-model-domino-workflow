@@ -38,4 +38,4 @@ Set these CI/CD variables (Settings → CI/CD → Variables). Mark secrets as **
 | `CONTAINER_REGISTRY_USERNAME` | Harbor user/robot (e.g. `partner`) |
 | `CONTAINER_REGISTRY_PASSWORD` | Harbor password from vault |
 
-`config.toml` `REGISTRY_NAME` must use namespace `harbor.testbed.spice-platform.eu/partner/uc3`.
+`config.toml` `REGISTRY_NAME` must use namespace `harbor.testbed.spice-platform.eu/partner/uc3`. `REPOSITORY_NAME` must be **lowercase** (Docker image tag rules).
