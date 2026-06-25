@@ -8,7 +8,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "description": "Input model for Fetch Energy Data Piece",
         "properties": {
@@ -95,8 +95,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/FetchEnergyDataPiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/FetchEnergyDataPiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
     "102_755787aa-bf3f-5177-9722-aa08ad1c6465": {
@@ -107,7 +107,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "properties": {
           "input_path": {
@@ -209,8 +209,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/PreprocessEnergyDataPiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/PreprocessEnergyDataPiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
     "103_b8bf39a4-77d8-54fa-9078-743659a1770c": {
@@ -221,7 +221,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "properties": {
           "data_path": {
@@ -314,8 +314,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/TrainModelPiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/TrainModelPiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
     "104_520d5908-51bd-5715-b120-38517246b71f": {
@@ -326,7 +326,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "properties": {
           "model_path": {
@@ -431,8 +431,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/PredictPiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/PredictPiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
     "105_c3ae72d4-356f-5201-9c11-92b0c0f10776": {
@@ -443,7 +443,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "properties": {
           "predictions_csv": {
@@ -529,8 +529,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/ModelMonitoringPiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/ModelMonitoringPiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
     "106_f58ce081-6094-5445-9349-81d75ab09d42": {
@@ -541,7 +541,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -644,8 +644,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/UserInputPiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/UserInputPiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
     "107_e91e3cab-7f31-5292-9ff3-1c85a7812f9b": {
@@ -656,7 +656,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "description": "Domino piece input – reads saved web form state and materializes workflow files.",
         "properties": {
@@ -770,8 +770,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/WebUserInputPiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/WebUserInputPiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
     "108_269fe489-9457-5a76-8249-e7c85fa56d5c": {
@@ -782,7 +782,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -874,8 +874,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/TechnicalLimitsPiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/TechnicalLimitsPiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
     "109_8fe65e2c-787e-5e5a-b185-8aaabfef8014": {
@@ -886,7 +886,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -987,8 +987,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/SizingOptimizationPiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/SizingOptimizationPiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
     "110_df232408-7e6f-5a91-b86e-036099d54cd5": {
@@ -999,7 +999,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "properties": {
           "scenario_yaml": {
@@ -1100,8 +1100,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/CatalogSyncPiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/CatalogSyncPiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
     "111_27a6672b-7684-5d91-9d7b-09f6d8959287": {
@@ -1112,7 +1112,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "properties": {
           "scenario_yaml": {
@@ -1199,8 +1199,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/CatalogRankerPiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/CatalogRankerPiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
     "112_68e22997-e9ce-5182-b799-55684e726d06": {
@@ -1211,7 +1211,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1298,8 +1298,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/SolarSimPiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/SolarSimPiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
     "113_c6559d37-047b-50fb-81ff-c4c26eee0457": {
@@ -1310,7 +1310,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1397,8 +1397,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/BatteryStrategyOptimizerPiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/BatteryStrategyOptimizerPiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
     "114_a3931fd4-7104-52b0-bdb2-7043bb88583c": {
@@ -1409,7 +1409,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1507,8 +1507,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/BatterySimPiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/BatterySimPiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
     "115_9f734ffd-ed6b-5ddf-a85d-5567300fb901": {
@@ -1519,7 +1519,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1654,8 +1654,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/SimulatePiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/SimulatePiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
     "116_5565de07-68cc-5447-be89-116539d1a504": {
@@ -1666,7 +1666,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "properties": {
           "report_json": {
@@ -1747,8 +1747,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/KPIPiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/KPIPiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
     "117_32d2992c-1718-5952-a5f8-ab89c176d6be": {
@@ -1759,7 +1759,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "properties": {
           "report_json": {
@@ -1851,8 +1851,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/InvestmentEvalPiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/InvestmentEvalPiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
     "118_dc71abf5-794e-55d6-8711-7edbdaf45bf4": {
@@ -1863,7 +1863,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "properties": {
           "report_json": {
@@ -1977,8 +1977,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/DashboardPiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/DashboardPiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
     "119_3a52b183-3ad3-51e7-8929-7c33dbb29aa0": {
@@ -1989,7 +1989,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "properties": {
           "workflow_user_input_json": {
@@ -2121,8 +2121,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/FeasibilityReportPiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/FeasibilityReportPiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
     "120_0d341169-4564-5736-a4ac-69f265e2b4c0": {
@@ -2133,7 +2133,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2252,8 +2252,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/SustainableIngestPiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/SustainableIngestPiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
     "121_f2d798f9-bd6c-566b-b165-bd0b82ab32a3": {
@@ -2264,7 +2264,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2377,8 +2377,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/IncrementalTrainPiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/IncrementalTrainPiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
     "122_84794e69-a3a8-54c0-98f5-dcf0ac16690b": {
@@ -2389,7 +2389,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2489,8 +2489,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/ForecastHorizonPiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/ForecastHorizonPiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
     "123_1f714198-c270-5ec2-87cb-585eb533c443": {
@@ -2501,7 +2501,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.26-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2635,8 +2635,8 @@
           "cursor": "pointer"
         }
       },
-      "source_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow/tree/main/pieces/AnomalyAlertPiece",
-      "repository_url": "https://github.com/filipchrvala/sustainable-model-domino-workflow",
+      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/AnomalyAlertPiece",
+      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     }
   },

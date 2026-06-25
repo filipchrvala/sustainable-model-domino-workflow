@@ -7,7 +7,7 @@ Domino piece repository for the sustainable energy workflow (OneData I/O, MRK/PV
 | Path | Purpose |
 |------|---------|
 | `pieces/` | Domino pieces and shared `common/` helpers |
-| `catalog/` | Default PV/battery catalog JSON (bundled in images) |
+| `pieces/catalog/` | Default PV/battery catalog JSON (bundled in images) |
 | `dependencies/` | Container build (`Dockerfile`, `requirements.txt`) |
 | `config.toml` | Registry, version, repository metadata |
 | `.domino/` | Compiled piece metadata (updated by CI) |

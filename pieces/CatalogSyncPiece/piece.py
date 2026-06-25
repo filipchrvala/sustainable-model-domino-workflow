@@ -74,7 +74,7 @@ class CatalogSyncPiece(BasePiece):
                 url_outage = True
                 source_mode["pv_modules"] = "fallback_local"
                 warnings.append(f"PV catalog URL unavailable: {pv_url} ({exc})")
-                local_pv = self._project_root() / "catalog" / "pv_modules_catalog.json"
+                local_pv = Path(__file__).resolve().parents[1] / "catalog" / "pv_modules_catalog.json"
                 if local_pv.is_file():
                     loc = json.loads(local_pv.read_text(encoding="utf-8"))
                     pv_df = pd.DataFrame(loc.get("modules") or [])
@@ -96,7 +96,7 @@ class CatalogSyncPiece(BasePiece):
                     inv_df = pd.DataFrame([])
 
             bat_products: list[dict] = []
-            local_bt = self._project_root() / "catalog" / "battery_catalog.json"
+            local_bt = Path(__file__).resolve().parents[1] / "catalog" / "battery_catalog.json"
             if bat_url:
                 try:
                     if bat_url.lower().endswith(".json"):

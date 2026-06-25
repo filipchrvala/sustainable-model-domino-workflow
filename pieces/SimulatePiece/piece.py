@@ -739,13 +739,17 @@ def _project_root() -> Path:
     return Path(__file__).resolve().parents[2]
 
 
+def _catalog_dir() -> Path:
+    return Path(__file__).resolve().parents[1] / "catalog"
+
+
 def _load_hardware_catalogs(
     *,
     battery_catalog_path: str = "",
     inverter_catalog_path: str = "",
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
-    pv_path = _project_root() / "catalog" / "pv_modules_catalog.json"
-    bt_path = _project_root() / "catalog" / "battery_catalog.json"
+    pv_path = _catalog_dir() / "pv_modules_catalog.json"
+    bt_path = _catalog_dir() / "battery_catalog.json"
     bt_online_path = Path(battery_catalog_path) if battery_catalog_path else None
     inv_path = Path(inverter_catalog_path) if inverter_catalog_path else None
     pv_mods: list[dict[str, Any]] = []
@@ -1565,8 +1569,8 @@ def run_analysis(
         "hardware_recommendation": hardware,
         "auto_optimization": auto_log,
         "catalog_paths": {
-            "pv_modules": str(_project_root() / "catalog" / "pv_modules_catalog.json"),
-            "battery_products": str(_project_root() / "catalog" / "battery_catalog.json"),
+            "pv_modules": str(_catalog_dir() / "pv_modules_catalog.json"),
+            "battery_products": str(_catalog_dir() / "battery_catalog.json"),
             "battery_products_online": battery_catalog_json or "",
             "inverters_online": inverter_catalog_json or "",
         },

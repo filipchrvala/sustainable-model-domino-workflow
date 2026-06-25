@@ -24,6 +24,10 @@ except ModuleNotFoundError:
         od = None
 
 
+def _catalog_dir() -> Path:
+    return Path(__file__).resolve().parents[1] / "catalog"
+
+
 def project_root() -> Path:
     return Path(__file__).resolve().parents[2]
 
@@ -95,7 +99,7 @@ def recommend_pv_system(
     reference_wp: float | None = None,
 ) -> dict[str, Any]:
     del constraints, economics
-    modules = modules or _load_catalog_items(project_root() / "catalog" / "pv_modules_catalog.json", "modules")
+    modules = modules or _load_catalog_items(_catalog_dir() / "pv_modules_catalog.json", "modules")
     if not modules:
         return {"error": "Prázdny katalóg panelov"}
 
@@ -142,7 +146,7 @@ def recommend_battery_system(target_kwh: float, products: list[dict[str, Any]] |
             "nominal_kwh_installed": 0.0,
             "source": "catalog/battery_catalog.json",
         }
-    products = products or _load_catalog_items(project_root() / "catalog" / "battery_catalog.json", "products")
+    products = products or _load_catalog_items(_catalog_dir() / "battery_catalog.json", "products")
     if not products:
         return {"error": "Prázdny katalóg batérií"}
 
