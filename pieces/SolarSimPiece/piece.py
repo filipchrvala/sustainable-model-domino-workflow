@@ -1,8 +1,6 @@
 from __future__ import annotations
 
-import importlib
 from pathlib import Path
-import sys
 import traceback
 
 import pandas as pd
@@ -14,6 +12,8 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
+print("[INFO] SolarSimPiece module loaded", flush=True)
+
 try:
     from common import onedata_io as od
 except ModuleNotFoundError:
@@ -23,17 +23,19 @@ except ModuleNotFoundError:
         od = None
 
 
-def _load_simulate_module():
-    repo_root = Path(__file__).resolve().parents[2]
-    if str(repo_root) not in sys.path:
-        sys.path.insert(0, str(repo_root))
-    return importlib.import_module("pieces.SimulatePiece.piece")
+def _load_simulate_module(*, caller: str) -> object:
+    try:
+        from common.simulate_bridge import load_simulate_module as _load
+    except ModuleNotFoundError:
+        from pieces.common.simulate_bridge import load_simulate_module as _load
+    return _load(caller=caller)
 
 
 class SolarSimPiece(BasePiece):
     """Create virtual PV production CSV from selected scenario."""
 
     def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
+        print("[INFO] SolarSimPiece started", flush=True)
         _stage = None
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
@@ -59,7 +61,7 @@ class SolarSimPiece(BasePiece):
                 raise FileNotFoundError(f"Scenario YAML not found: {scenario_path}")
 
             try:
-                sim = _load_simulate_module()
+                sim = _load_simulate_module(caller="SolarSimPiece")
                 cfg = yaml.safe_load(scenario_path.read_text(encoding="utf-8")) or {}
                 pv = cfg.get("pv") or {}
                 installed_kwp = float(pv.get("installed_kwp", 0.0))

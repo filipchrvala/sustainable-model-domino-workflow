@@ -143,32 +143,42 @@ def _ensure_predict_before_sizing(data: dict) -> None:
 
 SIZING_NODE = "109_8fe65e2c-787e-5e5a-b185-8aaabfef8014"
 
-SIZING_CONTAINER_RESOURCES = {
-    "requests": {"cpu": 200, "memory": 512},
-    "limits": {"cpu": 1000, "memory": 2048},
-    "use_gpu": False,
+MRK_SIM_PIECES: dict[str, tuple[str, int]] = {
+    "SizingOptimizationPiece": (SIZING_NODE, 2048),
+    "SolarSimPiece": ("112_68e22997-e9ce-5182-b799-55684e726d06", 2048),
+    "BatteryStrategyOptimizerPiece": ("113_c6559d37-047b-50fb-81ff-c4c26eee0457", 2048),
+    "BatterySimPiece": ("114_a3931fd4-7104-52b0-bdb2-7043bb88583c", 2048),
+    "SimulatePiece": ("115_9f734ffd-ed6b-5ddf-a85d-5567300fb901", 4096),
 }
 
-SIZING_CONTAINER_RESOURCES_UI = {
-    "cpu": 1000,
-    "memory": 2048,
-    "useGpu": False,
-}
+
+def _set_mrk_sim_container_resources(data: dict) -> None:
+    """MRK pieces import SimulatePiece helpers and need more RAM than default 512MB."""
+    pieces_data = data.get("workflowPiecesData") or {}
+    for piece in data.get("workflowPieces", {}).values():
+        name = piece.get("name")
+        spec = MRK_SIM_PIECES.get(name)
+        if spec is None:
+            continue
+        _node_id, mem_mb = spec
+        piece["container_resources"] = {
+            "requests": {"cpu": 200, "memory": min(512, mem_mb // 2)},
+            "limits": {"cpu": 1000 if mem_mb <= 2048 else 2000, "memory": mem_mb},
+            "use_gpu": False,
+        }
+        if name == "SizingOptimizationPiece":
+            piece["tags"] = ["MRK", "Sizing"]
+        node = pieces_data.get(_node_id)
+        if node is not None:
+            node["containerResources"] = {
+                "cpu": 1000 if mem_mb <= 2048 else 2000,
+                "memory": mem_mb,
+                "useGpu": False,
+            }
 
 
 def _set_sizing_container_resources(data: dict) -> None:
-    """Auto sizing loads SimulatePiece helpers and needs more RAM than default 512MB."""
-    for piece in data.get("workflowPieces", {}).values():
-        if piece.get("name") == "SizingOptimizationPiece":
-            piece["container_resources"] = {
-                "requests": {"cpu": 200, "memory": 512},
-                "limits": {"cpu": 1000, "memory": 2048},
-                "use_gpu": False,
-            }
-            piece["tags"] = ["MRK", "Sizing"]
-    node = (data.get("workflowPiecesData") or {}).get(SIZING_NODE)
-    if node is not None:
-        node["containerResources"] = dict(SIZING_CONTAINER_RESOURCES_UI)
+    _set_mrk_sim_container_resources(data)
 
 
 def _set_rolling_prediction_defaults(data: dict) -> None:
