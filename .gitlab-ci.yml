@@ -64,6 +64,18 @@ validate-and-organize:
     - when: never
   script:
     - pip list | grep domino
+    - |
+      python -c "
+      from pathlib import Path
+      import tomli
+      p = Path('config.toml')
+      b = p.read_bytes()
+      if b.startswith(b'\xef\xbb\xbf'):
+          p.write_bytes(b[3:])
+          print('Removed UTF-8 BOM from config.toml')
+      tomli.load(p.open('rb'))
+      print('config.toml parses OK')
+      "
     - domino piece-repository organize --build-images --source-url="${CI_PROJECT_URL}"
     - DOCKER_CLIENT_TIMEOUT=600 domino piece-repository publish-images --registry-username "$CONTAINER_REGISTRY_USERNAME" --registry-token "$CONTAINER_REGISTRY_PASSWORD"
     - |
@@ -85,6 +97,18 @@ run-tests-dev:
     - when: never
   script:
     - pip list | grep domino
+    - |
+      python -c "
+      from pathlib import Path
+      import tomli
+      p = Path('config.toml')
+      b = p.read_bytes()
+      if b.startswith(b'\xef\xbb\xbf'):
+          p.write_bytes(b[3:])
+          print('Removed UTF-8 BOM from config.toml')
+      tomli.load(p.open('rb'))
+      print('config.toml parses OK')
+      "
     - domino piece-repository organize --build-images --source-url="${CI_PROJECT_URL}" --tag-overwrite=development
     - DOCKER_CLIENT_TIMEOUT=600 domino piece-repository publish-images --registry-username "$CONTAINER_REGISTRY_USERNAME" --registry-token "$CONTAINER_REGISTRY_PASSWORD"
     - |

@@ -8,7 +8,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "description": "Input model for Fetch Energy Data Piece",
         "properties": {
@@ -107,7 +107,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "properties": {
           "input_path": {
@@ -221,7 +221,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "properties": {
           "data_path": {
@@ -326,7 +326,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "properties": {
           "model_path": {
@@ -443,7 +443,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "properties": {
           "predictions_csv": {
@@ -541,7 +541,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -656,7 +656,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "description": "Domino piece input – reads saved web form state and materializes workflow files.",
         "properties": {
@@ -782,7 +782,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -886,7 +886,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -999,7 +999,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "properties": {
           "scenario_yaml": {
@@ -1112,7 +1112,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "properties": {
           "scenario_yaml": {
@@ -1211,7 +1211,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1310,7 +1310,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1409,7 +1409,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1519,7 +1519,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "properties": {
           "load_csv": {
@@ -1666,7 +1666,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "properties": {
           "report_json": {
@@ -1759,7 +1759,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "properties": {
           "report_json": {
@@ -1863,7 +1863,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "properties": {
           "report_json": {
@@ -1989,7 +1989,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "properties": {
           "workflow_user_input_json": {
@@ -2133,7 +2133,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2264,7 +2264,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2389,7 +2389,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
@@ -2501,7 +2501,7 @@
         "dockerfile": null,
         "requirements_file": "requirements_0.txt"
       },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.27-group0",
+      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model:0.1.28-group0",
       "input_schema": {
         "properties": {
           "history_csv": {
