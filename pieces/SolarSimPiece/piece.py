@@ -16,8 +16,10 @@ print("[INFO] SolarSimPiece module loaded", flush=True)
 
 try:
     from common import mrk_helpers as mrk
+    from common import piece_bootstrap as boot
 except ModuleNotFoundError:
     from pieces.common import mrk_helpers as mrk
+    from pieces.common import piece_bootstrap as boot
 
 try:
     from common import onedata_io as od
@@ -32,10 +34,21 @@ class SolarSimPiece(BasePiece):
     """Create virtual PV production CSV from selected scenario."""
 
     def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
-        print("[INFO] SolarSimPiece started", flush=True)
+        boot.bootstrap_log(self.results_path, "SolarSimPiece", "piece_function started")
+        boot.bootstrap_log(
+            self.results_path,
+            "SolarSimPiece",
+            f"inputs load_csv={input_data.load_csv!r} scenario_yaml={input_data.scenario_yaml!r}",
+        )
         _stage = None
         if od is not None:
-            input_data, _stage = od.stage_inputs(input_data, secrets_data)
+            try:
+                input_data, _stage = od.stage_inputs(input_data, secrets_data)
+            except Exception as exc:
+                boot.bootstrap_log(self.results_path, "SolarSimPiece", f"stage_inputs FAILED: {exc}")
+                if od is not None:
+                    od.cleanup_on_error(self.results_path, secrets_data, "SolarSimPiece", _stage)
+                raise
         _piece_out = None
         try:
             csv_path = Path(input_data.load_csv)

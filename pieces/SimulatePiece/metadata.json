@@ -8,7 +8,7 @@
   "container_resources": {
     "requests": {
       "cpu": 500,
-      "memory": 1024
+      "memory": 4096
     },
     "limits": {
       "cpu": 2000,

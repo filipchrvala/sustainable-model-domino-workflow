@@ -18,23 +18,41 @@ print("[INFO] BatteryStrategyOptimizerPiece module loaded", flush=True)
 try:
     from common import onedata_io as od
     from common import mrk_helpers as mrk
+    from common import piece_bootstrap as boot
 except ModuleNotFoundError:
     try:
         from pieces.common import onedata_io as od
         from pieces.common import mrk_helpers as mrk
+        from pieces.common import piece_bootstrap as boot
     except ModuleNotFoundError:
         od = None
         mrk = None
+        boot = None
 
 
 class BatteryStrategyOptimizerPiece(BasePiece):
     """Build simple price-driven strategy thresholds for battery operation."""
 
     def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
-        print("[INFO] BatteryStrategyOptimizerPiece started", flush=True)
+        if boot is not None:
+            boot.bootstrap_log(self.results_path, "BatteryStrategyOptimizerPiece", "piece_function started")
+            boot.bootstrap_log(
+                self.results_path,
+                "BatteryStrategyOptimizerPiece",
+                f"inputs load_csv={input_data.load_csv!r} scenario_yaml={input_data.scenario_yaml!r}",
+            )
+        else:
+            print("[INFO] BatteryStrategyOptimizerPiece started", flush=True)
         _stage = None
         if od is not None:
-            input_data, _stage = od.stage_inputs(input_data, secrets_data)
+            try:
+                input_data, _stage = od.stage_inputs(input_data, secrets_data)
+            except Exception as exc:
+                if boot is not None:
+                    boot.bootstrap_log(self.results_path, "BatteryStrategyOptimizerPiece", f"stage_inputs FAILED: {exc}")
+                if od is not None:
+                    od.cleanup_on_error(self.results_path, secrets_data, "BatteryStrategyOptimizerPiece", _stage)
+                raise
         _piece_out = None
         try:
             csv_path = Path(input_data.load_csv)

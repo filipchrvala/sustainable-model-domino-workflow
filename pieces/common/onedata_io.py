@@ -494,7 +494,12 @@ def stage_inputs(input_data: Any, secrets_data: Any):
                 local_f = os.path.join(tmp, _remote_name(val))
                 write_bytes(local_f, read_bytes(val))
                 overrides[name] = local_f
-            # else: path does not exist remotely (likely an output target) -> leave
+            else:
+                raise FileNotFoundError(
+                    f"OneData input missing for '{name}': {val}. "
+                    "Upstream piece may not have mirrored output; check DAG edges "
+                    "(Predict -> Solar/Battery) and re-import test_sus_onedata.customization."
+                )
         except Exception as exc:
             host = (effective_secrets(secrets_data, use_defaults=True) or {}).get(
                 "onedata_onezone_host", DEFAULT_ONEZONE_HOST

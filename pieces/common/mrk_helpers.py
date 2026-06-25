@@ -40,14 +40,20 @@ def infer_timestep_hours(df: pd.DataFrame) -> float:
 
 
 def build_price_series(df: pd.DataFrame, cfg: dict) -> pd.Series:
-    del cfg  # reserved for future tariff overrides
-    if "price_eur_per_kwh" not in df.columns:
-        raise ValueError("CSV must contain mandatory column: price_eur_per_kwh")
-    s = pd.to_numeric(df["price_eur_per_kwh"], errors="coerce")
-    if not s.notna().any():
-        raise ValueError("CSV price_eur_per_kwh is mandatory and must contain at least one numeric value")
-    med = float(s.median())
-    return s.fillna(med).astype(float)
+    if "price_eur_per_kwh" in df.columns:
+        s = pd.to_numeric(df["price_eur_per_kwh"], errors="coerce")
+        if s.notna().any():
+            med = float(s.median())
+            return s.fillna(med).astype(float)
+
+    tariff = (cfg.get("tariff") or {}) if isinstance(cfg, dict) else {}
+    mrk = (cfg.get("mrk") or {}) if isinstance(cfg, dict) else {}
+    default_price = float(
+        tariff.get("default_price_eur_per_kwh")
+        or mrk.get("default_price_eur_per_kwh")
+        or 0.10
+    )
+    return pd.Series(default_price, index=df.index, dtype=float)
 
 
 def synthetic_pv_kw(
