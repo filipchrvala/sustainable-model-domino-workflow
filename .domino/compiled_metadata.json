@@ -980,10 +980,26 @@
                     "title": "Model Path",
                     "type": "string"
                 },
-                "data_path": {
-                    "description": "Path to prediction dataset (15min)",
-                    "title": "Data Path",
+                "load_csv": {
+                    "description": "Historical load CSV used to build the future prediction time grid",
+                    "title": "Load Csv",
                     "type": "string"
+                },
+                "prediction_days": {
+                    "default": 7,
+                    "description": "How many days ahead to predict (user-chosen in workflow UI)",
+                    "maximum": 366,
+                    "minimum": 1,
+                    "title": "Prediction Days",
+                    "type": "integer"
+                },
+                "timestep_minutes": {
+                    "default": 15,
+                    "description": "Time step for the prediction grid (must match training data)",
+                    "maximum": 60,
+                    "minimum": 1,
+                    "title": "Timestep Minutes",
+                    "type": "integer"
                 },
                 "use_rolling_prediction": {
                     "default": true,
@@ -1000,7 +1016,7 @@
             },
             "required": [
                 "model_path",
-                "data_path"
+                "load_csv"
             ],
             "title": "InputModel",
             "type": "object"
