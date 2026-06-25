@@ -13,7 +13,21 @@ class InputModel(RunIdInputMixin):
     model_config = ConfigDict(protected_namespaces=())
 
     model_path: str = Field(description="Path to trained XGBoost model")
-    data_path: str = Field(description="Path to prediction dataset (15min)")
+    load_csv: str = Field(
+        description="Historical load CSV used to build the future prediction time grid",
+    )
+    prediction_days: int = Field(
+        default=7,
+        ge=1,
+        le=366,
+        description="How many days ahead to predict (user-chosen in workflow UI)",
+    )
+    timestep_minutes: int = Field(
+        default=15,
+        ge=1,
+        le=60,
+        description="Time step for the prediction grid (must match training data)",
+    )
     use_rolling_prediction: bool = Field(
         default=True,
         description="True (default): bridge_rows of real load_kw, then lags from prior predictions.",
@@ -23,7 +37,6 @@ class InputModel(RunIdInputMixin):
 
 class SecretsModel(OneDataSecretsModel):
     pass
-
 
 
 class OutputModel(BaseModel):

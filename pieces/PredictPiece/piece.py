@@ -176,16 +176,28 @@ def _read_load_csv(path: Path) -> pd.DataFrame:
     return long[["datetime", "department_id", "load_kw"]]
 
 
-def _generate_prediction_input_from_load(load_path: Path, out_path: Path) -> Path:
-    n_future = 7 * 96
-    future_start = pd.Timestamp("2025-07-01 00:00:00")
-    future_dt = pd.date_range(future_start, periods=n_future, freq="15min")
+def _generate_prediction_input_from_load(
+    load_path: Path,
+    out_path: Path,
+    *,
+    prediction_days: int = 7,
+    timestep_minutes: int = 15,
+) -> Path:
+    rows_per_day = max(1, int(24 * 60 / timestep_minutes))
+    n_future = max(1, int(prediction_days)) * rows_per_day
+    freq = f"{timestep_minutes}min"
+
+    load_all = _read_load_csv(load_path).sort_values(["department_id", "datetime"]).reset_index(drop=True)
+    if load_all.empty:
+        raise ValueError(f"{load_path.name}: no load rows")
+    last_dt = pd.to_datetime(load_all["datetime"].max())
+    future_start = last_dt + pd.Timedelta(minutes=timestep_minutes)
+    future_dt = pd.date_range(future_start, periods=n_future, freq=freq)
     hours = future_dt.hour.values
     price = 0.07 + 0.035 * ((hours >= 7) & (hours <= 20))
     price = np.clip(price, 0.06, 0.15)
     future_base = pd.DataFrame({"datetime": future_dt, "load_kw": 0.0, "price_eur_per_kwh": price})
 
-    load_all = _read_load_csv(load_path).sort_values(["department_id", "datetime"]).reset_index(drop=True)
     parts: list[pd.DataFrame] = []
     for dept, group in load_all.groupby("department_id", sort=False):
         dept_id = str(dept)
@@ -194,9 +206,9 @@ def _generate_prediction_input_from_load(load_path: Path, out_path: Path) -> Pat
             continue
         bridge = group.tail(4)[["datetime", "load_kw"]].copy()
         bridge["datetime"] = pd.date_range(
-            end=future_start - pd.Timedelta(minutes=15),
+            end=future_start - pd.Timedelta(minutes=timestep_minutes),
             periods=4,
-            freq="15min",
+            freq=freq,
         )
         bridge["price_eur_per_kwh"] = 0.085
         bridge["department_id"] = dept_id
@@ -214,33 +226,31 @@ def _generate_prediction_input_from_load(load_path: Path, out_path: Path) -> Pat
     return out_path
 
 
-def _resolve_prediction_data_path(requested_path: Path, results_dir: Path) -> Path:
-    if requested_path.exists():
-        return requested_path
-
-    candidate_loads = [
-        requested_path.parent / "load.csv",
-        requested_path.parent / "load_and_prices.csv",
-    ]
-    for load_path in candidate_loads:
-        if load_path.is_file():
-            try:
-                return _generate_prediction_input_from_load(load_path, requested_path)
-            except OSError:
-                fallback_path = results_dir / requested_path.name
-                return _generate_prediction_input_from_load(load_path, fallback_path)
-    raise FileNotFoundError(f"Prediction data not found: {requested_path}")
+def _build_prediction_grid(
+    load_path: Path,
+    results_dir: Path,
+    *,
+    prediction_days: int,
+    timestep_minutes: int,
+) -> Path:
+    out_path = results_dir / "prediction_input_generated.csv"
+    return _generate_prediction_input_from_load(
+        load_path,
+        out_path,
+        prediction_days=prediction_days,
+        timestep_minutes=timestep_minutes,
+    )
 
 
 class PredictPiece(BasePiece):
 
     def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
         _stage = None
+        _run_id = None
         _orig_model_path = getattr(input_data, "model_path", None)
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
-            # The model's shift_profile.json lives next to the model file; when the
-            # model came from OneData, pull that sibling next to the staged model.
+            _run_id = od.resolve_run_id(input_data, secrets_data, generate=False)
             if _stage is not None and _stage.active:
                 od.fetch_sibling(_orig_model_path, input_data.model_path, "shift_profile.json")
         _piece_out = None
@@ -251,10 +261,22 @@ class PredictPiece(BasePiece):
         try:
             print("[INFO] PredictPiece started")
             print(f"[INFO] Model path: {input_data.model_path}")
-            print(f"[INFO] Data path: {input_data.data_path}")
+            print(f"[INFO] Load CSV: {input_data.load_csv}")
+            print(
+                f"[INFO] Prediction horizon: {input_data.prediction_days} days "
+                f"({input_data.timestep_minutes} min steps)"
+            )
 
             model_path = Path(input_data.model_path)
-            data_path = _resolve_prediction_data_path(Path(input_data.data_path), results_dir)
+            load_path = Path(input_data.load_csv)
+            if not load_path.is_file():
+                raise FileNotFoundError(f"Load CSV not found: {load_path}")
+            data_path = _build_prediction_grid(
+                load_path,
+                results_dir,
+                prediction_days=int(input_data.prediction_days),
+                timestep_minutes=int(input_data.timestep_minutes),
+            )
 
             if not model_path.exists():
                 raise FileNotFoundError(f"Model not found: {model_path}")
