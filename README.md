@@ -11,9 +11,11 @@ Domino piece repository for the sustainable energy workflow (OneData I/O, MRK/PV
 | `dependencies/` | Container build (`Dockerfile`, `requirements.txt`) |
 | `config.toml` | Registry, version, repository metadata |
 | `.domino/` | Compiled piece metadata (updated by CI) |
-| `sus_onedata.customization` | **Import in Domino** (Workflows editor → Import) |
-| `sus_onedata.json` | GitLab workflows pack only (not Domino UI) |
-| `requirements_0.txt` | Python deps reference for Domino organize |
+| `sus_onedata.customization` | Domino import (GitHub / GHCR) |
+| `sus_onedata.spice.customization` | Domino import (SPICE / Harbor) |
+| `sus_onedata.json` | Workflows pack export |
+| `scripts/sync_onedata_customization.py` | Regenerate customization + JSON |
+| `scripts/export_workflow_json.py` | Refresh GitLab workflows pack |
 
 ## Domino deployment
 
