@@ -5,35 +5,35 @@
             "requirements_file": "requirements_0.txt"
         },
         "pieces": [
-            "TrainModelPiece",
-            "SizingOptimizationPiece",
-            "PreprocessEnergyDataPiece",
             "KPIPiece",
-            "UserInputPiece",
-            "IncrementalTrainPiece",
-            "CatalogRankerPiece",
-            "PredictPiece",
-            "WebUserInputPiece",
-            "SustainableIngestPiece",
-            "SolarSimPiece",
-            "TechnicalLimitsPiece",
-            "SimulatePiece",
-            "FetchEnergyDataPiece",
-            "BatterySimPiece",
-            "DashboardPiece",
+            "TrainModelPiece",
             "FeasibilityReportPiece",
-            "ForecastHorizonPiece",
+            "SimulatePiece",
+            "CatalogSyncPiece",
             "ModelMonitoringPiece",
+            "IncrementalTrainPiece",
+            "PredictPiece",
             "BatteryStrategyOptimizerPiece",
             "InvestmentEvalPiece",
-            "CatalogSyncPiece",
-            "AnomalyAlertPiece"
+            "ForecastHorizonPiece",
+            "SolarSimPiece",
+            "WebUserInputPiece",
+            "PreprocessEnergyDataPiece",
+            "FetchEnergyDataPiece",
+            "AnomalyAlertPiece",
+            "CatalogRankerPiece",
+            "DashboardPiece",
+            "SustainableIngestPiece",
+            "UserInputPiece",
+            "SizingOptimizationPiece",
+            "BatterySimPiece",
+            "TechnicalLimitsPiece"
         ],
         "secrets": [
+            "onedata_onezone_host",
             "onedata_output_dir",
-            "onedata_token",
-            "onedata_onezone_host"
+            "onedata_token"
         ],
-        "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.34-group0"
+        "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.34-group0"
     }
 }
