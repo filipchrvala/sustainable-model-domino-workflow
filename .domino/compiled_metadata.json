@@ -929,8 +929,8 @@
                     "type": "string"
                 },
                 "prediction_days": {
-                    "default": 7,
-                    "description": "How many days ahead to predict (user-chosen in workflow UI)",
+                    "default": 30,
+                    "description": "How many days ahead to predict (overridden by scenario.yaml / workflow JSON when present)",
                     "maximum": 366,
                     "minimum": 1,
                     "title": "Prediction Days",
@@ -1054,7 +1054,7 @@
                 "cursor": "pointer"
             }
         },
-        "description": "Web form for project settings, consumption CSV uploads, and scenario options (alternative to UserInputPiece CSV)",
+        "description": "Web form for project settings, consumption CSV uploads, and scenario options. Streamlit UI: streamlit run pieces/WebUserInputPiece/piece.py",
         "dependencies_group": "0",
         "input_schema": {
             "description": "Domino piece input \u2013 reads saved web form state and materializes workflow files.",
