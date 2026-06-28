@@ -18,6 +18,7 @@ from __future__ import annotations
 import json
 import os
 import shutil
+import time
 from pathlib import Path, PurePosixPath
 from typing import Any
 
@@ -520,7 +521,24 @@ def stage_inputs(input_data: Any, secrets_data: Any):
                 tmp = tempfile.mkdtemp(prefix="od_in_")
                 stage.tmpdirs.append(tmp)
                 local_f = os.path.join(tmp, _remote_name(val))
-                write_bytes(local_f, read_bytes(val))
+                last_exc: Exception | None = None
+                for attempt in range(6):
+                    try:
+                        if isfile(val):
+                            write_bytes(local_f, read_bytes(val))
+                            last_exc = None
+                            break
+                        raise FileNotFoundError(
+                            f"OneData input missing for '{name}': {val}. "
+                            "Upstream piece may not have mirrored output; check DAG edges "
+                            "(Predict -> Solar/Battery) and re-import test_sus_onedata.customization."
+                        )
+                    except FileNotFoundError as exc:
+                        last_exc = exc
+                        if attempt < 5:
+                            time.sleep(2.0)
+                if last_exc is not None:
+                    raise last_exc
                 overrides[name] = local_f
             else:
                 raise FileNotFoundError(
@@ -633,10 +651,21 @@ def mirror_results(results_path: str | os.PathLike[str], secrets_data: Any,
     if not rp.exists():
         return None
     target = f"{base.rstrip('/')}/{piece_name}"
+    uploaded = 0
     for f in rp.rglob("*"):
         if f.is_file():
             rel = f.relative_to(rp).as_posix()
-            write_bytes(f"{target}/{rel}", f.read_bytes())
+            remote = f"{target}/{rel}"
+            write_bytes(remote, f.read_bytes())
+            if has_protocol(remote) and not isfile(remote):
+                raise RuntimeError(f"OneData mirror verify failed for {remote}")
+            uploaded += 1
+    if uploaded == 0:
+        local_files = [p for p in rp.rglob("*") if p.is_file()]
+        if local_files:
+            raise RuntimeError(
+                f"OneData mirror uploaded 0 files from {results_path} to {target}"
+            )
     return target
 
 

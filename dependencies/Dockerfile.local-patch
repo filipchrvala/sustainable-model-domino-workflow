@@ -1,4 +1,4 @@
-FROM ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.32-group0
+FROM ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.33-group0
 
 COPY config.toml domino/pieces_repository/
 COPY pieces domino/pieces_repository/pieces

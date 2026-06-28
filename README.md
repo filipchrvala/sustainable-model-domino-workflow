@@ -11,14 +11,17 @@ Domino piece repository for the sustainable energy workflow (OneData I/O, MRK/PV
 | `dependencies/` | Container build (`Dockerfile`, `requirements.txt`) |
 | `config.toml` | Registry, version, repository metadata |
 | `.domino/` | Compiled piece metadata (updated by CI) |
-| `test_sus_onedata.customization` | Workflow to import in Domino |
+| `test_sus_onedata.customization` | **Import in Domino** (Workflows editor → Import) |
+| `test_sus_onedata.json` | GitLab workflows pack only (not Domino UI) |
 | `requirements_0.txt` | Python deps reference for Domino organize |
 
 ## Domino deployment
 
 1. Connect this GitLab repo as a **Pieces Repository** in Domino.
 2. Wait for CI on `main` (after `config.toml` change) to build Harbor images.
-3. Import `test_sus_onedata.customization` and set workflow **Secrets**:
+3. Import **`test_sus_onedata.customization`** in the Domino workflow editor (not `.json`). Regenerate after edits:
+   `python scripts/sync_onedata_customization.py`
+   Set workflow **Secrets** (optional if using code defaults):
    - `onedata_onezone_host` — e.g. `data.spice-platform.eu`
    - `onedata_token` — your OneData access token (not stored in git)
    - `onedata_output_dir` — e.g. `onedata:///YourSpace/run`
