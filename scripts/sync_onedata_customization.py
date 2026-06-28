@@ -1,4 +1,4 @@
-"""Prepare test_sus_onedata.customization for Domino UI import (not GitLab JSON)."""
+"""Prepare sus_onedata.customization for Domino UI import (not GitLab JSON)."""
 
 from __future__ import annotations
 
@@ -8,11 +8,11 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CUSTOM = ROOT / "test_sus_onedata.customization"
+CUSTOM = ROOT / "sus_onedata.customization"
 COMPILED = ROOT / ".domino" / "compiled_metadata.json"
 CONFIG = ROOT / "config.toml"
-OUT_GITLAB = ROOT / "test_sus_onedata.json"
-OUT_SPICE = ROOT / "test_sus_onedata.spice.customization"
+OUT_GITLAB = ROOT / "sus_onedata.json"
+OUT_SPICE = ROOT / "sus_onedata.spice.customization"
 
 # Domino import schema allows only these top-level keys (see domino-frontend QKt).
 DOMINO_TOP_KEYS = frozenset(

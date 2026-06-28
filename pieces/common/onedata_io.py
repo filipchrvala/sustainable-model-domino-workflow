@@ -531,7 +531,7 @@ def stage_inputs(input_data: Any, secrets_data: Any):
                         raise FileNotFoundError(
                             f"OneData input missing for '{name}': {val}. "
                             "Upstream piece may not have mirrored output; check DAG edges "
-                            "(Predict -> Solar/Battery) and re-import test_sus_onedata.customization."
+                            "(Predict -> Solar/Battery) and re-import sus_onedata.customization."
                         )
                     except FileNotFoundError as exc:
                         last_exc = exc
@@ -544,7 +544,7 @@ def stage_inputs(input_data: Any, secrets_data: Any):
                 raise FileNotFoundError(
                     f"OneData input missing for '{name}': {val}. "
                     "Upstream piece may not have mirrored output; check DAG edges "
-                    "(Predict -> Solar/Battery) and re-import test_sus_onedata.customization."
+                    "(Predict -> Solar/Battery) and re-import sus_onedata.customization."
                 )
         except Exception as exc:
             host = (effective_secrets(secrets_data, use_defaults=True) or {}).get(
@@ -553,7 +553,7 @@ def stage_inputs(input_data: Any, secrets_data: Any):
             raise RuntimeError(
                 f"Failed to download OneData input '{name}' ({val}): {exc}. "
                 f"Host {host} must be reachable from the piece container. "
-                "On local Domino (PC without VPN in Docker) use test_sus_local.customization "
+                "On local Domino (PC without VPN in Docker) use sus_onedata_local.customization "
                 "and scripts/seed_shared_storage.py instead of OneData paths."
             ) from exc
 

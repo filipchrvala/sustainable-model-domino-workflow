@@ -171,7 +171,7 @@ class UserInputPiece(BasePiece):
                 raise FileNotFoundError(
                     f"Load CSV not staged from OneData: {raw}. "
                     "OneData is unreachable from this container (local Domino needs "
-                    "test_sus_local.customization + seed_shared_storage.py, or VPN to SPICE)."
+                    "sus_onedata_local.customization + seed_shared_storage.py, or VPN to SPICE)."
                 )
             raise FileNotFoundError(
                 f"Load CSV not found: {load_csv}. "
@@ -182,7 +182,7 @@ class UserInputPiece(BasePiece):
             if od is not None and od.has_protocol(od.normalize_remote_path(raw)):
                 raise FileNotFoundError(
                     f"Scenario YAML not staged from OneData: {raw}. "
-                    "Use test_sus_local.customization on PC without VPN in Docker."
+                    "Use sus_onedata_local.customization on PC without VPN in Docker."
                 )
             raise FileNotFoundError(
                 f"Scenario YAML not found: {scenario_yaml}. "

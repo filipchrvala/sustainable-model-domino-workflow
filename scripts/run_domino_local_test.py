@@ -20,7 +20,7 @@ REPO_PATH = "filipchrvala/sustainable-model-domino-workflow"
 REPO_URL = f"https://github.com/{REPO_PATH}"
 UC33_IMAGE_PREFIX = "ghcr.io/filipchrvala/sustainable-model-domino-workflow"
 UC32_IMAGE_PREFIX = "ghcr.io/filipchrvala/industry_sg_vre_cost_optimizer"
-DEFAULT_CUSTOM = ROOT / "test_sus_onedata.customization"
+DEFAULT_CUSTOM = ROOT / "sus_onedata.customization"
 
 DOMINO_TASK_PREFIX: dict[str, str] = {
     "FetchEnergyDataPiece": "FetchEnerg",

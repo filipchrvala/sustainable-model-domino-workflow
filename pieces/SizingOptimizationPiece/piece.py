@@ -38,7 +38,7 @@ def _require_path(field: str, value: str | None) -> str:
         raise ValueError(
             f"Missing upstream input '{field}' (empty path). "
             "Ensure Predict finished and workflow has Predict->Sizing edge; "
-            "re-import test_sus_onedata.customization from main."
+            "re-import sus_onedata.customization from main."
         )
     return text
 

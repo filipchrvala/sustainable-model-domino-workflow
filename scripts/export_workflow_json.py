@@ -1,4 +1,4 @@
-"""Export Domino-importable workflow JSON from test_sus_onedata.customization."""
+"""Export Domino-importable workflow JSON from sus_onedata.customization."""
 
 from __future__ import annotations
 
@@ -8,10 +8,10 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CUSTOM = ROOT / "test_sus_onedata.customization"
+CUSTOM = ROOT / "sus_onedata.customization"
 CONFIG = ROOT / "config.toml"
-OUT_GHCR = ROOT / "test_sus_onedata.json"
-OUT_SPICE = ROOT / "test_sus_onedata.spice.json"
+OUT_GHCR = ROOT / "sus_onedata.json"
+OUT_SPICE = ROOT / "sus_onedata.spice.json"
 WORKFLOWS_PACK = (
     Path(__file__).resolve().parents[2]
     / "uc3-domino-gitlab-sync"
