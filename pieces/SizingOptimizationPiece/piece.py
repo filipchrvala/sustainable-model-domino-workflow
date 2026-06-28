@@ -50,9 +50,11 @@ class SizingOptimizationPiece(BasePiece):
         print("[INFO] SizingOptimizationPiece started", flush=True)
         _stage = None
         _piece_out = None
+        _run_id = None
         try:
             if od is not None:
                 input_data, _stage = od.stage_inputs(input_data, secrets_data)
+                _run_id = od.resolve_run_id(input_data, secrets_data, generate=False)
 
             load_csv = _require_path("load_csv", input_data.load_csv)
             scenario_yaml = _require_path("scenario_yaml", input_data.scenario_yaml)

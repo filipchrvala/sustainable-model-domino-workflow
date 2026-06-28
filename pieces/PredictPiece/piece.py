@@ -12,6 +12,7 @@ import pandas as pd
 from pathlib import Path
 import joblib
 from datetime import datetime
+import yaml
 
 try:
     from common import onedata_io as od
@@ -226,6 +227,60 @@ def _generate_prediction_input_from_load(
     return out_path
 
 
+def _read_horizon_from_sidecars(load_csv: Path) -> tuple[int | None, int | None]:
+    """Read prediction_days / timestep from scenario.yaml or workflow_user_input.json near load CSV."""
+    days: int | None = None
+    timestep: int | None = None
+    candidates: list[Path] = []
+    for name in ("workflow_user_input.json",):
+        candidates.append(load_csv.with_name(name))
+        candidates.append(load_csv.parent / name)
+    for wf_path in candidates:
+        if not wf_path.is_file():
+            continue
+        try:
+            wf = json.loads(wf_path.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        pp = wf.get("PredictPiece") or {}
+        if pp.get("prediction_days") is not None:
+            days = int(pp["prediction_days"])
+        if pp.get("timestep_minutes") is not None:
+            timestep = int(pp["timestep_minutes"])
+        break
+
+    scen_path: Path | None = None
+    for cand in (
+        load_csv.with_name("scenario_resolved.yaml"),
+        load_csv.with_name("scenario.yaml"),
+        load_csv.parent / "scenario_resolved.yaml",
+        load_csv.parent / "scenario.yaml",
+    ):
+        if cand.is_file():
+            scen_path = cand
+            break
+    if scen_path is not None:
+        try:
+            scen = yaml.safe_load(scen_path.read_text(encoding="utf-8")) or {}
+        except Exception:
+            scen = {}
+        if days is None:
+            prod = scen.get("production") or {}
+            raw = scen.get("prediction_days") or prod.get("prediction_days")
+            if raw is not None:
+                days = int(raw)
+        if timestep is None and scen.get("timestep_minutes") is not None:
+            timestep = int(scen["timestep_minutes"])
+    return days, timestep
+
+
+def _resolve_prediction_horizon(input_data: InputModel, load_path: Path) -> tuple[int, int]:
+    file_days, file_ts = _read_horizon_from_sidecars(load_path)
+    days = file_days if file_days is not None else int(input_data.prediction_days or 30)
+    timestep = file_ts if file_ts is not None else int(input_data.timestep_minutes or 15)
+    return days, timestep
+
+
 def _build_prediction_grid(
     load_path: Path,
     results_dir: Path,
@@ -262,20 +317,21 @@ class PredictPiece(BasePiece):
             print("[INFO] PredictPiece started")
             print(f"[INFO] Model path: {input_data.model_path}")
             print(f"[INFO] Load CSV: {input_data.load_csv}")
-            print(
-                f"[INFO] Prediction horizon: {input_data.prediction_days} days "
-                f"({input_data.timestep_minutes} min steps)"
-            )
 
             model_path = Path(input_data.model_path)
             load_path = Path(input_data.load_csv)
             if not load_path.is_file():
                 raise FileNotFoundError(f"Load CSV not found: {load_path}")
+            prediction_days, timestep_minutes = _resolve_prediction_horizon(input_data, load_path)
+            print(
+                f"[INFO] Prediction horizon: {prediction_days} days "
+                f"({timestep_minutes} min steps)"
+            )
             data_path = _build_prediction_grid(
                 load_path,
                 results_dir,
-                prediction_days=int(input_data.prediction_days),
-                timestep_minutes=int(input_data.timestep_minutes),
+                prediction_days=prediction_days,
+                timestep_minutes=timestep_minutes,
             )
 
             if not model_path.exists():

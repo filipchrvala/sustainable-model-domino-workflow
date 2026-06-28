@@ -44,9 +44,12 @@ class BatteryStrategyOptimizerPiece(BasePiece):
         else:
             print("[INFO] BatteryStrategyOptimizerPiece started", flush=True)
         _stage = None
+        _piece_out = None
+        _run_id = None
         if od is not None:
             try:
                 input_data, _stage = od.stage_inputs(input_data, secrets_data)
+                _run_id = od.resolve_run_id(input_data, secrets_data, generate=False)
             except Exception as exc:
                 if boot is not None:
                     boot.bootstrap_log(self.results_path, "BatteryStrategyOptimizerPiece", f"stage_inputs FAILED: {exc}")

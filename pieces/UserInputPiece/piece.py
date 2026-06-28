@@ -194,6 +194,7 @@ class UserInputPiece(BasePiece):
         scenario = yaml.safe_load(scenario_copy.read_text(encoding="utf-8")) or {}
         timestep_minutes = float(scenario.get("timestep_minutes", 15))
         prod_cfg = scenario.get("production") or {}
+        prediction_days = scenario.get("prediction_days") or prod_cfg.get("prediction_days")
         gap_repair_enabled = bool(prod_cfg.get("gap_repair_enabled", True))
 
         # Case A: load_csv already contains both load_kw and price_eur_per_kwh.
@@ -288,6 +289,8 @@ class UserInputPiece(BasePiece):
             "gap_repair_enabled": gap_repair_enabled,
             "repaired_intervals_count": int(repaired_intervals),
         }
+        if prediction_days is not None:
+            summary["prediction_days"] = int(prediction_days)
         (out_dir / "user_input_summary.json").write_text(
             json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8"
         )

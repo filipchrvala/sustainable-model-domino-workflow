@@ -3,7 +3,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
+import subprocess
 import sys
+import tempfile
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -15,6 +18,8 @@ API_BASE = "http://localhost:8000"
 WORKSPACE_ID = 1
 REPO_PATH = "filipchrvala/sustainable-model-domino-workflow"
 REPO_URL = f"https://github.com/{REPO_PATH}"
+UC33_IMAGE_PREFIX = "ghcr.io/filipchrvala/sustainable-model-domino-workflow"
+UC32_IMAGE_PREFIX = "ghcr.io/filipchrvala/industry_sg_vre_cost_optimizer"
 DEFAULT_CUSTOM = ROOT / "test_sus_onedata.customization"
 
 DOMINO_TASK_PREFIX: dict[str, str] = {
@@ -135,10 +140,17 @@ def _dependencies(node_id: str, custom: dict, node_to_task: dict[str, str]) -> l
     return deps
 
 
-def customization_to_workflow_request(custom: dict, *, name: str, source_image: str) -> dict:
+def customization_to_workflow_request(
+    custom: dict, *, name: str, piece_registry: dict[str, dict], repo_id: int, repo_version: str
+) -> dict:
     node_to_task, _ = _build_node_maps(custom)
     tasks: dict = {}
     for node_id, piece in custom.get("workflowPieces", {}).items():
+        piece_name = piece["name"]
+        registered = piece_registry.get(piece_name)
+        if not registered:
+            raise RuntimeError(f"Piece {piece_name} not registered in repository {repo_id}")
+        source_image = registered["source_image"]
         task_id = node_to_task[node_id]
         wpd = custom.get("workflowPiecesData", {}).get(node_id, {})
         cr = piece.get("container_resources") or {
@@ -155,7 +167,14 @@ def customization_to_workflow_request(custom: dict, *, name: str, source_image: 
             }
         tasks[task_id] = {
             "task_id": task_id,
-            "piece": {"name": piece["name"], "source_image": source_image},
+            "piece": {
+                "id": registered["id"],
+                "name": piece_name,
+                "source_image": source_image,
+                "repository_id": repo_id,
+                "repository_url": REPO_URL,
+                "repository_version": repo_version,
+            },
             "workflow_shared_storage": {
                 "source": "None",
                 "mode": wpd.get("storage", {}).get("storageAccessMode", "Read/Write"),
@@ -171,6 +190,18 @@ def customization_to_workflow_request(custom: dict, *, name: str, source_image: 
         task_id = node_to_task.get(node_id)
         if task_id:
             ui_nodes[task_id] = node
+    forage = json.loads(json.dumps(custom))
+    default_image = next(iter(piece_registry.values()))["source_image"]
+    for piece in forage.get("workflowPieces", {}).values():
+        registered = piece_registry.get(piece["name"], {})
+        piece["source_image"] = registered.get("source_image", default_image)
+        if registered.get("id") is not None:
+            piece["id"] = registered["id"]
+        piece["repository_id"] = repo_id
+        piece["repository_url"] = REPO_URL
+        piece["repository_version"] = repo_version
+    forage["source_image"] = default_image
+
     return {
         "workflow": {
             "name": name,
@@ -184,7 +215,7 @@ def customization_to_workflow_request(custom: dict, *, name: str, source_image: 
         },
         "tasks": tasks,
         "ui_schema": {"nodes": ui_nodes, "edges": custom.get("workflowEdges", [])},
-        "forageSchema": custom,
+        "forageSchema": forage,
     }
 
 
@@ -215,14 +246,115 @@ def ensure_piece_repository(token: str, version: str) -> int:
     return repo_id
 
 
-def piece_source_image(token: str, repo_id: int, piece_name: str = "FetchEnergyDataPiece") -> str:
+def piece_registry(token: str, repo_id: int) -> dict[str, dict]:
     h = _headers(token)
     r = requests.get(f"{API_BASE}/pieces-repositories/{repo_id}/pieces", headers=h, timeout=60)
     r.raise_for_status()
-    for piece in r.json():
-        if piece.get("name") == piece_name:
-            return piece["source_image"]
-    raise RuntimeError(f"Piece {piece_name} not found in repository {repo_id}")
+    registry = {piece["name"]: piece for piece in r.json() if piece.get("name")}
+    if not registry:
+        raise RuntimeError(f"No pieces found in repository {repo_id}")
+    return registry
+
+
+def list_piece_repositories(token: str) -> list[dict]:
+    h = _headers(token)
+    r = requests.get(
+        f"{API_BASE}/pieces-repositories",
+        params={"workspace_id": WORKSPACE_ID, "page": 0, "page_size": 50},
+        headers=h,
+        timeout=60,
+    )
+    r.raise_for_status()
+    return r.json().get("data", [])
+
+
+def unregister_piece_repository(token: str, repo_id: int) -> None:
+    h = _headers(token)
+    r = requests.delete(f"{API_BASE}/pieces-repositories/{repo_id}", headers=h, timeout=120)
+    if r.status_code == 409:
+        raise RuntimeError(
+            f"Cannot unregister repository id={repo_id} (409 Conflict). "
+            "Delete local workflows that reference UC3.2 pieces first."
+        )
+    r.raise_for_status()
+    print(f"Unregistered piece repository id={repo_id}")
+
+
+def delete_workflow(token: str, workflow_id: int) -> None:
+    h = _headers(token)
+    r = requests.delete(f"{API_BASE}/workspaces/{WORKSPACE_ID}/workflows/{workflow_id}", headers=h, timeout=120)
+    if r.status_code == 404:
+        return
+    r.raise_for_status()
+
+
+def uc33_docker_image(repo_version: str) -> str:
+    return f"{UC33_IMAGE_PREFIX}:{repo_version}-group0"
+
+
+def newest_airflow_dag_path() -> str:
+    out = subprocess.check_output(
+        [
+            "docker",
+            "exec",
+            "airflow-domino-scheduler",
+            "sh",
+            "-c",
+            "ls -t /opt/airflow/dags/*.py 2>/dev/null | head -1",
+        ],
+        text=True,
+    ).strip()
+    if not out:
+        raise RuntimeError("No Airflow DAG files found under /opt/airflow/dags")
+    return out
+
+
+def patch_workflow_dag_images(*, target_image: str, dag_path: str | None = None) -> str:
+    """
+    Domino resolves duplicate piece names globally when generating DAGs.
+    Patch only the new workflow DAG so UC3.2 repo can stay registered.
+    """
+    dag_path = dag_path or newest_airflow_dag_path()
+    content = subprocess.check_output(
+        ["docker", "exec", "airflow-domino-scheduler", "cat", dag_path],
+        text=True,
+    )
+    patched = re.sub(
+        rf"{re.escape(UC32_IMAGE_PREFIX)}:[^\s'\"]+",
+        target_image,
+        content,
+    )
+    patched = re.sub(
+        rf"{re.escape(UC33_IMAGE_PREFIX)}:[^\s'\"]+",
+        target_image,
+        patched,
+    )
+    if patched == content:
+        print(f"DAG already uses {target_image}: {dag_path}")
+        return dag_path
+    with tempfile.NamedTemporaryFile("w", suffix=".py", delete=False, encoding="utf-8") as handle:
+        handle.write(patched)
+        tmp_path = handle.name
+    subprocess.check_call(["docker", "cp", tmp_path, f"airflow-domino-scheduler:{dag_path}"])
+    Path(tmp_path).unlink(missing_ok=True)
+    print(f"Patched DAG {dag_path} -> {target_image}")
+    return dag_path
+
+
+def register_piece_repository(token: str, *, path: str, version: str, source: str = "github") -> int:
+    h = _headers(token)
+    body = {
+        "workspace_id": WORKSPACE_ID,
+        "source": source,
+        "path": path,
+        "version": version,
+        "url": f"https://github.com/{path}",
+    }
+    r = requests.post(f"{API_BASE}/pieces-repositories", json=body, headers=h, timeout=120)
+    r.raise_for_status()
+    repo_id = r.json()["id"]
+    print(f"Registered piece repository id={repo_id} path={path} version={version}")
+    return repo_id
 
 
 def create_workflow(token: str, payload: dict) -> int:
@@ -304,36 +436,67 @@ def poll_tasks(token: str, workflow_id: int, run_id: str, *, timeout: int = 7200
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run UC3.3 sustainable model in local Domino")
     parser.add_argument("--customization", type=Path, default=DEFAULT_CUSTOM)
-    parser.add_argument("--repo-version", default="0.1.32")
+    parser.add_argument("--repo-version", default="0.1.33")
     parser.add_argument("--timeout", type=int, default=7200)
+    parser.add_argument(
+        "--no-patch-dag",
+        action="store_true",
+        help="Skip post-create Airflow DAG image patch (SimulatePiece may bind to UC3.2 image)",
+    )
+    parser.add_argument(
+        "--cleanup-workflow",
+        action="store_true",
+        help="Delete the test workflow after run (does not touch other workflows)",
+    )
     args = parser.parse_args()
 
     custom = json.loads(args.customization.read_text(encoding="utf-8"))
     token = _login()
-    repo_id = ensure_piece_repository(token, args.repo_version)
-    source_image = piece_source_image(token, repo_id)
-    print(f"Using Docker image: {source_image}")
+    target_image = uc33_docker_image(args.repo_version)
+    wf_id: int | None = None
+    try:
+        repo_id = ensure_piece_repository(token, args.repo_version)
+        registry = piece_registry(token, repo_id)
+        default_image = registry.get("FetchEnergyDataPiece", next(iter(registry.values())))["source_image"]
+        sim = registry.get("SimulatePiece", {})
+        print(
+            f"Using Docker image: {default_image} ({len(registry)} pieces registered, repo_id={repo_id})"
+        )
+        print(f"Target patched image: {target_image}")
+        if sim:
+            print(f"SimulatePiece registry: id={sim.get('id')} image={sim.get('source_image')}")
 
-    wf_name = f"uc33_onedata_{int(time.time())}"
-    payload = customization_to_workflow_request(custom, name=wf_name, source_image=source_image)
-    print(f"Tasks in workflow: {len(payload['tasks'])}")
+        wf_name = f"uc33_onedata_{int(time.time())}"
+        payload = customization_to_workflow_request(
+            custom, name=wf_name, piece_registry=registry, repo_id=repo_id, repo_version=args.repo_version
+        )
+        print(f"Tasks in workflow: {len(payload['tasks'])}")
 
-    wf_id = create_workflow(token, payload)
-    trigger_run(token, wf_id)
-    run_id = latest_run_id(token, wf_id)
-    print(f"Run id: {run_id}")
+        wf_id = create_workflow(token, payload)
+        if not args.no_patch_dag:
+            time.sleep(2)
+            patch_workflow_dag_images(target_image=target_image)
+        trigger_run(token, wf_id)
+        run_id = latest_run_id(token, wf_id)
+        print(f"Run id: {run_id}")
 
-    tasks = poll_tasks(token, wf_id, run_id, timeout=args.timeout)
-    failed = [t for t in tasks if t.get("state") not in ("success", "skipped", None)]
-    print("\n=== TASK RESULTS ===")
-    for t in sorted(tasks, key=lambda x: x["task_id"]):
-        print(f"  {t['task_id']}: {t.get('state')}")
+        tasks = poll_tasks(token, wf_id, run_id, timeout=args.timeout)
+        failed = [t for t in tasks if t.get("state") not in ("success", "skipped", None)]
+        print("\n=== TASK RESULTS ===")
+        for t in sorted(tasks, key=lambda x: x["task_id"]):
+            img = t.get("docker_image") or ""
+            extra = f" ({img})" if img else ""
+            print(f"  {t['task_id']}: {t.get('state')}{extra}")
 
-    if failed:
-        print(f"\nFAILED: {len(failed)} task(s)", file=sys.stderr)
-        return 1
-    print("\nALL TASKS PASSED")
-    return 0
+        if failed:
+            print(f"\nFAILED: {len(failed)} task(s)", file=sys.stderr)
+            return 1
+        print("\nALL TASKS PASSED")
+        return 0
+    finally:
+        if wf_id is not None and args.cleanup_workflow:
+            print(f"\nCleaning up test workflow id={wf_id}…")
+            delete_workflow(token, wf_id)
 
 
 if __name__ == "__main__":

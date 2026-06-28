@@ -192,6 +192,9 @@ class SustainableIngestPiece(BasePiece):
         _piece_out = None
         _stage = None
         _run_id = None
+        remote_history_csv = str(input_data.history_csv)
+        remote_updates_dir = str(input_data.updates_dir)
+        remote_archive_dir = str(input_data.archive_dir)
         if od is not None:
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
             _run_id = od.resolve_run_id(input_data, secrets_data, generate=False)
@@ -203,16 +206,17 @@ class SustainableIngestPiece(BasePiece):
                 with open(log_path, "a", encoding="utf-8") as f:
                     f.write("[INFO] OneData backend configured\n")
 
-            history_path = str(input_data.history_csv)
+            history_path = remote_history_csv if _is_remote(remote_history_csv) else str(input_data.history_csv)
             updates_dir = str(input_data.updates_dir)
-            archive_dir = str(input_data.archive_dir)
+            archive_dir = remote_archive_dir if _is_remote(remote_archive_dir) else str(input_data.archive_dir)
+            read_history_path = str(input_data.history_csv)
             _io_makedirs(updates_dir)
             _io_makedirs(archive_dir)
             # Manifest stays local to the piece run (Domino results dir).
             manifest_path = Path(self.results_path) / "sustainable_ingest_manifest.json"
 
-            if _io_isfile(history_path):
-                history = _io_read_csv(history_path, parse_dates=["datetime"])
+            if _io_isfile(read_history_path):
+                history = _io_read_csv(read_history_path, parse_dates=["datetime"])
             else:
                 bootstrap = str(input_data.bootstrap_parquet) if input_data.bootstrap_parquet else None
                 if bootstrap and _io_isfile(bootstrap):

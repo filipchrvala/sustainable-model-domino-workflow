@@ -17,10 +17,10 @@ class InputModel(RunIdInputMixin):
         description="Historical load CSV used to build the future prediction time grid",
     )
     prediction_days: int = Field(
-        default=7,
+        default=30,
         ge=1,
         le=366,
-        description="How many days ahead to predict (user-chosen in workflow UI)",
+        description="How many days ahead to predict (overridden by scenario.yaml / workflow JSON when present)",
     )
     timestep_minutes: int = Field(
         default=15,

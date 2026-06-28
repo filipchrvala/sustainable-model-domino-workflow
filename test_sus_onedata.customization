@@ -738,145 +738,6 @@
       "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
       "repository_id": 0
     },
-    "107_e91e3cab-7f31-5292-9ff3-1c85a7812f9b": {
-      "id": 100,
-      "name": "WebUserInputPiece",
-      "description": "Web form for project settings, consumption CSV uploads, and scenario options (alternative to UserInputPiece CSV)",
-      "dependency": {
-        "dockerfile": null,
-        "requirements_file": "requirements_0.txt"
-      },
-      "source_image": "harbor.testbed.spice-platform.eu/partner/uc3/industry_sg_vre_sustainable_model:0.1.32-group0",
-      "input_schema": {
-        "description": "Domino piece input – reads saved web form state and materializes workflow files.",
-        "properties": {
-          "web_form_state_json": {
-            "description": "Path to web_form_state.json (from Streamlit WebUserInputPiece UI)",
-            "title": "Web Form State Json",
-            "type": "string"
-          },
-          "scenario_yaml": {
-            "description": "Scenario YAML path (usually tests/_generated/scenario.yml after materialize)",
-            "title": "Scenario Yaml",
-            "type": "string"
-          },
-          "use_classic_csv_fallback": {
-            "default": false,
-            "description": "If true and web CSV paths missing, use FetchEnergyDataPiece_Inputs CSV files",
-            "title": "Use Classic Csv Fallback",
-            "type": "boolean"
-          },
-          "run_id": {
-            "default": "",
-            "description": "Workflow run id for OneData per-run output folder",
-            "title": "Run Id",
-            "type": "string"
-          }
-        },
-        "required": [
-          "web_form_state_json",
-          "scenario_yaml"
-        ],
-        "title": "InputModel",
-        "type": "object"
-      },
-      "output_schema": {
-        "properties": {
-          "message": {
-            "title": "Message",
-            "type": "string"
-          },
-          "load_csv": {
-            "title": "Load Csv",
-            "type": "string"
-          },
-          "scenario_yaml": {
-            "title": "Scenario Yaml",
-            "type": "string"
-          },
-          "workflow_user_input_json": {
-            "title": "Workflow User Input Json",
-            "type": "string"
-          },
-          "web_form_state_json": {
-            "title": "Web Form State Json",
-            "type": "string"
-          },
-          "input_mode": {
-            "default": "web",
-            "title": "Input Mode",
-            "type": "string"
-          },
-          "run_id": {
-            "default": "",
-            "description": "Workflow run id for OneData per-run output folder",
-            "title": "Run Id",
-            "type": "string"
-          }
-        },
-        "required": [
-          "message",
-          "load_csv",
-          "scenario_yaml",
-          "workflow_user_input_json",
-          "web_form_state_json"
-        ],
-        "title": "OutputModel",
-        "type": "object"
-      },
-      "secrets_schema": {
-        "properties": {
-          "onedata_onezone_host": {
-            "default": "data.spice-platform.eu",
-            "description": "OneData Onezone host (e.g. data.spice-platform.eu)",
-            "title": "Onedata Onezone Host",
-            "type": "string"
-          },
-          "onedata_token": {
-            "description": "Onedata access token (default in code; Domino secrets optional)",
-            "title": "Onedata Token",
-            "type": "string",
-            "default": "MDAyNGxvY2F00aW9uIGRhdGEuc3BpY2UtcGxhdGZvcm00uZXUKMDA2YmlkZW500aWZpZXIgMi9ubWQvdXNyLWMzZjNkNDc3NjE3MzBiMjk4OWZkNzEyZTJmODc4YWJiY2hlMTdiL2FjdC8yODNjMzExMmU1NmVhNjgxMWUxOGUyYWRkZTdiYjJjNGNoOGNjZgowMDJmc2lnbmF00dXJlIL1Iu96JPccUim5K102wEE01WY00yzaw3E5uAt88MXsxl02pCg"
-          },
-          "onedata_output_dir": {
-            "default": "onedata:///FilipsSpace/sustainable_model/outputs",
-            "description": "OneData base dir for mirrored piece outputs",
-            "title": "Onedata Output Dir",
-            "type": "string"
-          }
-        },
-        "title": "SecretsModel",
-        "type": "object"
-      },
-      "container_resources": {
-        "requests": {
-          "cpu": 100,
-          "memory": 128
-        },
-        "limits": {
-          "cpu": 500,
-          "memory": 512
-        },
-        "use_gpu": false
-      },
-      "tags": [],
-      "style": {
-        "module": "WebUserInputPiece",
-        "label": "Web User Input",
-        "nodeType": "default",
-        "nodeStyle": {
-          "backgroundColor": "#ebebeb"
-        },
-        "useIcon": true,
-        "iconClassName": "fa-solid:globe",
-        "iconStyle": {
-          "cursor": "pointer"
-        }
-      },
-      "source_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model/tree/main/pieces/WebUserInputPiece",
-      "repository_url": "https://gitlab.spice-platform.eu/use-cases/uc3/UC3.3_Industry_Sg_Vre_Sustainable_Model",
-      "repository_id": 0
-    },
     "108_269fe489-9457-5a76-8249-e7c85fa56d5c": {
       "id": 100,
       "name": "TechnicalLimitsPiece",
@@ -3164,39 +3025,6 @@
         }
       }
     },
-    "107_e91e3cab-7f31-5292-9ff3-1c85a7812f9b": {
-      "storage": {
-        "storageAccessMode": "Read/Write"
-      },
-      "containerResources": {
-        "cpu": 500,
-        "memory": 512,
-        "useGpu": false
-      },
-      "inputs": {
-        "web_form_state_json": {
-          "fromUpstream": false,
-          "upstreamId": "",
-          "upstreamArgument": "",
-          "upstreamValue": "",
-          "value": "onedata:///FilipsSpace/sustainable_model/inputs/web_form_state.json"
-        },
-        "scenario_yaml": {
-          "fromUpstream": false,
-          "upstreamId": "",
-          "upstreamArgument": "",
-          "upstreamValue": "",
-          "value": "onedata:///FilipsSpace/sustainable_model/inputs/scenario.yaml"
-        },
-        "use_classic_csv_fallback": {
-          "fromUpstream": false,
-          "upstreamId": "",
-          "upstreamArgument": "",
-          "upstreamValue": "",
-          "value": true
-        }
-      }
-    },
     "108_269fe489-9457-5a76-8249-e7c85fa56d5c": {
       "storage": {
         "storageAccessMode": "Read/Write"
@@ -4118,40 +3946,6 @@
       "positionAbsolute": {
         "x": 20,
         "y": 240
-      }
-    },
-    {
-      "id": "107_e91e3cab-7f31-5292-9ff3-1c85a7812f9b",
-      "type": "CustomNode",
-      "position": {
-        "x": 20,
-        "y": 420
-      },
-      "data": {
-        "name": "WebUserInputPiece",
-        "style": {
-          "module": "WebUserInputPiece",
-          "label": "Web User Input",
-          "nodeType": "default",
-          "nodeStyle": {
-            "backgroundColor": "#ebebeb"
-          },
-          "useIcon": true,
-          "iconClassName": "fa-solid:globe",
-          "iconStyle": {
-            "cursor": "pointer"
-          }
-        },
-        "validationError": false,
-        "orientation": "horizontal"
-      },
-      "width": 150,
-      "height": 70,
-      "selected": false,
-      "dragging": false,
-      "positionAbsolute": {
-        "x": 20,
-        "y": 420
       }
     },
     {
@@ -5361,5 +5155,5 @@
       }
     }
   ],
-  "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.30-group0"
+  "source_image": "ghcr.io/filipchrvala/sustainable-model-domino-workflow:0.1.32-group0"
 }

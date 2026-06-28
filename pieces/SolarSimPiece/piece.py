@@ -41,9 +41,12 @@ class SolarSimPiece(BasePiece):
             f"inputs load_csv={input_data.load_csv!r} scenario_yaml={input_data.scenario_yaml!r}",
         )
         _stage = None
+        _piece_out = None
+        _run_id = None
         if od is not None:
             try:
                 input_data, _stage = od.stage_inputs(input_data, secrets_data)
+                _run_id = od.resolve_run_id(input_data, secrets_data, generate=False)
             except Exception as exc:
                 boot.bootstrap_log(self.results_path, "SolarSimPiece", f"stage_inputs FAILED: {exc}")
                 if od is not None:

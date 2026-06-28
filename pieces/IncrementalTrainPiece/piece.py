@@ -66,10 +66,12 @@ class IncrementalTrainPiece(BasePiece):
         _reg_local = None
         _reg_target = None
         _piece_out = None
+        _run_id = None
         if od is not None:
             input_data, _reg_local, _reg_target = od.stage_registry(
                 input_data, "model_registry_dir", secrets_data)
             input_data, _stage = od.stage_inputs(input_data, secrets_data)
+            _run_id = od.resolve_run_id(input_data, secrets_data, generate=False)
         log_path = Path(self.results_path) / "incremental_train.log"
         err_path = Path(self.results_path) / "incremental_train_error.txt"
         try:
@@ -167,7 +169,8 @@ class IncrementalTrainPiece(BasePiece):
                     _stage,
                     registry_local=_reg_local,
                     registry_target=_reg_target,
-                , run_id=_run_id)
+                    run_id=_run_id,
+                )
             elif _stage is not None:
                 _stage.cleanup()
         if od is not None and _piece_out is not None:
@@ -179,5 +182,6 @@ class IncrementalTrainPiece(BasePiece):
                 _stage,
                 registry_local=_reg_local,
                 registry_target=_reg_target,
-            , run_id=_run_id)
+                run_id=_run_id,
+            )
         return _piece_out

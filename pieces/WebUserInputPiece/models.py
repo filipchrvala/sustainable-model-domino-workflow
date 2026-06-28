@@ -57,6 +57,10 @@ H: dict[str, str] = {
     "manual_load_kw": "Okamžitý odber v kW v danom čase.",
     "manual_price": "Cena elektriny v €/kWh.",
     "timestep_minutes": "Krok časovej rady v minútach (zvyčajne 15). Po nahratí CSV sa doplní sám.",
+    "prediction_days": (
+        "Počet dní dopredu pre predikciu spotreby (PredictPiece). "
+        "Uloží sa do scenario.yaml a workflow_user_input.json."
+    ),
     "mrk_peak_from_csv": "Najvyššia mesačná špička odberu z CSV — návrh pre zmluvný výkon RV.",
     "contract_kw": (
         "Zmluvný rezervovaný výkon RV (kW) u distribútora — mesačný poplatok a penalizácie."
@@ -110,6 +114,7 @@ FIELD_LABELS: dict[str, str] = {
     "manual_load_kw": "Odber (kW)",
     "manual_price": "Cena (€/kWh)",
     "timestep_minutes": "Krok dát (min)",
+    "prediction_days": "Horizont predikcie (dni)",
     "mrk_peak_from_csv": "Mes. špička z CSV",
     "contract_kw": "RV (kW)",
     "fee_eur_per_kw_month": "Poplatok RV (€/kW/mes)",
