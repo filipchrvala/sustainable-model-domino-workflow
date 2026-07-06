@@ -22,14 +22,6 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
-try:
-    from common import onedata_io as od
-except ModuleNotFoundError:
-    try:
-        from pieces.common import onedata_io as od
-    except ModuleNotFoundError:
-        od = None
-
 # --- load (historická spotreba) ---
 
 
@@ -739,17 +731,13 @@ def _project_root() -> Path:
     return Path(__file__).resolve().parents[2]
 
 
-def _catalog_dir() -> Path:
-    return Path(__file__).resolve().parents[1] / "catalog"
-
-
 def _load_hardware_catalogs(
     *,
     battery_catalog_path: str = "",
     inverter_catalog_path: str = "",
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
-    pv_path = _catalog_dir() / "pv_modules_catalog.json"
-    bt_path = _catalog_dir() / "battery_catalog.json"
+    pv_path = _project_root() / "catalog" / "pv_modules_catalog.json"
+    bt_path = _project_root() / "catalog" / "battery_catalog.json"
     bt_online_path = Path(battery_catalog_path) if battery_catalog_path else None
     inv_path = Path(inverter_catalog_path) if inverter_catalog_path else None
     pv_mods: list[dict[str, Any]] = []
@@ -1569,8 +1557,8 @@ def run_analysis(
         "hardware_recommendation": hardware,
         "auto_optimization": auto_log,
         "catalog_paths": {
-            "pv_modules": str(_catalog_dir() / "pv_modules_catalog.json"),
-            "battery_products": str(_catalog_dir() / "battery_catalog.json"),
+            "pv_modules": str(_project_root() / "catalog" / "pv_modules_catalog.json"),
+            "battery_products": str(_project_root() / "catalog" / "battery_catalog.json"),
             "battery_products_online": battery_catalog_json or "",
             "inverters_online": inverter_catalog_json or "",
         },
@@ -1708,25 +1696,7 @@ def run_analysis(
 class SimulatePiece(BasePiece):
     """Run MRK+PV+battery simulation and write mrk_savings_report.json."""
 
-    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
-        _stage = None
-        _piece_out = None
-        _run_id = None
-        if od is not None:
-            input_data, _stage = od.stage_inputs(input_data, secrets_data)
-            _run_id = od.resolve_run_id(input_data, secrets_data, generate=False)
-        try:
-            _piece_out = self._run_impl(input_data)
-        finally:
-            if od is not None and _piece_out is None:
-                od.cleanup_on_error(self.results_path, secrets_data, "SimulatePiece", _stage, run_id=_run_id)
-            elif _stage is not None:
-                _stage.cleanup()
-        if od is not None and _piece_out is not None:
-            return od.finish_piece(_piece_out, self.results_path, secrets_data, "SimulatePiece", _stage, run_id=_run_id)
-        return _piece_out
-
-    def _run_impl(self, input_data: InputModel) -> OutputModel:
+    def piece_function(self, input_data: InputModel) -> OutputModel:
         csv_path = Path(input_data.load_csv)
         scenario_path = Path(input_data.scenario_yaml)
         out_dir = Path(self.results_path) if self.results_path else Path(input_data.output_dir or ".")
@@ -1742,8 +1712,6 @@ class SimulatePiece(BasePiece):
         _log(f"Input load_csv={csv_path}")
         _log(f"Input scenario_yaml={scenario_path}")
         _log(f"Input output_dir={input_data.output_dir}")
-        _log(f"Input virtual_battery_soc_csv={input_data.virtual_battery_soc_csv}")
-        _log(f"Input battery_summary_csv={input_data.battery_summary_csv}")
         if not csv_path.is_file():
             raise FileNotFoundError(f"Load CSV not found: {csv_path}")
         if not scenario_path.is_file():
@@ -1802,23 +1770,6 @@ class SimulatePiece(BasePiece):
                 "warnings": sync.get("warnings") or [],
                 "manifest_path": str(manifest),
             }
-            report_path.write_text(json.dumps(rep, indent=2, ensure_ascii=False), encoding="utf-8")
-
-        battery_soc_path = Path(input_data.virtual_battery_soc_csv) if input_data.virtual_battery_soc_csv else None
-        battery_summary_path = Path(input_data.battery_summary_csv) if input_data.battery_summary_csv else None
-        if (battery_soc_path and battery_soc_path.is_file()) or (battery_summary_path and battery_summary_path.is_file()):
-            rep = json.loads(report_path.read_text(encoding="utf-8"))
-            artifacts = rep.setdefault("artifacts", {})
-            if battery_soc_path and battery_soc_path.is_file():
-                artifacts["virtual_battery_soc_csv"] = str(battery_soc_path)
-            if battery_summary_path and battery_summary_path.is_file():
-                artifacts["battery_summary_csv"] = str(battery_summary_path)
-                try:
-                    battery_summary = pd.read_csv(battery_summary_path)
-                    if not battery_summary.empty:
-                        rep["battery_summary"] = battery_summary.iloc[0].to_dict()
-                except Exception:
-                    pass
             report_path.write_text(json.dumps(rep, indent=2, ensure_ascii=False), encoding="utf-8")
 
         rep = json.loads(report_path.read_text(encoding="utf-8"))

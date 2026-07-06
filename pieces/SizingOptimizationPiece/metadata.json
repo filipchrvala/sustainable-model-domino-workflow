@@ -5,20 +5,6 @@
   "dependency": {
     "requirements_file": "requirements_0.txt"
   },
-  "container_resources": {
-    "requests": {
-      "cpu": 200,
-      "memory": 2048
-    },
-    "limits": {
-      "cpu": 1000,
-      "memory": 2048
-    }
-  },
-  "tags": [
-    "MRK",
-    "Sizing"
-  ],
   "style": {
     "node_label": "Sizing Optimization",
     "icon_class_name": "fa-solid:chart-line"

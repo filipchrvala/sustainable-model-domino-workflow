@@ -12,25 +12,11 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
-try:
-    from common import onedata_io as od
-except ModuleNotFoundError:
-    try:
-        from pieces.common import onedata_io as od
-    except ModuleNotFoundError:
-        od = None
-
 
 class InvestmentEvalPiece(BasePiece):
     """Investment metrics from report + KPI."""
 
-    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
-        _stage = None
-        _piece_out = None
-        _run_id = None
-        if od is not None:
-            input_data, _stage = od.stage_inputs(input_data, secrets_data)
-            _run_id = od.resolve_run_id(input_data, secrets_data, generate=False)
+    def piece_function(self, input_data: InputModel) -> OutputModel:
         rep_path = Path(input_data.report_json)
         kpi_path = Path(input_data.kpi_results_csv)
         out_dir = Path(self.results_path or rep_path.parent)
@@ -92,7 +78,7 @@ class InvestmentEvalPiece(BasePiece):
             pd.DataFrame([row]).to_csv(out_csv, index=False)
             out_json.write_text(json.dumps({"investment_evaluation": [row]}, indent=2, ensure_ascii=False), encoding="utf-8")
             _log(f"Wrote outputs: {out_csv}, {out_json}")
-            _piece_out = OutputModel(
+            return OutputModel(
                 message="Investment evaluation finished",
                 investment_evaluation_csv=str(out_csv),
                 investment_evaluation_json=str(out_json),
@@ -101,11 +87,3 @@ class InvestmentEvalPiece(BasePiece):
             (out_dir / "investment_eval_error.txt").write_text(traceback.format_exc(), encoding="utf-8")
             _log(f"ERROR during investment evaluation: {exc}")
             raise
-        finally:
-            if od is not None and _piece_out is None:
-                od.cleanup_on_error(self.results_path, secrets_data, "InvestmentEvalPiece", _stage, run_id=_run_id)
-            elif _stage is not None:
-                _stage.cleanup()
-        if od is not None and _piece_out is not None:
-            return od.finish_piece(_piece_out, self.results_path, secrets_data, "InvestmentEvalPiece", _stage, run_id=_run_id)
-        return _piece_out

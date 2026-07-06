@@ -17,14 +17,6 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
-try:
-    from common import onedata_io as od
-except ModuleNotFoundError:
-    try:
-        from pieces.common import onedata_io as od
-    except ModuleNotFoundError:
-        od = None
-
 DEFAULT_PV_URL = "https://raw.githubusercontent.com/NREL/SAM/patch/deploy/libraries/CEC%20Modules.csv"
 DEFAULT_INV_URL = "https://raw.githubusercontent.com/NREL/SAM/develop/deploy/libraries/CEC%20Inverters.csv"
 
@@ -36,13 +28,7 @@ class CatalogSyncPiece(BasePiece):
     def _project_root() -> Path:
         return Path(__file__).resolve().parents[2]
 
-    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
-        _stage = None
-        _piece_out = None
-        _run_id = None
-        if od is not None:
-            input_data, _stage = od.stage_inputs(input_data, secrets_data)
-            _run_id = od.resolve_run_id(input_data, secrets_data, generate=False)
+    def piece_function(self, input_data: InputModel) -> OutputModel:
         scenario_path = Path(input_data.scenario_yaml)
         out_dir = Path(self.results_path or scenario_path.parent)
         out_dir.mkdir(parents=True, exist_ok=True)
@@ -76,7 +62,7 @@ class CatalogSyncPiece(BasePiece):
                 url_outage = True
                 source_mode["pv_modules"] = "fallback_local"
                 warnings.append(f"PV catalog URL unavailable: {pv_url} ({exc})")
-                local_pv = Path(__file__).resolve().parents[1] / "catalog" / "pv_modules_catalog.json"
+                local_pv = self._project_root() / "catalog" / "pv_modules_catalog.json"
                 if local_pv.is_file():
                     loc = json.loads(local_pv.read_text(encoding="utf-8"))
                     pv_df = pd.DataFrame(loc.get("modules") or [])
@@ -98,7 +84,7 @@ class CatalogSyncPiece(BasePiece):
                     inv_df = pd.DataFrame([])
 
             bat_products: list[dict] = []
-            local_bt = Path(__file__).resolve().parents[1] / "catalog" / "battery_catalog.json"
+            local_bt = self._project_root() / "catalog" / "battery_catalog.json"
             if bat_url:
                 try:
                     if bat_url.lower().endswith(".json"):
@@ -285,7 +271,7 @@ class CatalogSyncPiece(BasePiece):
                 msg = "Catalog sync finished with URL outage fallback"
             _log(f"Counts: pv={len(pv)}, inv={len(inv)}, bat={len(bat_products)}, url_outage={url_outage}")
             _log(f"Wrote outputs: {pv_json}, {inv_json}, {bat_json}, {manifest_json}")
-            _piece_out = OutputModel(
+            return OutputModel(
                 message=msg,
                 pv_catalog_json=str(pv_json),
                 inverter_catalog_json=str(inv_json),
@@ -297,11 +283,3 @@ class CatalogSyncPiece(BasePiece):
             (out_dir / "catalog_sync_error.txt").write_text(traceback.format_exc(), encoding="utf-8")
             _log(f"ERROR during catalog sync: {exc}")
             raise
-        finally:
-            if od is not None and _piece_out is None:
-                od.cleanup_on_error(self.results_path, secrets_data, "CatalogSyncPiece", _stage, run_id=_run_id)
-            elif _stage is not None:
-                _stage.cleanup()
-        if od is not None and _piece_out is not None:
-            return od.finish_piece(_piece_out, self.results_path, secrets_data, "CatalogSyncPiece", _stage, run_id=_run_id)
-        return _piece_out

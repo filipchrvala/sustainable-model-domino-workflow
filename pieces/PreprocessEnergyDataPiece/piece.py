@@ -8,14 +8,6 @@ from pathlib import Path
 import pandas as pd
 import traceback
 
-try:
-    from common import onedata_io as od
-except ModuleNotFoundError:
-    try:
-        from pieces.common import onedata_io as od
-    except ModuleNotFoundError:
-        od = None
-
 
 class PreprocessEnergyDataPiece(BasePiece):
     """
@@ -23,13 +15,7 @@ class PreprocessEnergyDataPiece(BasePiece):
     The prediction input for PredictPiece is a separate CSV and is not generated here.
     """
 
-    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
-        _stage = None
-        _piece_out = None
-        _run_id = None
-        if od is not None:
-            input_data, _stage = od.stage_inputs(input_data, secrets_data)
-            _run_id = od.resolve_run_id(input_data, secrets_data, generate=False)
+    def piece_function(self, input_data: InputModel) -> OutputModel:
         log_path = Path(self.results_path) / "preprocess_energy_data.log"
         err_path = Path(self.results_path) / "preprocess_energy_data_error.txt"
         try:
@@ -83,7 +69,7 @@ class PreprocessEnergyDataPiece(BasePiece):
 
             self.display_result = {"file_type": "parquet", "file_path": str(train_path)}
 
-            _piece_out = OutputModel(
+            return OutputModel(
                 message="Preprocessing finished (train_dataset only)",
                 train_file_path=str(train_path),
                 predict_file_path=predict_path_str,
@@ -96,11 +82,3 @@ class PreprocessEnergyDataPiece(BasePiece):
             with open(err_path, "w", encoding="utf-8") as f:
                 f.write(err)
             raise
-        finally:
-            if od is not None and _piece_out is None:
-                od.cleanup_on_error(self.results_path, secrets_data, "PreprocessEnergyDataPiece", _stage, run_id=_run_id)
-            elif _stage is not None:
-                _stage.cleanup()
-        if od is not None and _piece_out is not None:
-            return od.finish_piece(_piece_out, self.results_path, secrets_data, "PreprocessEnergyDataPiece", _stage, run_id=_run_id)
-        return _piece_out

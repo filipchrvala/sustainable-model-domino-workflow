@@ -1,24 +1,11 @@
-from typing import Optional
-
-try:
-    from common.onedata_models import OneDataSecretsModel, RunIdInputMixin
-except ModuleNotFoundError:
-    from pieces.common.onedata_models import OneDataSecretsModel, RunIdInputMixin
-
-
 from pydantic import BaseModel, ConfigDict, Field
 
 
-class InputModel(RunIdInputMixin):
+class InputModel(BaseModel):
     data_path: str = Field(
         title="Training dataset path",
         description="Path to preprocessed parquet or CSV dataset"
     )
-
-
-class SecretsModel(OneDataSecretsModel):
-    pass
-
 
 
 class OutputModel(BaseModel):

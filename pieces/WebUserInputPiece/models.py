@@ -1,11 +1,3 @@
-from typing import Optional
-
-try:
-    from common.onedata_models import OneDataSecretsModel, RunIdInputMixin
-except ModuleNotFoundError:
-    from pieces.common.onedata_models import OneDataSecretsModel, RunIdInputMixin
-
-
 from pydantic import BaseModel, Field
 
 # --- field help (web formulár) ---
@@ -51,16 +43,15 @@ H: dict[str, str] = {
     "prices_csv": (
         "Voliteľný CSV s cenami. Ak chýba, ceny musia byť v súbore spotreby."
     ),
-    "append_to_drop": "Pri uložení pošle nové dáta do histórie pre ďalšie behy workflow.",
+    "append_to_drop": (
+        "Po kliknutí na „Obnoviť data + alerty“ (alebo uložení) skopíruje nahratý doplnkový CSV "
+        "do company_drop. Pri prvom behu nechajte nezaškrtnuté."
+    ),
     "append_csv": "Doplnkový CSV s novými riadkami spotreby.",
     "manual_datetime": "Čas merania (typ. krok 15 min).",
     "manual_load_kw": "Okamžitý odber v kW v danom čase.",
     "manual_price": "Cena elektriny v €/kWh.",
     "timestep_minutes": "Krok časovej rady v minútach (zvyčajne 15). Po nahratí CSV sa doplní sám.",
-    "prediction_days": (
-        "Počet dní dopredu pre predikciu spotreby (PredictPiece). "
-        "Uloží sa do scenario.yaml a workflow_user_input.json."
-    ),
     "mrk_peak_from_csv": "Najvyššia mesačná špička odberu z CSV — návrh pre zmluvný výkon RV.",
     "contract_kw": (
         "Zmluvný rezervovaný výkon RV (kW) u distribútora — mesačný poplatok a penalizácie."
@@ -94,6 +85,9 @@ H: dict[str, str] = {
     "btn_save": "Uloží formulár bez spustenia výpočtu.",
     "btn_validate": "Uloží a skontroluje CSV a konfiguráciu.",
     "btn_run_workflow": "Uloží a spustí celý workflow (~18 krokov).",
+    "btn_operational_refresh": (
+        "Len ingest nových CSV, doučenie modelu, forecast a alerty — bez simulácie FVE/batérie."
+    ),
 }
 
 FIELD_LABELS: dict[str, str] = {
@@ -114,7 +108,6 @@ FIELD_LABELS: dict[str, str] = {
     "manual_load_kw": "Odber (kW)",
     "manual_price": "Cena (€/kWh)",
     "timestep_minutes": "Krok dát (min)",
-    "prediction_days": "Horizont predikcie (dni)",
     "mrk_peak_from_csv": "Mes. špička z CSV",
     "contract_kw": "RV (kW)",
     "fee_eur_per_kw_month": "Poplatok RV (€/kW/mes)",
@@ -151,7 +144,7 @@ FIELD_LABELS: dict[str, str] = {
 FIELD_HELP = H
 
 
-class InputModel(RunIdInputMixin):
+class InputModel(BaseModel):
     """Domino piece input – reads saved web form state and materializes workflow files."""
 
     web_form_state_json: str = Field(
@@ -164,11 +157,6 @@ class InputModel(RunIdInputMixin):
         default=False,
         description="If true and web CSV paths missing, use FetchEnergyDataPiece_Inputs CSV files",
     )
-
-
-class SecretsModel(OneDataSecretsModel):
-    pass
-
 
 
 class OutputModel(BaseModel):

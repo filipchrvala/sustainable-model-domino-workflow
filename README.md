@@ -1,46 +1,59 @@
-# UC3.3 Industry SG VRE — Sustainable Model (Domino)
+# Sustainable Model Domino Workflow
 
-Domino piece repository for the sustainable energy workflow (OneData I/O, MRK/PV/battery simulation, investment KPIs, dashboard).
+Workflow combines:
 
-## Repository layout (production)
+- load ingest, preprocessing, training, prediction, and model monitoring,
+- MRK + PV + battery sizing and simulation,
+- investment and dashboard outputs,
+- sustainable refresh flow with incremental training, horizon forecasting, and anomaly alerts.
 
-| Path | Purpose |
-|------|---------|
-| `pieces/` | Domino pieces and shared `common/` helpers |
-| `pieces/catalog/` | Default PV/battery catalog JSON (bundled in images) |
-| `dependencies/` | Container build (`Dockerfile`, `requirements.txt`) |
-| `config.toml` | Registry, version, repository metadata |
-| `.domino/` | Compiled piece metadata (updated by CI) |
-| `sus_onedata.customization` | Domino import (GitHub / GHCR) |
-| `sus_onedata.spice.customization` | Domino import (SPICE / Harbor) |
-| `sus_onedata.json` | Workflows pack export |
-| `scripts/sync_onedata_customization.py` | Regenerate customization + JSON |
-| `scripts/export_workflow_json.py` | Refresh GitLab workflows pack |
+## Local setup
 
-## Domino deployment
+Install runtime dependencies:
 
-1. Connect this GitLab repo as a **Pieces Repository** in Domino.
-2. Wait for CI on `main` (after `config.toml` change) to build Harbor images.
-3. Import **`sus_onedata.customization`** in the Domino workflow editor (not `.json`). Regenerate after edits:
-   `python scripts/sync_onedata_customization.py`
-   Set workflow **Secrets** (optional if using code defaults):
-   - `onedata_onezone_host` — e.g. `data.spice-platform.eu`
-   - `onedata_token` — your OneData access token (not stored in git)
-   - `onedata_output_dir` — e.g. `onedata:///YourSpace/run`
-4. Seed static inputs on OneData under `inputs/` (load, prices, scenario, etc.) before the first run.
+```text
+pip install -r requirements_0.txt
+```
 
-## GitLab CI / Harbor
+Main entrypoints:
 
-Pipeline builds and publishes piece images to Harbor on push to `main` when `config.toml` changes.
+```text
+python run_workflow.py
+python run_workflow.py --phase investment
+python run_workflow.py --phase sustainable --horizon-hours 72
+python -m streamlit run scripts/streamlit_dashboard.py
+python -m streamlit run scripts/streamlit_web_input.py
+```
 
-Set these CI/CD variables (Settings → CI/CD → Variables). Mark secrets as **Masked**:
+PowerShell helpers:
 
-| Variable | Description |
-|----------|-------------|
-| `CI_PUSH_TOKEN` | Project access token with `write_repository` (+ `api`) |
-| `CI_RELEASE_TOKEN` | Project access token with `api` |
-| `CONTAINER_REGISTRY` | `harbor.testbed.spice-platform.eu` |
-| `CONTAINER_REGISTRY_USERNAME` | Harbor user/robot (e.g. `partner`) |
-| `CONTAINER_REGISTRY_PASSWORD` | Harbor password from vault |
+```text
+.\run_live_dashboard.ps1
+.\run_web_input.ps1
+```
 
-`config.toml` `REGISTRY_NAME` must use namespace `harbor.testbed.spice-platform.eu/partner/uc3`. `REPOSITORY_NAME` must be **lowercase** (Docker image tag rules).
+## Main outputs
+
+- `tests/SimulatePiece_Outputs/mrk_savings_report.json`
+- `tests/KPIPiece_Outputs/kpi_results.csv`
+- `tests/InvestmentEvalPiece_Outputs/investment_evaluation.csv`
+- `tests/DashboardPiece_Outputs/dashboard_data.json`
+- `tests/dashboard_data.json`
+- `tests/sustainable/outputs/forecast_by_department.csv`
+- `tests/AnomalyAlertPiece_Outputs/anomaly_alerts.csv`
+
+## Tests
+
+```text
+pip install -r requirements-tests.txt
+pytest
+```
+
+## Domino
+
+Domino metadata is tracked in:
+
+- `.domino/compiled_metadata.json`
+- `.domino/dependencies_map.json`
+
+The repository is intended to expose the full sustainable workflow piece set, with workflow logic kept directly inside real piece folders.

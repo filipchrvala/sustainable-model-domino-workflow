@@ -16,43 +16,22 @@ try:
 except ImportError:
     from .models import METRIC_HELP, InputModel, OutputModel
 
-# Optional shared OneData I/O layer (used only to publish the final JSON).
-try:
-    from common import onedata_io as od
-except ModuleNotFoundError:
-    try:
-        from pieces.common import onedata_io as od
-    except ModuleNotFoundError:
-        od = None
-
-
-def _read_optional_csv(path: Path | None) -> pd.DataFrame:
-    if path is None or not path.is_file():
-        return pd.DataFrame()
-    try:
-        return pd.read_csv(path)
-    except pd.errors.EmptyDataError:
-        return pd.DataFrame()
-
 
 def render_kpi_metric(column, label: str, value: str, help_key: str, *, widget_key: str) -> None:
-    """Metrika s tooltipom (bez samostatného tlačidla ?)."""
+    """Metrika s viditeľným tlačidlom ? (popover) — help= pri st.metric býva málo viditeľné."""
     import streamlit as st
 
     text = METRIC_HELP.get(help_key, "")
     column.metric(label, value, help=text or None)
+    if text:
+        with column.popover("?", help="Vysvetlenie ukazovateľa", key=f"kpi_pop_{widget_key}"):
+            st.markdown(text)
 
 
 class DashboardPiece(BasePiece):
     """Build finance-focused dashboard payload for CFO decisions."""
 
-    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
-        _stage = None
-        _piece_out = None
-        _run_id = None
-        if od is not None:
-            input_data, _stage = od.stage_inputs(input_data, secrets_data)
-            _run_id = od.resolve_run_id(input_data, secrets_data, generate=False)
+    def piece_function(self, input_data: InputModel) -> OutputModel:
         rep_path = Path(input_data.report_json)
         kpi_path = Path(input_data.kpi_results_csv)
         inv_path = Path(input_data.investment_evaluation_csv)
@@ -121,7 +100,7 @@ class DashboardPiece(BasePiece):
                 "drift": {},
             }
             if alerts_path and alerts_path.is_file():
-                alerts_df = _read_optional_csv(alerts_path)
+                alerts_df = pd.read_csv(alerts_path)
                 if not alerts_df.empty:
                     sev = alerts_df.get("severity", pd.Series([], dtype=str)).astype(str).str.lower()
                     alerts_block["summary"] = {
@@ -182,33 +161,13 @@ class DashboardPiece(BasePiece):
             }
 
             out_json = out_dir / "dashboard_data.json"
-            payload_text = json.dumps(payload, indent=2, ensure_ascii=False)
-            out_json.write_text(payload_text, encoding="utf-8")
+            out_json.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
             _log(f"Wrote dashboard JSON: {out_json}; kpi_rows={len(kpi_df)}")
-
-            # Optional: also publish the final JSON to OneData. Purely additive —
-            # only runs when a target is given AND OneData secrets are present.
-            publish_to = getattr(input_data, "publish_to", None)
-            if publish_to and od is not None and od.configure_onedata(secrets_data, force=True):
-                try:
-                    od.write_text(publish_to, payload_text)
-                    _log(f"Published dashboard JSON to OneData: {publish_to}")
-                except Exception as pub_exc:
-                    _log(f"WARNING: OneData publish failed ({publish_to}): {pub_exc}")
-
-            _piece_out = OutputModel(dashboard_data_json=str(out_json))
+            return OutputModel(dashboard_data_json=str(out_json))
         except Exception as exc:
             (out_dir / "dashboard_error.txt").write_text(traceback.format_exc(), encoding="utf-8")
             _log(f"ERROR during dashboard assembly: {exc}")
             raise
-        finally:
-            if od is not None and _piece_out is None:
-                od.cleanup_on_error(self.results_path, secrets_data, "DashboardPiece", _stage, run_id=_run_id)
-            elif _stage is not None:
-                _stage.cleanup()
-        if od is not None and _piece_out is not None:
-            return od.finish_piece(_piece_out, self.results_path, secrets_data, "DashboardPiece", _stage, run_id=_run_id)
-        return _piece_out
 
 
 # --- sizing grid UI ---
@@ -268,7 +227,7 @@ def render_sizing_grid_section(
         "Vybrať variant z mriežky",
         options=list(range(len(df))),
         format_func=lambda i: labels[int(i)],
-        help=METRIC_HELP["grid_pick"],
+        help=METRIC_HELP.get("grid_pick"),
     )
     sel = df.iloc[int(pick)]
     c1, c2, c3, c4 = st.columns(4)
@@ -554,7 +513,7 @@ def render_timeseries_dashboard(payload: dict) -> None:
         "Scenár",
         scenario_options,
         index=scenario_options.index(default_scenario) if default_scenario in scenario_options else 0,
-        help=METRIC_HELP["scenario_select"],
+        help=METRIC_HELP.get("scenario_select"),
     )
 
     st.subheader("Solar PV & battery (scenario)")
@@ -1049,6 +1008,7 @@ def render_unified_dashboard() -> bool:
     gen = raw.get("generated_at_utc")
     if gen:
         st.caption(f"Posledná aktualizácia (UTC): **{gen}**")
+    st.caption("Pod každou metrikou je tlačidlo **?** — kliknutím zobrazíte slovenské vysvetlenie.")
     with st.expander("Slovník ukazovateľov", expanded=False):
         _glossary = (
             ("Úspora (obdobie)", "savings_period"),
@@ -1059,7 +1019,7 @@ def render_unified_dashboard() -> bool:
         )
         for title, key in _glossary:
             st.markdown(f"**{title}**")
-            st.caption(METRIC_HELP.get(key, "—"))
+            st.caption(METRIC_HELP.get(key, ""))
 
     if raw.get("format") == "alternate_unified_v1":
         inv = raw.get("investment")

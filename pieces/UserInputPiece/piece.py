@@ -13,33 +13,6 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
-try:
-    from common import onedata_io as od
-except ModuleNotFoundError:
-    try:
-        from pieces.common import onedata_io as od
-    except ModuleNotFoundError:
-        od = None
-
-
-def _discover_workflow_user_input_path(load_csv: Path, scenario_yaml: Path) -> Path | None:
-    repo_root = Path(__file__).resolve().parents[2]
-    candidates = [
-        scenario_yaml.with_name("workflow_user_input.json"),
-        load_csv.with_name("workflow_user_input.json"),
-        load_csv.parent / "workflow_user_input.json",
-        repo_root / "tests" / "user_input" / "workflow_user_input.json",
-    ]
-    seen: set[str] = set()
-    for candidate in candidates:
-        key = str(candidate)
-        if key in seen:
-            continue
-        seen.add(key)
-        if candidate.is_file():
-            return candidate
-    return None
-
 
 class UserInputPiece(BasePiece):
     """Validate and pass-through user inputs for downstream pieces."""
@@ -122,33 +95,7 @@ class UserInputPiece(BasePiece):
             ).fillna(med)
         return repaired, filled
 
-    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
-        _stage = None
-        _piece_out = None
-        _run_id = None
-        _orig = {
-            "load_csv": getattr(input_data, "load_csv", None),
-            "scenario_yaml": getattr(input_data, "scenario_yaml", None),
-        }
-        if od is not None:
-            input_data, _stage = od.stage_inputs(input_data, secrets_data)
-            _run_id = od.resolve_run_id(input_data, secrets_data, generate=True)
-            if _stage is not None and _stage.active:
-                od.fetch_sibling(
-                    _orig.get("scenario_yaml"), input_data.scenario_yaml, "workflow_user_input.json"
-                )
-        try:
-            _piece_out = self._run_impl(input_data, _run_id)
-        finally:
-            if od is not None and _piece_out is None:
-                od.cleanup_on_error(self.results_path, secrets_data, "UserInputPiece", _stage, run_id=_run_id)
-            elif _stage is not None:
-                _stage.cleanup()
-        if od is not None and _piece_out is not None:
-            return od.finish_piece(_piece_out, self.results_path, secrets_data, "UserInputPiece", _stage, run_id=_run_id)
-        return _piece_out
-
-    def _run_impl(self, input_data: InputModel, run_id: str | None = None) -> OutputModel:
+    def piece_function(self, input_data: InputModel) -> OutputModel:
         load_csv = Path(input_data.load_csv)
         prices_csv = Path(input_data.prices_csv) if input_data.prices_csv else None
         scenario_yaml = Path(input_data.scenario_yaml)
@@ -166,35 +113,15 @@ class UserInputPiece(BasePiece):
         _log(f"Input prices_csv={prices_csv}")
         _log(f"Input scenario_yaml={scenario_yaml}")
         if not load_csv.is_file():
-            raw = str(getattr(input_data, "load_csv", load_csv))
-            if od is not None and od.has_protocol(od.normalize_remote_path(raw)):
-                raise FileNotFoundError(
-                    f"Load CSV not staged from OneData: {raw}. "
-                    "OneData is unreachable from this container (local Domino needs "
-                    "sus_onedata_local.customization + seed_shared_storage.py, or VPN to SPICE)."
-                )
-            raise FileNotFoundError(
-                f"Load CSV not found: {load_csv}. "
-                "For local Domino run scripts/seed_shared_storage.py once."
-            )
+            raise FileNotFoundError(f"Load CSV not found: {load_csv}")
         if not scenario_yaml.is_file():
-            raw = str(getattr(input_data, "scenario_yaml", scenario_yaml))
-            if od is not None and od.has_protocol(od.normalize_remote_path(raw)):
-                raise FileNotFoundError(
-                    f"Scenario YAML not staged from OneData: {raw}. "
-                    "Use sus_onedata_local.customization on PC without VPN in Docker."
-                )
-            raise FileNotFoundError(
-                f"Scenario YAML not found: {scenario_yaml}. "
-                "For local Domino run scripts/seed_shared_storage.py once."
-            )
+            raise FileNotFoundError(f"Scenario YAML not found: {scenario_yaml}")
         scenario_copy = out_dir / "scenario_resolved.yaml"
         shutil.copy2(scenario_yaml, scenario_copy)
         _log(f"Copied scenario to shared output path: {scenario_copy}")
         scenario = yaml.safe_load(scenario_copy.read_text(encoding="utf-8")) or {}
         timestep_minutes = float(scenario.get("timestep_minutes", 15))
         prod_cfg = scenario.get("production") or {}
-        prediction_days = scenario.get("prediction_days") or prod_cfg.get("prediction_days")
         gap_repair_enabled = bool(prod_cfg.get("gap_repair_enabled", True))
 
         # Case A: load_csv already contains both load_kw and price_eur_per_kwh.
@@ -289,27 +216,15 @@ class UserInputPiece(BasePiece):
             "gap_repair_enabled": gap_repair_enabled,
             "repaired_intervals_count": int(repaired_intervals),
         }
-        if prediction_days is not None:
-            summary["prediction_days"] = int(prediction_days)
         (out_dir / "user_input_summary.json").write_text(
             json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8"
         )
         (out_dir / "user_input_validated.json").write_text(
             json.dumps(summary["resolved_paths"], indent=2, ensure_ascii=False), encoding="utf-8"
         )
-        workflow_input_copy = out_dir / "workflow_user_input.json"
-        workflow_input_source = _discover_workflow_user_input_path(load_csv, scenario_yaml)
-        if workflow_input_source is not None:
-            shutil.copy2(workflow_input_source, workflow_input_copy)
-            _log(f"Copied workflow_user_input_json from {workflow_input_source}")
-        else:
-            workflow_input_copy.write_text("{}", encoding="utf-8")
-            _log("workflow_user_input.json not found near inputs; wrote empty fallback")
 
         return OutputModel(
             message="User input validated",
             load_csv=str(merged_path),
             scenario_yaml=str(scenario_copy),
-            workflow_user_input_json=str(workflow_input_copy),
-            run_id=run_id or "",
         )

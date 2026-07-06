@@ -1,26 +1,10 @@
-from typing import Optional
-
-try:
-    from common.onedata_models import OneDataSecretsModel, RunIdInputMixin
-except ModuleNotFoundError:
-    from pieces.common.onedata_models import OneDataSecretsModel, RunIdInputMixin
-
-
 from pydantic import BaseModel, Field
 
 
-class InputModel(RunIdInputMixin):
+class InputModel(BaseModel):
     load_csv: str = Field(description="Path to historical load CSV")
     scenario_yaml: str = Field(description="Path to scenario YAML")
     output_dir: str = Field(default="", description="Optional output dir when results_path is not set")
-    virtual_battery_soc_csv: str = Field(
-        default="",
-        description="Optional battery SOC CSV produced by BatterySimPiece",
-    )
-    battery_summary_csv: str = Field(
-        default="",
-        description="Optional battery summary CSV produced by BatterySimPiece",
-    )
     battery_strategy_recommendation_json: str = Field(
         default="",
         description="Optional battery strategy recommendation JSON",
@@ -29,11 +13,6 @@ class InputModel(RunIdInputMixin):
     inverter_catalog_json: str = Field(default="", description="Optional inverter catalog JSON")
     battery_catalog_json: str = Field(default="", description="Optional battery catalog JSON")
     catalog_manifest_json: str = Field(default="", description="Optional catalog sync manifest JSON")
-
-
-class SecretsModel(OneDataSecretsModel):
-    pass
-
 
 
 class OutputModel(BaseModel):

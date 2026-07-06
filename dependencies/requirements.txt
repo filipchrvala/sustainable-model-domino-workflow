@@ -6,16 +6,8 @@ pydantic>=2.0
 streamlit>=1.32
 plotly>=5.0
 joblib>=1.3
-# Latest XGBoost (3.x may pull nvidia-nccl-cu12 on Linux; used only if GPU training is enabled).
-# All pieces train/predict on CPU (Domino use_gpu=false); nccl is bundled for future GPU option.
 xgboost>=2.0
 scikit-learn>=1.3
 pyarrow>=14.0
 pvlib>=0.10
 openpyxl>=3.1
-# OneData (optional, used only by boundary pieces when secrets are configured).
-# The onedata:// fsspec backend (onedatarestfsspec) is vendored under
-# pieces/common/onedatarestfsspec because it is git-only (not on PyPI) and the
-# Domino base image has no git to build it. Its runtime deps below ARE on PyPI.
-fsspec>=2023.9
-onedatafilerestclient>=25.0.0

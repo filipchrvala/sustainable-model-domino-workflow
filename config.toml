@@ -1,5 +1,5 @@
 [repository]
-REGISTRY_NAME = "harbor.testbed.spice-platform.eu/partner/uc3"
-REPOSITORY_NAME = "industry_sg_vre_sustainable_model"
+REGISTRY_NAME = "filipchrvala"
+REPOSITORY_NAME = "sustainable-model-domino-workflow"
 REPOSITORY_LABEL = "Sustainable Model Domino Workflow"
-VERSION = "0.1.34"
+VERSION = "0.1.0"

@@ -1,6 +1,6 @@
 {
   "name": "WebUserInputPiece",
-  "description": "Web form for project settings, consumption CSV uploads, and scenario options. Streamlit UI: streamlit run pieces/WebUserInputPiece/piece.py",
+  "description": "Web form for project settings, consumption CSV uploads, and scenario options (alternative to UserInputPiece CSV)",
   "dependencies_group": "0",
   "dependency": {
     "requirements_file": "requirements_0.txt"

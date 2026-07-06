@@ -14,14 +14,6 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
-try:
-    from common import onedata_io as od
-except ModuleNotFoundError:
-    try:
-        from pieces.common import onedata_io as od
-    except ModuleNotFoundError:
-        od = None
-
 
 def _safe_load_model(model_path_raw: str, registry_root_raw: str):
     root = Path(registry_root_raw).resolve()
@@ -89,13 +81,7 @@ def _psi(ref: np.ndarray, cur: np.ndarray, bins: int = 10) -> float:
 
 
 class AnomalyAlertPiece(BasePiece):
-    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
-        _stage = None
-        _piece_out = None
-        _run_id = None
-        if od is not None:
-            input_data, _stage = od.stage_inputs(input_data, secrets_data)
-            _run_id = od.resolve_run_id(input_data, secrets_data, generate=False)
+    def piece_function(self, input_data: InputModel) -> OutputModel:
         log_path = Path(self.results_path) / "anomaly_alert.log"
         err_path = Path(self.results_path) / "anomaly_alert_error.txt"
         try:
@@ -109,8 +95,7 @@ class AnomalyAlertPiece(BasePiece):
                 work = _features(g).tail(int(input_data.lookback_rows))
                 if work.empty:
                     continue
-                resolved_model_path = str(Path(input_data.model_registry_dir) / Path(str(model_path)).name)
-                model = _safe_load_model(resolved_model_path, input_data.model_registry_dir)
+                model = _safe_load_model(model_path, input_data.model_registry_dir)
                 expected = model.predict(work[_fcols()])
                 actual = work["load_kw"].astype(float).values
                 resid = actual - expected
@@ -193,7 +178,7 @@ class AnomalyAlertPiece(BasePiece):
                     f"[INFO] drift_states: critical={drift_summary['critical_count']}, "
                     f"warning={drift_summary['warning_count']}, ok={drift_summary['ok_count']}\n"
                 )
-            _piece_out = OutputModel(
+            return OutputModel(
                 message=f"Anomaly alerts generated, rows={len(alerts)}",
                 alerts_csv=str(out_path),
                 drift_report_json=str(drift_path),
@@ -206,11 +191,3 @@ class AnomalyAlertPiece(BasePiece):
             with open(err_path, "w", encoding="utf-8") as f:
                 f.write(err)
             raise
-        finally:
-            if od is not None and _piece_out is None:
-                od.cleanup_on_error(self.results_path, secrets_data, "AnomalyAlertPiece", _stage, run_id=_run_id)
-            elif _stage is not None:
-                _stage.cleanup()
-        if od is not None and _piece_out is not None:
-            return od.finish_piece(_piece_out, self.results_path, secrets_data, "AnomalyAlertPiece", _stage, run_id=_run_id)
-        return _piece_out

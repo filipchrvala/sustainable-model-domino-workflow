@@ -1,15 +1,7 @@
-from typing import Optional
-
-try:
-    from common.onedata_models import OneDataSecretsModel, RunIdInputMixin
-except ModuleNotFoundError:
-    from pieces.common.onedata_models import OneDataSecretsModel, RunIdInputMixin
-
-
 from pydantic import BaseModel, Field
 
 
-class InputModel(RunIdInputMixin):
+class InputModel(BaseModel):
     input_path: str = Field(
         description="Path to merged energy parquet file"
     )
@@ -23,11 +15,6 @@ class InputModel(RunIdInputMixin):
         default=False,
         description="If False (default): only train_dataset.parquet. Predict uses separate CSV in PredictPiece.",
     )
-
-
-class SecretsModel(OneDataSecretsModel):
-    pass
-
 
 
 class OutputModel(BaseModel):

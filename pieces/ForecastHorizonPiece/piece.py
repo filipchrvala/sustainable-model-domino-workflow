@@ -13,14 +13,6 @@ except ModuleNotFoundError:
 
 from .models import InputModel, OutputModel
 
-try:
-    from common import onedata_io as od
-except ModuleNotFoundError:
-    try:
-        from pieces.common import onedata_io as od
-    except ModuleNotFoundError:
-        od = None
-
 
 def _safe_load_model(model_path_raw: str, registry_root_raw: str):
     root = Path(registry_root_raw).resolve()
@@ -72,13 +64,7 @@ def _fcols() -> list[str]:
 
 
 class ForecastHorizonPiece(BasePiece):
-    def piece_function(self, input_data: InputModel, secrets_data=None) -> OutputModel:
-        _stage = None
-        _piece_out = None
-        _run_id = None
-        if od is not None:
-            input_data, _stage = od.stage_inputs(input_data, secrets_data)
-            _run_id = od.resolve_run_id(input_data, secrets_data, generate=False)
+    def piece_function(self, input_data: InputModel) -> OutputModel:
         log_path = Path(self.results_path) / "forecast_horizon.log"
         err_path = Path(self.results_path) / "forecast_horizon_error.txt"
         try:
@@ -89,10 +75,7 @@ class ForecastHorizonPiece(BasePiece):
                 g = hist[hist["department_id"].astype(str) == str(dept)].sort_values("datetime").reset_index(drop=True)
                 if len(g) < 300:
                     continue
-                # model_path may be absolute from another run/host; resolve it
-                # against the (possibly staged) registry by its filename.
-                resolved_model_path = str(Path(input_data.model_registry_dir) / Path(str(model_path)).name)
-                model = _safe_load_model(resolved_model_path, input_data.model_registry_dir)
+                model = _safe_load_model(model_path, input_data.model_registry_dir)
                 step_minutes = 15
                 last_dt = pd.to_datetime(g["datetime"].iloc[-1])
                 steps = max(1, int(round(input_data.horizon_hours * 60 / step_minutes)))
@@ -125,7 +108,7 @@ class ForecastHorizonPiece(BasePiece):
             pd.DataFrame(rows).to_csv(out_path, index=False)
             with open(log_path, "a", encoding="utf-8") as f:
                 f.write(f"[INFO] forecast_rows={len(rows)}\n")
-            _piece_out = OutputModel(message=f"Forecast completed, rows={len(rows)}", forecast_csv=str(out_path))
+            return OutputModel(message=f"Forecast completed, rows={len(rows)}", forecast_csv=str(out_path))
         except Exception:
             err = traceback.format_exc()
             with open(log_path, "a", encoding="utf-8") as f:
@@ -134,11 +117,3 @@ class ForecastHorizonPiece(BasePiece):
             with open(err_path, "w", encoding="utf-8") as f:
                 f.write(err)
             raise
-        finally:
-            if od is not None and _piece_out is None:
-                od.cleanup_on_error(self.results_path, secrets_data, "ForecastHorizonPiece", _stage, run_id=_run_id)
-            elif _stage is not None:
-                _stage.cleanup()
-        if od is not None and _piece_out is not None:
-            return od.finish_piece(_piece_out, self.results_path, secrets_data, "ForecastHorizonPiece", _stage, run_id=_run_id)
-        return _piece_out

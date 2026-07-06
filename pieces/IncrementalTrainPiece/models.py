@@ -1,15 +1,7 @@
-from typing import Optional
-
-try:
-    from common.onedata_models import OneDataSecretsModel, RunIdInputMixin
-except ModuleNotFoundError:
-    from pieces.common.onedata_models import OneDataSecretsModel, RunIdInputMixin
-
-
 from pydantic import BaseModel, ConfigDict, Field
 
 
-class InputModel(RunIdInputMixin):
+class InputModel(BaseModel):
     model_config = ConfigDict(protected_namespaces=())
     history_csv: str = Field(description="Merged long-term history CSV")
     model_registry_dir: str = Field(description="Directory for per-department model artifacts")
@@ -18,11 +10,6 @@ class InputModel(RunIdInputMixin):
         default=20, ge=1, description="Run full retrain after this many incremental updates"
     )
     incremental_trees: int = Field(default=50, ge=10, description="Number of trees appended in incremental update")
-
-
-class SecretsModel(OneDataSecretsModel):
-    pass
-
 
 
 class OutputModel(BaseModel):

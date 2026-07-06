@@ -5,16 +5,6 @@
   "dependency": {
     "requirements_file": "requirements_0.txt"
   },
-  "container_resources": {
-    "requests": {
-      "cpu": 200,
-      "memory": 2048
-    },
-    "limits": {
-      "cpu": 1000,
-      "memory": 2048
-    }
-  },
   "style": {
     "node_label": "Solar Simulation",
     "icon_class_name": "fa-solid:sun"
