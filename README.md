@@ -57,3 +57,13 @@ Domino metadata is tracked in:
 - `.domino/dependencies_map.json`
 
 The repository is intended to expose the full sustainable workflow piece set, with workflow logic kept directly inside real piece folders.
+
+## CI/CD variables (GitLab)
+
+| Variable | Description |
+|----------|-------------|
+| `CI_PUSH_TOKEN` | Project access token with `write_repository` (+ `api`) |
+| `CI_RELEASE_TOKEN` | Project access token with `api` |
+| `CONTAINER_REGISTRY` | `harbor.testbed.spice-platform.eu` |
+| `CONTAINER_REGISTRY_USERNAME` | Harbor user/robot (e.g. `partner`) |
+| `CONTAINER_REGISTRY_PASSWORD` | Harbor password from vault |
